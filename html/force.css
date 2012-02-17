@@ -1,0 +1,21 @@
+.node ellipse {
+  fill: #fff;
+  stroke-width: 1.5px;
+}
+
+.node text {
+  font-size: 14px;
+}
+
+line.link {
+  stroke: #333;
+  stroke-opacity: 1;
+}
+
+#chart {
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
