@@ -8,4 +8,4 @@ mkdir $DEST
 
 cp html/* $DEST/
 
-batctl vd json|python ./bat2nodes.py -a aliases.json $GWS - > $DEST/nodes.json
+ssh 188.138.99.158 batctl vd json|python ./bat2nodes.py -a aliases.json $GWS - > $DEST/nodes.json

@@ -36,7 +36,7 @@ d3.json("nodes.json", function(json) {
       .call(force.drag);
 
   node.append("ellipse")
-      .attr("rx", function(d) { if (d.group == 3) return 4; else return d.name.length * 5; })
+      .attr("rx", function(d) { if (d.group == 3) return 4; else return Math.max(14, d.name.length * 5); })
       .attr("ry", function(d) { if (d.group == 3) return 4; else return 14; })
       .style("fill", function(d) { if (d.group == 3) return fill(d.group); else return ""; })
       .style("stroke", function(d) { return fill(d.group); });
@@ -48,7 +48,7 @@ d3.json("nodes.json", function(json) {
       .text(function(d) { if (d.group == 3) return ""; else return d.name; });
 
   node.append("title")
-      .text(function(d) { return d.name; });
+      .text(function(d) { return d.macs; });
 
   force.on("tick", function() {
     link.attr("x1", function(d) { return d.source.x; })

@@ -29,7 +29,7 @@ nodes = []
 
 class Node():
   def __init__(self):
-    self.name = None
+    self.name = ""
     self.macs = set()
     self.group = 0
     # groups:
@@ -39,9 +39,6 @@ class Node():
     # 3 TT
 
   def add_mac(self, mac):
-    if len(self.macs) == 0 and not self.name:
-      self.name = mac
-
     self.macs.add(mac)
 
   def __repr__(self):
@@ -103,13 +100,6 @@ for line in lines:
 for line in lines:
   x = json.loads(line)
 
-  if 'primary' in x:
-    try:
-      node = maybe_node_by_mac(nodes, (x['primary'], ))
-      node.name = x['primary']
-    except:
-      pass
-
   if 'router' in x:
     try:
       if 'gateway' in x:
@@ -163,7 +153,9 @@ links = map(lambda x: map_link(nodes, x), links)
 
 output = dict()
 
-output['nodes'] = map(lambda x: {'group': x.group, 'name': x.name}, nodes)
+output['nodes'] = map(lambda x: {'group': x.group, 'name': x.name,
+                                 'macs': ', '.join(x.macs)
+                                }, nodes)
 output['links'] = map(lambda x: {'source': x.pair[0], 'target': x.pair[1],
                                  'distance': x.distance,
                                  'strength': x.strength
