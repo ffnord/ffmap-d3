@@ -4,7 +4,7 @@
 # Gatewayliste
 # aliases.json
 
-import simplejson as json
+import json
 import fileinput
 import argparse
 
@@ -128,12 +128,13 @@ if options['aliases']:
     if 'group' in alias:
       node.group = alias['group']
 
-for gateway in options['gateway']:
-  try:
-    node = maybe_node_by_mac(nodes, (gateway, ))
-    node.group = 2
-  except:
-    continue
+if options['gateway']:
+  for gateway in options['gateway']:
+    try:
+      node = maybe_node_by_mac(nodes, (gateway, ))
+      node.group = 2
+    except:
+      continue
 
 def map_link(nodes, pair):
   distance = 80
@@ -149,16 +150,16 @@ def map_link(nodes, pair):
   return link
 
 
-links = map(lambda x: map_link(nodes, x), links)
+links = [map_link(nodes, x) for x in links]
 
 output = dict()
 
-output['nodes'] = map(lambda x: {'group': x.group, 'name': x.name,
-                                 'macs': ', '.join(x.macs)
-                                }, nodes)
-output['links'] = map(lambda x: {'source': x.pair[0], 'target': x.pair[1],
-                                 'distance': x.distance,
-                                 'strength': x.strength
-                                }, links)
+output['nodes'] = [{'group': x.group, 'name': x.name,
+                    'macs': ', '.join(x.macs)
+                   } for x in nodes]
+output['links'] = [{'source': x.pair[0], 'target': x.pair[1],
+                    'distance': x.distance,
+                    'strength': x.strength
+                   } for x in links]
 
-print json.dumps(output)
+print(json.dumps(output))
