@@ -2,7 +2,7 @@
    "04:11:6b:98:08:21" : {
       "name" : "sellars"
    },
-   "da:7b:6f:c1:63:d2" : {
+   "00:25:86:e6:f1:bf" : {
       "name" : "krtek"
    },
    "b0:48:7a:e7:d3:64" : {
@@ -12,8 +12,7 @@
       "name" : "holstentor"
    },
    "56:47:05:ab:00:2b" : {
-      "name" : "aftermath",
-      "group" : 1
+      "name" : "aftermath"
    },
    "ca:96:05:3c:54:f9" : {
       "name" : "prometheus"
@@ -35,5 +34,8 @@
    },
    "ca:a8:ca:2d:c8:b2" : {
       "name" : "prometheus"
+   },
+   "fa:d1:11:80:41:d4" : {
+      "name" : "confusion"
    }
 }
