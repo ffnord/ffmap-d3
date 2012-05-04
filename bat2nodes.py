@@ -139,7 +139,7 @@ if options['gateway']:
 def map_link(nodes, pair):
   distance = 80
   strength = 0.2
-  if filter(lambda x: nodes[x].group == 3, pair):
+  if any(filter(lambda x: nodes[x].group == 3, pair)):
     distance = 10
     strength = 1
 
