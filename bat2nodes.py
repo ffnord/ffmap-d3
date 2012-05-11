@@ -8,6 +8,9 @@ import json
 import fileinput
 import argparse
 
+from node import Node
+from link import Link
+
 parser = argparse.ArgumentParser()
 
 parser.add_argument('-a', '--aliases',
@@ -26,30 +29,6 @@ options = vars(args)
 aliases = dict()
 links = set()
 nodes = []
-
-class Node():
-  def __init__(self):
-    self.name = ""
-    self.macs = set()
-    self.group = 0
-    self.online = False
-    # groups:
-    # 0 normal node
-    # 1 aftermath
-    # 2 gateways
-    # 3 TT
-
-  def add_mac(self, mac):
-    self.macs.add(mac)
-
-  def __repr__(self):
-    return self.macs.__repr__()
-
-class Link():
-  def __init__(self):
-    self.pair = None
-    self.distance = None
-    self.strength = None
 
 def maybe_node_by_mac(nodes, macs):
   for node in nodes:
