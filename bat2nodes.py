@@ -32,6 +32,7 @@ class Node():
     self.name = ""
     self.macs = set()
     self.group = 0
+    self.online = False
     # groups:
     # 0 normal node
     # 1 aftermath
@@ -68,6 +69,7 @@ for line in lines:
       node = maybe_node_by_mac(nodes, (x['of'], x['secondary']))
     except:
       node = Node()
+      node.online = True
       nodes.append(node)
 
     node.add_mac(x['of'])
@@ -81,6 +83,7 @@ for line in lines:
       node = maybe_node_by_mac(nodes, (x['router'], ))
     except:
       node = Node()
+      node.online = True
       node.add_mac(x['router'])
       nodes.append(node)
 
@@ -91,6 +94,7 @@ for line in lines:
       node = maybe_node_by_mac(nodes, (x['neighbor'], ))
     except:
       node = Node()
+      node.online = True
       if x['label'] == 'TT':
         node.group = 3
 
@@ -149,14 +153,13 @@ def map_link(nodes, pair):
   link.strength = strength
   return link
 
-
 links = [map_link(nodes, x) for x in links]
 
 output = dict()
 
 output['nodes'] = [{'group': x.group, 'name': x.name,
                     'macs': ', '.join(x.macs)
-                   } for x in nodes]
+                   } for x in nodes if x.online]
 output['links'] = [{'source': x.pair[0], 'target': x.pair[1],
                     'distance': x.distance,
                     'strength': x.strength
