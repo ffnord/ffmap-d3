@@ -115,9 +115,10 @@ if options['gateway']:
   for gateway in options['gateway']:
     try:
       node = maybe_node_by_mac(nodes, (gateway, ))
-      node.group = 2
     except:
       continue
+
+    node.group = 2
 
 def map_link(nodes, pair):
   distance = 80
