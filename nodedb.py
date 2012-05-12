@@ -2,6 +2,9 @@ import json
 from node import Node
 from link import Link
 
+from bs4 import BeautifulSoup
+import urllib
+
 class NodeDB:
   def __init__(self):
     self._nodes = []
@@ -120,3 +123,57 @@ class NodeDB:
     link.strength = strength
     return link
 
+  def import_wikigps(self, url):
+    def fetch_wikitable(url):
+      f = urllib.urlopen(url)
+
+      soup = BeautifulSoup(f)
+
+      table = soup.find_all("table")[0]
+
+      rows = table.find_all("tr")
+
+      headers = []
+
+      data = []
+
+      def maybe_strip(x):
+        if isinstance(x.string, basestring):
+          return x.string.strip()
+        else:
+          return ""
+
+      for row in rows:
+        tds = list([maybe_strip(x) for x in row.find_all("td")])
+        ths = list([maybe_strip(x) for x in row.find_all("th")])
+
+        if any(tds):
+          data.append(tds)
+
+        if any(ths):
+          headers = ths
+
+      nodes = []
+
+      for d in data:
+        nodes.append(dict(zip(headers, d)))
+
+      return nodes
+
+    nodes = fetch_wikitable(url)
+
+    for node in nodes:
+      if not ('MAC' in node and 'GPS' in node):
+        continue
+
+      macs = [s for s in [s.strip() for s in node['MAC'].split(',')] if s]
+      gps = [s for s in [s.strip() for s in node['GPS'].split(',')] if s]
+
+      for pair in zip(macs, gps):
+        try:
+          node = self.maybe_node_by_mac(pair[0])
+        except:
+          node = Node()
+          self._nodes.append(node)
+
+        node.gps = pair[1]
