@@ -21,7 +21,7 @@ class NodeDB:
   def maybe_node_by_mac(self, macs):
     for node in self._nodes:
       for mac in macs:
-        if mac in node.macs:
+        if mac.lower() in node.macs:
           return node
 
     raise
@@ -171,9 +171,10 @@ class NodeDB:
 
       for pair in zip(macs, gps):
         try:
-          node = self.maybe_node_by_mac(pair[0])
+          node = self.maybe_node_by_mac((pair[0], ))
         except:
           node = Node()
+          node.add_mac(pair[0])
           self._nodes.append(node)
 
         node.gps = pair[1]

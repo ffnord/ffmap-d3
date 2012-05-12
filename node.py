@@ -12,7 +12,7 @@ class Node():
     # 3 TT
 
   def add_mac(self, mac):
-    self.macs.add(mac)
+    self.macs.add(mac.lower())
 
   def __repr__(self):
     return self.macs.__repr__()
