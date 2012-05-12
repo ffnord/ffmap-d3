@@ -1,5 +1,18 @@
-var w = window.innerWidth,
-    h = window.innerHeight - 10,
+function getOffset( el ) {
+    var _x = 0;
+    var _y = 0;
+    while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
+        _x += el.offsetLeft - el.scrollLeft;
+        _y += el.offsetTop - el.scrollTop;
+        el = el.offsetParent;
+    }
+    return { top: _y, left: _x };
+}
+
+var offset = getOffset(document.getElementById('chart'));
+
+var w = window.innerWidth - offset.left,
+    h = window.innerHeight - offset.top - 24,
     fill = d3.scale.category20();
 
 var vis = d3.select("#chart").append("svg")
