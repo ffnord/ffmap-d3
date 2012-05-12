@@ -4,6 +4,7 @@ class Node():
     self.macs = set()
     self.group = 0
     self.online = False
+    self.gps = None
     # groups:
     # 0 normal node
     # 1 aftermath
