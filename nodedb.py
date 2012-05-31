@@ -199,5 +199,6 @@ class NodeDB:
 
           self._nodes[j].gps = self._nodes[i].gps
 
+          self._nodes[i].gps = None
+
           self._links.remove(link)
-          self._nodes.remove(node)
