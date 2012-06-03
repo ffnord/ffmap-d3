@@ -1,10 +1,11 @@
 .node ellipse {
   fill: #fff;
-  stroke-width: 1.5px;
+  stroke-width: 2.5px;
 }
 
 .node text {
-  font-size: 14px;
+  font-size: 10px;
+  color: #333;
 }
 
 line.link {

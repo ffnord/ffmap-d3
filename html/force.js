@@ -49,15 +49,14 @@ d3.json("nodes.json", function(json) {
       .call(force.drag);
 
   node.append("ellipse")
-      .attr("rx", function(d) { if (d.group == 3) return 4; else return Math.max(14, d.name.length * 5); })
-      .attr("ry", function(d) { if (d.group == 3) return 4; else return 14; })
+      .attr("rx", function(d) { if (d.group == 3) return 4; else return Math.max(10, d.name.length * 5); })
+      .attr("ry", function(d) { if (d.group == 3) return 4; else return 10; })
       .style("fill", function(d) { if (d.group == 3) return fill(d.group); else return ""; })
       .style("stroke", function(d) { return fill(d.group); });
 
   node.append("text")
       .attr("text-anchor", "middle")
       .attr("y", "4px")
-      .style("fill", function(d) { return fill(d.group); })
       .text(function(d) { if (d.group == 3) return ""; else return d.name; });
 
   node.append("title")
