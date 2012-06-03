@@ -3,7 +3,18 @@ from node import Node
 from link import Link
 
 from bs4 import BeautifulSoup
-import urllib
+
+
+# Python2/3 compatiblity hacks
+try:
+	from urllib.request import urlopen
+except ImportError:
+	from urllib import urlopen
+
+try:
+	basestring
+except NameError:
+	basestring = str
 
 class NodeDB:
   def __init__(self):
@@ -125,7 +136,7 @@ class NodeDB:
 
   def import_wikigps(self, url):
     def fetch_wikitable(url):
-      f = urllib.urlopen(url)
+      f = urlopen(url)
 
       soup = BeautifulSoup(f)
 
