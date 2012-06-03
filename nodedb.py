@@ -194,11 +194,10 @@ class NodeDB:
           linklist.remove(i)
           j = linklist[0]
 
-          for mac in self._nodes[i].macs:
+          for mac in node.macs:
             self._nodes[j].add_mac(mac)
 
-          self._nodes[j].gps = self._nodes[i].gps
+          self._nodes[j].gps = node.gps
 
-          self._nodes[i].gps = None
+          node.gps = None
 
-          self._links.remove(link)

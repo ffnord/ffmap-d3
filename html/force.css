@@ -12,5 +12,7 @@ line.link {
   stroke-opacity: 1;
 }
 
-#chart {
+#chart, #chart svg {
+  display: block;
+  vertical-align: middle;
 }

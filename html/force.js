@@ -12,7 +12,7 @@ function getOffset( el ) {
 var offset = getOffset(document.getElementById('chart'));
 
 var w = window.innerWidth - offset.left,
-    h = window.innerHeight - offset.top - 24,
+    h = window.innerHeight - offset.top,
     fill = d3.scale.category20();
 
 var vis = d3.select("#chart").append("svg")
