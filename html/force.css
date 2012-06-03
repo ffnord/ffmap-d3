@@ -21,3 +21,7 @@ line.link {
 #chart {
   background-image: url(gplaypattern.png);
 }
+
+.node.highlight ellipse {
+  fill: #FFF0B3;
+}

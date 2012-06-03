@@ -67,7 +67,14 @@ d3.json("nodes.json", function(json) {
    function fade(opacity) {
             return function(d) {
                   node.style("stroke-opacity", function(o) {
-                        thisOpacity = isConnected(d, o) ? 1 : opacity;
+                        var connected = isConnected(d, o);
+
+                        if (connected && opacity != 1)
+                          d3.select(this).classed("highlight", true);
+                        else
+                          d3.select(this).classed("highlight", false);
+
+                        thisOpacity = connected ? 1 : opacity;
                         this.setAttribute('fill-opacity', thisOpacity);
                         return thisOpacity;
                     });
