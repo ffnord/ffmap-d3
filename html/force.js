@@ -73,6 +73,23 @@ d3.json("nodes.json", function(json) {
                     });
               };
         } 
+  
+  function show_node_info(d) {
+    if (!(typeof nodeinfo === 'undefined')) 
+      nodeinfo.remove();
+
+    nodeinfo = d3.select("#chart").append("div")
+    .attr("id", "nodeinfo");
+
+    nodeinfo.append("h1")
+      .text(d.name);
+
+    nodeinfo.append("p")
+      .text(d.macs);
+
+    nodeinfo.append("p")
+      .text(d.gps);
+  }
 
   var node = vis.selectAll("svg.node")
       .data(json.nodes)
@@ -80,6 +97,7 @@ d3.json("nodes.json", function(json) {
       .attr("class", "node")
       .on("mouseover", fade(.2))
       .on("mouseout", fade(1))
+      .on("click", show_node_info)
       .call(force.drag);
 
   node.append("ellipse")

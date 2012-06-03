@@ -20,8 +20,33 @@ line.link {
 
 #chart {
   background-image: url(gplaypattern.png);
+  position: relative;
 }
 
 .node.highlight ellipse {
   fill: #FFF0B3;
+}
+
+#nodeinfo {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 0.5em;
+  font-family: arial, helvatica;
+}
+
+#nodeinfo h1, p {
+  color: #555;
+}
+
+#nodeinfo h1 {
+  font-size: 10pt;
+  margin: 0 0 0.5em;
+}
+
+#nodeinfo p {
+  font-size: 10pt;
+  margin: 0;
 }
