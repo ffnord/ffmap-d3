@@ -71,6 +71,27 @@ function render_graph(type) {
           linkedByIndex[d.source.index + "," + d.target.index] = 1;
       });
 
+    json.links.forEach(function(d) {
+          var node, other;
+
+          if (d.source.group == 2) {
+            node = d.target;
+            other = d.source;
+          }
+
+          if (d.target.group == 2) {
+            node = d.source;
+            other = d.target;
+          }
+          
+          if (node) {
+            if (node.uplinks === undefined)
+              node.uplinks = new Array();
+
+            node.uplinks.push(other);
+          }
+      });
+
   var linkdata = json.links;
 
   if (type == "mesh")
@@ -167,17 +188,17 @@ function render_graph(type) {
     })
     .append("g");
 
-    uplink_info.append("rect")
+    uplink_info.append("path")
       .attr("width", 16)
       .attr("height", 16)
-      .attr("x", -8)
-      .attr("y", -28)
-      .attr("fill", "#fff")
-      .attr("stroke", "#066");
+      .attr("x", 0)
+      .attr("y", 0)
+      .attr("d","m -2.8850049,-13.182327 c 7.5369165,0.200772 12.1529864,-1.294922 12.3338513,-10.639456 l 2.2140476,1.018191 -3.3137621,-5.293097 -3.2945999,5.20893 2.4339957,-0.995747 c -0.4041883,5.76426 -1.1549641,10.561363 -10.3735326,10.701179 z")
+      .style("fill", "#333");
 
     uplink_info.append("text")
       .attr("text-anchor", "middle")
-      .attr("y", 4 - 20)
+      .attr("y", 3 - 20)
       .text(function (d) {return d.uplinks.length});
   }
 
