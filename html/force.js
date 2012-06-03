@@ -42,7 +42,7 @@ d3.json("nodes.json", function(json) {
       .data(json.links)
     .enter().append("line")
       .attr("class", "link")
-      //.style("stroke-width", function(d) { return Math.min(1, d.strength * 2); })
+      .style("stroke-width", function(d) { return Math.min(1, d.strength * 2); })
       .attr("x1", function(d) { return d.source.x; })
       .attr("y1", function(d) { return d.source.y; })
       .attr("x2", function(d) { return d.target.x; })

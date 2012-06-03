@@ -17,3 +17,7 @@ line.link {
   display: block;
   vertical-align: middle;
 }
+
+#chart {
+  background-image: url(gplaypattern.png);
+}
