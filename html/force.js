@@ -32,20 +32,58 @@ d3.json("nodes.json", function(json) {
       .size([w, h])
       .start();
 
+  var linkedByIndex = {};
+
+  json.links.forEach(function(d) {
+      linkedByIndex[d.source.index + "," + d.target.index] = 1;
+  });
+
   var link = vis.selectAll("line.link")
       .data(json.links)
     .enter().append("line")
       .attr("class", "link")
-      .style("stroke-width", function(d) { return Math.min(1, d.strength * 2); })
+      //.style("stroke-width", function(d) { return Math.min(1, d.strength * 2); })
       .attr("x1", function(d) { return d.source.x; })
       .attr("y1", function(d) { return d.source.y; })
       .attr("x2", function(d) { return d.target.x; })
       .attr("y2", function(d) { return d.target.y; });
 
+  function highlight_nodes(f) {
+    return function (e, i) {
+      d3.select(this).classed("highlight", f);
+              var links = vis.selectAll("line").filter(function(d) {
+                        return d.source.index == i || d.target.index == i;
+                    }).each(function(dLink, iLink) {
+                          d3.select(this).classed("highlight", f);
+                      });
+    }
+  }
+
+    function isConnected(a, b) {
+        return linkedByIndex[a.index + "," + b.index] || linkedByIndex[b.index + "," + a.index] || a.index == b.index;
+    }
+
+
+   function fade(opacity) {
+            return function(d) {
+                  node.style("stroke-opacity", function(o) {
+                        thisOpacity = isConnected(d, o) ? 1 : opacity;
+                        this.setAttribute('fill-opacity', thisOpacity);
+                        return thisOpacity;
+                    });
+
+                  link.style("stroke-opacity", function(o) {
+                        return o.source === d || o.target === d ? 1 : opacity;
+                    });
+              };
+        } 
+
   var node = vis.selectAll("svg.node")
       .data(json.nodes)
     .enter().append("g")
       .attr("class", "node")
+      .on("mouseover", fade(.1))//highlight_nodes(true))
+      .on("mouseout", fade(1))//highlight_nodes(false))
       .call(force.drag);
 
   node.append("ellipse")
