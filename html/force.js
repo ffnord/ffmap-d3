@@ -48,17 +48,6 @@ d3.json("nodes.json", function(json) {
       .attr("x2", function(d) { return d.target.x; })
       .attr("y2", function(d) { return d.target.y; });
 
-  function highlight_nodes(f) {
-    return function (e, i) {
-      d3.select(this).classed("highlight", f);
-              var links = vis.selectAll("line").filter(function(d) {
-                        return d.source.index == i || d.target.index == i;
-                    }).each(function(dLink, iLink) {
-                          d3.select(this).classed("highlight", f);
-                      });
-    }
-  }
-
     function isConnected(a, b) {
         return linkedByIndex[a.index + "," + b.index] || linkedByIndex[b.index + "," + a.index] || a.index == b.index;
     }
