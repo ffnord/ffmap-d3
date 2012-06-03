@@ -25,13 +25,13 @@ var btns = cp.append("div")
 btns.append("button")
 .attr("class", "btn active left")
 .attr("value", "all")
-.text("Everything")
+.text("Alles")
 .on("click", update_graph);
 
 btns.append("button")
 .attr("class", "btn right")
 .attr("value", "mesh")
-.text("Mesh only")
+.text("nur Mesh")
 .on("click", update_graph);
 
 function update_graph() {
