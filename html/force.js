@@ -21,8 +21,8 @@ var vis = d3.select("#chart").append("svg")
 
 d3.json("nodes.json", function(json) {
   var force = d3.layout.force()
-      .charge(-350)
-      .gravity(0.05)
+      .charge(-100)
+      .gravity(0.02)
       .friction(0.75)
       .theta(0.1)
       .linkDistance(function (d) { return d.distance; })
