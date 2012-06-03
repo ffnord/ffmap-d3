@@ -82,8 +82,8 @@ d3.json("nodes.json", function(json) {
       .data(json.nodes)
     .enter().append("g")
       .attr("class", "node")
-      .on("mouseover", fade(.1))//highlight_nodes(true))
-      .on("mouseout", fade(1))//highlight_nodes(false))
+      .on("mouseover", fade(.2))
+      .on("mouseout", fade(1))
       .call(force.drag);
 
   node.append("ellipse")
