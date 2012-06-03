@@ -158,12 +158,15 @@ function render_graph(type) {
   node.append("title")
     .text(function(d) { return d.macs; });
 
-  var uplink_info = node.filter(function (d) {
-    return d.name == "krtek"
-  })
-  .append("g");
-
   if (type == "mesh") {
+    var uplink_info = node.filter(function (d) {
+      if (d.uplinks !== undefined)
+        return d.uplinks.length > 0;
+      else
+        return false;
+    })
+    .append("g");
+
     uplink_info.append("rect")
       .attr("width", 16)
       .attr("height", 16)
@@ -175,7 +178,7 @@ function render_graph(type) {
     uplink_info.append("text")
       .attr("text-anchor", "middle")
       .attr("y", 4 - 20)
-      .text("8");
+      .text(function (d) {return d.uplinks.length});
   }
 
   force.on("tick", function() {
