@@ -148,7 +148,10 @@ function render_graph(type) {
       .text(d.name);
 
     nodeinfo.append("p")
-      .text(d.macs);
+      .text("primary: " + d.id);
+
+    nodeinfo.append("p")
+      .text("macs: " + d.macs);
 
     nodeinfo.append("p")
       .text(d.gps);
