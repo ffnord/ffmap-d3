@@ -19,7 +19,7 @@ except NameError:
 class NodeDB:
   def __init__(self):
     self._nodes = []
-    self._links = set()
+    self._links = []
 
   # fetch list of links
   def get_links(self):
@@ -28,6 +28,15 @@ class NodeDB:
   # fetch list of nodes
   def get_nodes(self):
     return self._nodes
+
+  def add_link(self, a, b, q):
+    l = tuple(sorted((a,b)))
+    for link in self._links:
+      if l == link[0]:
+        if link[1] != str(q):
+          link[1] += " / " + str(q)
+        return
+    self._links.append([l,str(q)])
 
   def maybe_node_by_mac(self, macs):
     for node in self._nodes:
@@ -96,7 +105,7 @@ class NodeDB:
         a = self._nodes.index(router)
         b = self._nodes.index(neighbor)
 
-        self._links.add(tuple((tuple(sorted((a,b))), x['label'])))
+        self.add_link(a, b, x['label'])
 
     for line in lines:
       x = json.loads(line)
