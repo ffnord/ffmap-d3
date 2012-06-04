@@ -45,6 +45,9 @@ cp.append("input")
 
 function show_node(mac) {
   d3.selectAll("#chart .node").classed("marked", false);
+  if (mac.length == 0)
+    return;
+
   d3.selectAll("#chart .node").each( function(d) {
     if (d.id == mac) 
       d3.select(this).classed("marked", true);
