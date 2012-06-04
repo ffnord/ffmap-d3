@@ -190,7 +190,7 @@ class NodeDB:
 
       macs = [s for s in [s.strip() for s in node['MAC'].split(',')] if s]
       gps = [s for s in [s.strip() for s in node['GPS'].split(',')] if s]
-      if 'MAC' in node:
+      if 'Nick' in node:
         names = [s for s in [s.strip() for s in node['Nick'].split(',')] if s]
         zipped = zip(macs, gps, names)
       else:
