@@ -7,7 +7,7 @@ class D3MapBuilder:
   def build(self):
     output = dict()
 
-    output['nodes'] = [{'group': x.group, 'name': x.name,
+    output['nodes'] = [{'group': x.group, 'name': x.name, 'id': x.id,
                         'macs': ', '.join(x.macs)
                        } for x in self._db.get_nodes() if x.online]
     output['links'] = [{'source': x.pair[0], 'target': x.pair[1],

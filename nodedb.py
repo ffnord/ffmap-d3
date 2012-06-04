@@ -98,6 +98,17 @@ class NodeDB:
 
         self._links.add(tuple(sorted((a,b))))
 
+    for line in lines:
+      x = json.loads(line)
+
+      if 'primary' in x:
+        try:
+          node = self.maybe_node_by_mac((x['primary'], ))
+        except:
+          continue
+
+        node.id = x['primary']
+
   def import_aliases(self, aliases):
     for mac, alias in aliases.items():
       try:

@@ -1,6 +1,7 @@
 class Node():
   def __init__(self):
     self.name = ""
+    self.id = ""
     self.macs = set()
     self.group = 0
     self.online = False
