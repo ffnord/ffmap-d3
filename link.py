@@ -3,4 +3,5 @@ class Link():
     self.pair = None
     self.distance = None
     self.strength = None
+    self.quality = None
 

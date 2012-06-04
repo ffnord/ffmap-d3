@@ -12,7 +12,8 @@ class D3MapBuilder:
                        } for x in self._db.get_nodes() if x.online]
     output['links'] = [{'source': x.pair[0], 'target': x.pair[1],
                         'distance': x.distance,
-                        'strength': x.strength
+                        'strength': x.strength,
+                        'quality': x.quality
                        } for x in self._db.get_links()]
 
     return json.dumps(output)

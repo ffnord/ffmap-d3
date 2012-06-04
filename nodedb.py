@@ -96,7 +96,7 @@ class NodeDB:
         a = self._nodes.index(router)
         b = self._nodes.index(neighbor)
 
-        self._links.add(tuple(sorted((a,b))))
+        self._links.add(tuple((tuple(sorted((a,b))), x['label'])))
 
     for line in lines:
       x = json.loads(line)
@@ -135,14 +135,15 @@ class NodeDB:
   def map_link(self, pair):
     distance = 80
     strength = 0.2
-    if any(filter(lambda x: self._nodes[x].group == 3, pair)):
+    if any(filter(lambda x: self._nodes[x].group == 3, pair[0])):
       distance = 10
       strength = 1
 
     link = Link()
-    link.pair = pair
+    link.pair = pair[0]
     link.distance = distance
     link.strength = strength
+    link.quality = pair[1]
     return link
 
   def import_wikigps(self, url):
@@ -213,7 +214,7 @@ class NodeDB:
 
   def find_link(self, i):
     for link in self._links:
-      if i in link:
+      if i in link[0]:
         return link
 
   def wilder_scheiss(self):

@@ -122,18 +122,21 @@ function render_graph(type) {
       d.source.group != 3 && d.target.group != 3;
     });
 
-  var linkdata = vis.selectAll("line.link")
-    .data(linkdata)
 
-  var link = linkdata.enter().append("line")
+  var link = vis.selectAll("line.link")
+    .data(linkdata)
+    .enter().append("line")
     .attr("class", "link")
     .style("stroke-width", function(d) { return Math.min(1, d.strength * 2); });
 
-  var linklabel = linkdata.enter().append("text")
+  var linklabel = vis.selectAll("text")
+    .data(linkdata.filter(function (d) {return d.quality != "TT"}))
+    .enter()
+    .append("text")
     .attr("text-anchor", "middle")
     .attr("color", "#000")
     .attr("class", "strength")
-    .text(function (d) { return d.strength; });
+    .text(function (d) { return d.quality; });
 
       function isConnected(a, b) {
             return linkedByIndex[a.index + "," + b.index] || linkedByIndex[b.index + "," + a.index] || a.index == b.index;
