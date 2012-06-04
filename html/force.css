@@ -13,6 +13,11 @@ line.link {
   stroke-opacity: 1;
 }
 
+.strength {
+  font-size: 10px;
+  fill: #C83771;
+}
+
 #chart, #chart svg {
   display: block;
   vertical-align: middle;

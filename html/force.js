@@ -122,16 +122,18 @@ function render_graph(type) {
       d.source.group != 3 && d.target.group != 3;
     });
 
-
-  var link = vis.selectAll("line.link")
+  var linkdata = vis.selectAll("line.link")
     .data(linkdata)
-    .enter().append("line")
+
+  var link = linkdata.enter().append("line")
     .attr("class", "link")
-    .style("stroke-width", function(d) { return Math.min(1, d.strength * 2); })
-    .attr("x1", function(d) { return d.source.x; })
-    .attr("y1", function(d) { return d.source.y; })
-    .attr("x2", function(d) { return d.target.x; })
-    .attr("y2", function(d) { return d.target.y; });
+    .style("stroke-width", function(d) { return Math.min(1, d.strength * 2); });
+
+  var linklabel = linkdata.enter().append("text")
+    .attr("text-anchor", "middle")
+    .attr("color", "#000")
+    .attr("class", "strength")
+    .text(function (d) { return d.strength; });
 
       function isConnected(a, b) {
             return linkedByIndex[a.index + "," + b.index] || linkedByIndex[b.index + "," + a.index] || a.index == b.index;
@@ -232,6 +234,11 @@ function render_graph(type) {
     .attr("y1", function(d) { return d.source.y; })
     .attr("x2", function(d) { return d.target.x; })
     .attr("y2", function(d) { return d.target.y; });
+
+    linklabel
+    .attr("x", function(d) { return Math.min(d.source.x, d.target.x) + Math.abs(d.source.x - d.target.x) / 2; })
+    .attr("y", function(d) { return Math.min(d.source.y, d.target.y) + Math.abs(d.source.y - d.target.y) / 2; });
+
 
   node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
   });
