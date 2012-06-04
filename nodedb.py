@@ -190,14 +190,18 @@ class NodeDB:
 
       macs = [s for s in [s.strip() for s in node['MAC'].split(',')] if s]
       gps = [s for s in [s.strip() for s in node['GPS'].split(',')] if s]
+      names = [s for s in [s.strip() for s in node['Nick'].split(',')] if s]
 
-      for pair in zip(macs, gps):
+      for pair in zip(macs, gps, names):
         try:
           node = self.maybe_node_by_mac((pair[0], ))
         except:
           node = Node()
           node.add_mac(pair[0])
           self._nodes.append(node)
+
+        if pair[2]:
+          node.name = pair[2]
 
         node.gps = pair[1]
 
