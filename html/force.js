@@ -34,6 +34,25 @@ btns.append("button")
 .text("nur Mesh")
 .on("click", update_graph);
 
+cp.append("label")
+  .text("Knoten hervorheben:");
+
+cp.append("br");
+
+cp.append("input")
+  .on("keyup", function(){show_node(this.value)})
+  .on("change", function(){show_node(this.value)});
+
+function show_node(mac) {
+  d3.selectAll("#chart .node").classed("marked", false);
+  d3.selectAll("#chart .node").each( function(d) {
+    if (d.id == mac) 
+      d3.select(this).classed("marked", true);
+  })
+}
+
+var hashstr = window.location.hash.substring(1);
+
 function update_graph() {
   var value = jQuery(this).val()
 
@@ -213,5 +232,7 @@ function render_graph(type) {
 
   node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
   });
+  show_node(hashstr);
   });
+
 }

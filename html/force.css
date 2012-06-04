@@ -23,6 +23,11 @@ line.link {
   position: relative;
 }
 
+.node.marked ellipse {
+  stroke: #C83771 !important;
+  stroke-width: 5px;
+}
+
 .node.highlight ellipse {
   fill: #FFF0B3;
 }
