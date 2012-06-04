@@ -205,7 +205,7 @@ class NodeDB:
           node.add_mac(pair[0])
           self._nodes.append(node)
 
-        if '2' in pair:
+        if len(pair) > 2:
           if pair[2]:
             node.name = pair[2]
 
