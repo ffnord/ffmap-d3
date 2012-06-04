@@ -232,7 +232,9 @@ function render_graph(type) {
 
   node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
   });
-  show_node(hashstr);
+
+  if (hashstr.length != 0)
+    show_node(hashstr);
   });
 
 }
