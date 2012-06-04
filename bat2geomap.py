@@ -32,7 +32,7 @@ if options['aliases']:
 
 db.import_wikigps("http://freifunk.metameute.de/Knoten")
 
-db.wilder_scheiss()
+#db.wilder_scheiss()
 
 m = GeoMapBuilder(db)
 
