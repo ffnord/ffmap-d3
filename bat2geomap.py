@@ -36,4 +36,4 @@ db.import_wikigps("http://freifunk.metameute.de/Knoten")
 
 m = GeoMapBuilder(db)
 
-print(m.build())
+print(m.build().encode("utf8"))
