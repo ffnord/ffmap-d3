@@ -1,3 +1,62 @@
+function zigzag_amplitude(d) {
+  return d.amplitude;
+}
+
+function zigzag_len(d) {
+  return d.len;
+}
+
+function zigzag_angularFrequency(d) {
+  return d.angularFrequency;
+}
+
+d3.svg.zigzag = function() {
+  var amplitude = zigzag_amplitude,
+      len = zigzag_len,
+      angularFrequency = zigzag_angularFrequency;
+
+  function zigzag() {
+    var A = amplitude.apply(this, arguments),
+        l = len.apply(this, arguments),
+        ω = angularFrequency.apply(this, arguments) + 1;
+
+    start = -l/2;
+    end = l/2;
+
+    step = l/ω;
+
+    var s = "M" + start + ",0"
+
+    for (var i = 1; i<ω; i++)
+      s += "L" + (start + i*step) + "," + ((i%2)?A:-A);
+
+    s += "L" + end + ",0"
+
+    return s;
+  }
+
+  zigzag.amplitude = function(v) {
+    if (!arguments.length) return amplitude;
+    amplitude = d3.functor(v);
+    return zigzag;
+  };
+
+  zigzag.len = function(v) {
+    if (!arguments.length) return len;
+    len = d3.functor(v);
+    return zigzag;
+  };
+
+  zigzag.angularFrequency = function(v) {
+    if (!arguments.length) return angularFrequency;
+    angularFrequency = d3.functor(v);
+    return zigzag;
+  };
+
+  return zigzag;
+};
+
+
 function getOffset( el ) {
   var _x = 0;
   var _y = 0;
@@ -129,14 +188,27 @@ function render_graph(type) {
     .attr("class", "link")
     .style("stroke-width", function(d) { return Math.min(1, d.strength * 2); });
 
-  var linklabel = vis.selectAll("text")
-    .data(linkdata.filter(function (d) {return d.quality != "TT"}))
+  var linklabel = vis.selectAll("g")
+    .data(linkdata.filter(function (d) {return d.quality != "TT" && d.quality != "1.000"}))
     .enter()
-    .append("text")
-    .attr("text-anchor", "middle")
-    .attr("color", "#000")
-    .attr("class", "strength")
-    .text(function (d) { return d.quality; });
+    .append("g")
+    .append("path")
+    .attr("d", d3.svg.zigzag().amplitude(function (d) {
+          return Math.pow((1 - 1/d.quality), 0.5) * 8;
+        }).len(30).angularFrequency(4)
+/*
+        d3.svg.arc().outerRadius(5).innerRadius(0)
+         .startAngle( function (d) {
+            return Math.PI/d.quality - Math.PI/2;
+          })
+         .endAngle( function (d) {
+            return -Math.PI/d.quality - Math.PI/2;
+          })
+          */
+        )
+    .attr("fill", "transparent")
+    .attr("stroke", "#C83771")
+    .attr("stroke-width", "1px")
 
       function isConnected(a, b) {
             return linkedByIndex[a.index + "," + b.index] || linkedByIndex[b.index + "," + a.index] || a.index == b.index;
@@ -159,6 +231,9 @@ function render_graph(type) {
                   });
 
                   link.style("stroke-opacity", function(o) {
+                        return o.source === d || o.target === d ? 1 : opacity;
+                    });
+                  linklabel.style("opacity", function(o) {
                         return o.source === d || o.target === d ? 1 : opacity;
                     });
               };
@@ -219,10 +294,6 @@ function render_graph(type) {
     .append("g");
 
     uplink_info.append("path")
-      .attr("width", 16)
-      .attr("height", 16)
-      .attr("x", 0)
-      .attr("y", 0)
       .attr("d","m -2.8850049,-13.182327 c 7.5369165,0.200772 12.1529864,-1.294922 12.3338513,-10.639456 l 2.2140476,1.018191 -3.3137621,-5.293097 -3.2945999,5.20893 2.4339957,-0.995747 c -0.4041883,5.76426 -1.1549641,10.561363 -10.3735326,10.701179 z")
       .style("fill", "#333");
 
@@ -239,9 +310,19 @@ function render_graph(type) {
     .attr("y2", function(d) { return d.target.y; });
 
     linklabel
-    .attr("x", function(d) { return Math.min(d.source.x, d.target.x) + Math.abs(d.source.x - d.target.x) / 2; })
-    .attr("y", function(d) { return Math.min(d.source.y, d.target.y) + Math.abs(d.source.y - d.target.y) / 2; });
-
+    .attr("transform", function(d) { 
+      π = Math.PI;
+      Δx = d.source.x - d.target.x;
+      Δy = d.source.y - d.target.y;
+      m = Δy/Δx;
+      α = Math.atan(m);
+      α += Δx<0?π:0;
+      sin = Math.sin(α);
+      cos = Math.cos(α);
+      x = (Math.min(d.source.x, d.target.x) + Math.abs(Δx) / 2)
+      y = (Math.min(d.source.y, d.target.y) + Math.abs(Δy) / 2)
+      return "matrix(" + [cos, sin, -sin, cos, x, y].join(",") + ")";
+    });
 
   node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
   });
