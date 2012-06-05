@@ -34,7 +34,7 @@ class NodeDB:
     for link in self._links:
       if l == link[0]:
         if link[1] != str(q):
-          link[1] += " / " + str(q)
+          link[1] = max(float(link[1]), float(q))
         return
     self._links.append([l,str(q)])
 
