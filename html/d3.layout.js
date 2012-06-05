@@ -315,11 +315,6 @@ d3.layout.force = function() {
       } else {
         o.x -= (o.px - (o.px = o.x)) * friction;
         o.y -= (o.py - (o.py = o.y)) * friction;
-        if (o.x < 0) o.x = 10;
-        if (o.x > size[0]) o.x = size[0] - 10;
-        if (o.y < 0) o.y = 10;
-        if (o.y > size[1]) o.y = size[1] - 10;
-
       }
     }
 

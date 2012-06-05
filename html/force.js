@@ -131,6 +131,19 @@ var force = d3.layout.force()
               .size([w, h])
 
 force.on("tick", function() {
+  var size = force.size()
+  var nodes = force.nodes()
+  var n = nodes.length
+  for (i = 0; i < n; i++) {
+    var o = nodes[i]
+    if (!o.fixed) {
+      if (o.x < 0) o.x = 10
+      if (o.x > size[0]) o.x = size[0] - 10
+      if (o.y < 0) o.y = 10
+      if (o.y > size[1]) o.y = size[1] - 10
+    }
+  }
+
   var link = vis.selectAll(".link")
 
   link.selectAll("line")
