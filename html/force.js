@@ -113,8 +113,6 @@ function update_graph() {
   update(data, value)
 }
 
-var i, j
-
 var vis = d3.select("#chart").append("svg")
             .attr("width", w)
             .attr("height", h)
@@ -166,7 +164,6 @@ var data
 d3.json("nodes.json", function(json) {
   force.linkDistance(function (d) { return d.distance; })
        .linkStrength(function (d) { return d.strength; })
-       .start()
 
   json.links.forEach(function(d) {
     var node, other
@@ -210,7 +207,7 @@ function update(src, type) {
   var link = vis.select("g.links")
                 .selectAll("g.link")
                 .data(links, function(d) {
-                    return d.id || (d.id = ++j)
+                    return d.id
                 })
 
   var linkEnter = link.enter().append("g")
@@ -247,7 +244,7 @@ function update(src, type) {
                 .selectAll("g.node")
                 .data(nodes,
                   function(d) {
-                    return d.id || (d.id = ++i)
+                    return d.id
                   }
                 )
   var nodeEnter = node.enter().append("g")
