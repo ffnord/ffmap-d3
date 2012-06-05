@@ -3,18 +3,7 @@ from node import Node
 from link import Link
 
 from bs4 import BeautifulSoup
-
-
-# Python2/3 compatiblity hacks
-try:
-	from urllib.request import urlopen
-except ImportError:
-	from urllib import urlopen
-
-try:
-	basestring
-except NameError:
-	basestring = str
+from urllib.request import urlopen
 
 class NodeDB:
   def __init__(self):
@@ -170,7 +159,7 @@ class NodeDB:
       data = []
 
       def maybe_strip(x):
-        if isinstance(x.string, basestring):
+        if isinstance(x.string, str):
           return x.string.strip()
         else:
           return ""

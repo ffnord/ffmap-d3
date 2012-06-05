@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # TODO
 # Gatewayliste
@@ -36,4 +36,4 @@ db.import_wikigps("http://freifunk.metameute.de/Knoten")
 
 m = GeoMapBuilder(db)
 
-print(m.build().encode("utf8"))
+print(m.build())
