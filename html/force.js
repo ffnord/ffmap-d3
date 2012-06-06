@@ -187,12 +187,35 @@ var visible = {clients: true, vpn: true}
 
 function reload() {
   d3.json("nodes.json", function(json) {
+    // update existing nodes with new info
+    // XXX inefficient data structure
+    json.nodes.forEach(function(d, i) {
+      var n
+      force.nodes().forEach(function(x) {if (x.id == d.id) n = x})
+      if (n) {
+        for (var key in d)
+          if (d.hasOwnProperty(key))
+            n[key] = d[key]
 
+        json.nodes[i] = n
+      }
+    })
+
+    json.links.forEach(function(d, i) {
+      var n
+      force.links().forEach(function(x) {if (x.id == d.id) n = x})
+      if (n) {
+        json.links[i] = n
+      }
+    })
+
+    // replace indices with real objects
     json.links.forEach( function(d) {
       if (typeof d.source == "number") d.source = json.nodes[d.source];
       if (typeof d.target == "number") d.target = json.nodes[d.target];
     })
 
+    // count uplinks
     json.links.forEach(function(d) {
       var node, other
 
@@ -211,28 +234,6 @@ function reload() {
           node.uplinks = new Array();
 
         node.uplinks.push(other);
-      }
-    })
-
-    // update existing nodes with new info
-    json.nodes.forEach(function(d, i) {
-      var n
-      force.nodes().forEach(function(x) {if (x.id == d.id) n = x})
-      if (n) {
-        for (var key in d)
-          if (d.hasOwnProperty(key))
-            n[key] = d[key]
-
-        json.nodes[i] = n
-      }
-    })
-
-    json.links.forEach(function(d) {
-      var n
-      force.links().forEach(function(x) {if (x.id == d.id) n = x})
-      if (n) {
-        d.source = n.source
-        d.target = n.target
       }
     })
 
