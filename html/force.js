@@ -18,6 +18,12 @@ var w = window.innerWidth - offset.left,
 var cp = d3.select("#chart").append("div")
            .attr("id", "controlpanel")
 
+cp.append("button")
+    .attr("class", "btn")
+    .attr("value", "reload")
+    .text("Aktualisieren")
+    .on("click", reload)
+
 var btns = cp.append("div")
            .attr("class", "btn-group")
 
@@ -111,7 +117,7 @@ function update_graph() {
   jQuery(this).toggleClass("active")
   var value = jQuery(this).val()
   visible[value] = jQuery(this).hasClass("active")
-  update(data)
+  update()
 }
 
 var vis = d3.select("#chart").append("svg")
@@ -179,43 +185,65 @@ var data
 
 var visible = {clients: true, vpn: true}
 
-d3.json("nodes.json", function(json) {
-  data = json
+function reload() {
+  d3.json("nodes.json", function(json) {
 
-  // start force-layout early as it will
-  // replace indexes to source and target
-  // in data.links with actual elements from
-  // nodes
-  force.nodes(data.nodes)
-       .links(data.links)
-       .start()
+    json.links.forEach( function(d) {
+      if (typeof d.source == "number") d.source = json.nodes[d.source];
+      if (typeof d.target == "number") d.target = json.nodes[d.target];
+    })
 
-  data.links.forEach(function(d) {
-    var node, other
+    json.links.forEach(function(d) {
+      var node, other
 
-    if (d.source.group == 2) {
-      node = d.target;
-      other = d.source;
-    }
+      if (d.source.group == 2) {
+        node = d.target;
+        other = d.source;
+      }
 
-    if (d.target.group == 2) {
-      node = d.source;
-      other = d.target;
-    }
+      if (d.target.group == 2) {
+        node = d.source;
+        other = d.target;
+      }
 
-    if (node) {
-      if (node.uplinks === undefined)
-        node.uplinks = new Array();
+      if (node) {
+        if (node.uplinks === undefined)
+          node.uplinks = new Array();
 
-      node.uplinks.push(other);
-    }
+        node.uplinks.push(other);
+      }
+    })
+
+    // update existing nodes with new info
+    json.nodes.forEach(function(d, i) {
+      var n
+      force.nodes().forEach(function(x) {if (x.id == d.id) n = x})
+      if (n) {
+        for (var key in d)
+          if (d.hasOwnProperty(key))
+            n[key] = d[key]
+
+        json.nodes[i] = n
+      }
+    })
+
+    json.links.forEach(function(d) {
+      var n
+      force.links().forEach(function(x) {if (x.id == d.id) n = x})
+      if (n) {
+        d.source = n.source
+        d.target = n.target
+      }
+    })
+
+    data = json
+
+    update()
   })
+}
 
-  update(data)
-})
-
-function update(src) {
-  var links = force.links(data.links
+function update() {
+  var links = data.links
                    .filter(function (d) {
                      if (!visible.clients && (d.source.group == 3 || d.target.group == 3))
                        return false 
@@ -225,7 +253,6 @@ function update(src) {
 
                      return true
                    })
-               ).links()
 
   var link = vis.select("g.links")
                 .selectAll("g.link")
@@ -237,11 +264,16 @@ function update(src) {
                       .attr("class", "link")
 
   linkEnter.append("line")
-    .style("stroke-width", function(d) {
-      return Math.min(1, d.strength * 2)
-    })
 
-  linkEnter.filter(function (d) {
+  link.selectAll("line")
+      .style("stroke-width", function(d) {
+        return Math.min(1, d.strength * 2)
+      })
+
+  link.selectAll("path.label")
+      .remove()
+
+  link.filter(function (d) {
         return d.quality != "TT" && d.quality != "1.000"
       })
       .append("path")
@@ -256,8 +288,7 @@ function update(src) {
 
   link.exit().remove()
 
-  var nodes = force.nodes(data.nodes
-                .filter(function (d) {
+  var nodes = data.nodes.filter(function (d) {
                   if (!visible.vpn && d.group == 2)
                     return false
 
@@ -268,8 +299,7 @@ function update(src) {
                     return false
 
                   return true
-                })
-              ).nodes()
+                }) 
 
   var node = vis.select("g.nodes")
                 .selectAll("g.node")
@@ -278,6 +308,7 @@ function update(src) {
                     return d.id
                   }
                 )
+
   var nodeEnter = node.enter().append("g")
                 .attr("class", "node")
                 .on("mouseover", fade(.2))
@@ -286,6 +317,8 @@ function update(src) {
                 .call(force.drag)
 
   nodeEnter.append("ellipse")
+
+  node.selectAll("ellipse")
     .attr("rx", function(d) {
       if (d.group == 3) return 4
       else return Math.max(10, d.name.length * 5)
@@ -308,9 +341,13 @@ function update(src) {
     .append("text")
     .attr("text-anchor", "middle")
     .attr("y", "4px")
-    .text(function(d) { return d.name })
+
+  node.selectAll("text")
+      .text(function(d) { return d.name })
 
   nodeEnter.append("title")
+
+  node.selectAll("title")
     .text(function(d) { return d.macs })
 
   if (!visible.vpn) {
@@ -340,7 +377,9 @@ function update(src) {
 
   node.exit().remove()
 
-  force.start()
+  force.nodes(nodes)
+       .links(links)
+       .start()
 
   linkedByIndex = {}
 
@@ -351,3 +390,5 @@ function update(src) {
   if (hashstr.length != 0)
     show_node(hashstr)
 }
+
+reload()
