@@ -1,0 +1,46 @@
+#chart {
+  background: #000;
+}
+
+.node ellipse {
+  stroke-width: 2.5px;
+}
+
+.node text {
+  font-size: 10px;
+  color: #333;
+}
+
+.link line {
+  stroke: #f50;
+  stroke-opacity: 1;
+  stroke-width: 5px !important;
+}
+
+.node ellipse.group-0 {
+  fill: #fff;
+  stroke: #04f;
+}
+
+.node ellipse.group-2 {
+  stroke: #FF7F0E;
+}
+
+.node ellipse.group-3 {
+  stroke: #ff0;
+  fill: #ff0;
+  stroke-width: 5px;
+}
+
+.link .label {
+  fill: transparent;
+  stroke: #C83771;
+  stroke-width: 1px;
+}
+
+.strength {
+  font-size: 10px;
+  fill: #C83771;
+}
+
+
