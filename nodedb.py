@@ -119,7 +119,8 @@ class NodeDB:
         a = self._nodes.index(router)
         b = self._nodes.index(neighbor)
 
-        self.add_link(a, b, x['label'])
+        if a != b:
+          self.add_link(a, b, x['label'])
 
     for line in lines:
       x = json.loads(line)
