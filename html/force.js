@@ -216,6 +216,10 @@ function reload() {
     })
 
     // count uplinks
+    json.nodes.forEach(function(d) {
+      d.uplinks = undefined
+    })
+
     json.links.forEach(function(d) {
       var node, other
 
@@ -340,10 +344,11 @@ function update() {
       return d.group != 3
     })
     .append("text")
+    .attr("class", "name")
     .attr("text-anchor", "middle")
     .attr("y", "4px")
 
-  node.selectAll("text")
+  node.selectAll("text.name")
       .text(function(d) { return d.name })
 
   nodeEnter.append("title")
@@ -351,6 +356,8 @@ function update() {
   node.selectAll("title")
     .text(function(d) { return d.macs })
 
+  node.selectAll(".uplinks").remove()
+  
   if (!visible.vpn) {
     var uplink_info = node.filter(function (d) {
       if (d.uplinks !== undefined)
@@ -372,8 +379,6 @@ function update() {
       .attr("text-anchor", "middle")
       .attr("y", 3 - 20)
       .text(function (d) {return d.uplinks.length})
-  } else {
-    node.selectAll(".uplinks").remove()
   }
 
   node.exit().remove()
