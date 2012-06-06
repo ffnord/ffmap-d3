@@ -98,20 +98,43 @@ function fade(opacity) {
 } 
 
 function show_node_info(d) {
-  if (typeof nodeinfo !== 'undefined')
-    nodeinfo.remove();
+  d3.selectAll("#nodeinfo").remove()
 
   nodeinfo = d3.select("#chart")
                .append("div")
                .attr("id", "nodeinfo")
+  nodeinfo.append("button")
+          .attr("class", "close")
+          .text("x")
+          .on("click", function(d) {
+             nodeinfo.remove()
+          })
+
   nodeinfo.append("h1")
-          .text(d.name)
+          .text(d.name + " / " + d.id)
+
   nodeinfo.append("p")
-          .text("primary: " + d.id)
-  nodeinfo.append("p")
+          .append("label")
           .text("macs: " + d.macs)
-  nodeinfo.append("p")
-          .text(d.gps)
+
+  if (d.geo) {
+    nodeinfo.append("h2").text("Geodaten")
+
+    nodeinfo.append("p")
+            .text(d.geo)
+
+    url = GMaps.staticMapURL({
+      size: [300, 100],
+      lat: d.geo[0],
+      lng: d.geo[1],
+      markers: [
+        {lat: d.geo[0], lng: d.geo[1]},
+      ]
+    })
+
+    nodeinfo.append("img")
+            .attr("src", url)
+  }
 }
 
 function update_graph() {
