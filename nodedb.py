@@ -235,26 +235,3 @@ class NodeDB:
             node.name = pair[2]
 
         node.gps = pair[1]
-
-  def find_link(self, i):
-    for link in self._links:
-      if i in link[0]:
-        return link
-
-  def wilder_scheiss(self):
-    for node in self._nodes:
-      if node.group == 3 and node.gps:
-        i = self._nodes.index(node)
-        link = self.find_link(i)
-        if link:
-          linklist = list(link)
-          linklist.remove(i)
-          j = linklist[0]
-
-          for mac in node.macs:
-            self._nodes[j].add_mac(mac)
-
-          self._nodes[j].gps = node.gps
-
-          node.gps = None
-
