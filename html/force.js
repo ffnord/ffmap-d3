@@ -199,7 +199,7 @@ d3.json("nodes.json", function(json) {
     }
   })
 
-  data = json;
+  data = json
 
   update(data, "all")
 })
