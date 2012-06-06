@@ -388,6 +388,7 @@ function update() {
 
   force.nodes(nodes)
        .links(links)
+       .alpha(0.1)
        .start()
 
   linkedByIndex = {}

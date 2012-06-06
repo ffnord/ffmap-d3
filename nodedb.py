@@ -1,6 +1,7 @@
 import json
 from node import Node
 from link import Link
+from itertools import zip_longest
 
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
@@ -210,28 +211,37 @@ class NodeDB:
     nodes = fetch_wikitable(url)
 
     for node in nodes:
-      if not ('MAC' in node and 'GPS' in node):
-        continue
+      try:
+        node['MAC'] = node['MAC'].split(',')
+      except KeyError:
+        pass
 
-      macs = [s for s in [s.strip() for s in node['MAC'].split(',')] if s]
-      gps = [s for s in [s.strip() for s in node['GPS'].split(',')] if s]
-      zipped = zip(macs, gps)
+      try:
+        node['GPS'] = node['GPS'].split(',')
+      except KeyError:
+        pass
 
-      if 'Nick' in node:
-        names = [s for s in [s.strip() for s in node['Nick'].split(',')] if s]
-        if names:
-          zipped = zip(macs, gps, names)
+      try:
+        node['Nick'] = node['Nick'].split(',')
+      except KeyError:
+        pass
 
-      for pair in zipped:
+      nodes = zip_longest(node['MAC'], node['GPS'], node['Nick'])
+
+      for data in nodes:
+        if not data[0]:
+          continue
+
         try:
-          node = self.maybe_node_by_mac((pair[0], ))
+          node = self.maybe_node_by_mac((data[0], ))
         except:
           node = Node()
-          node.add_mac(pair[0])
+          node.add_mac(data[0])
           self._nodes.append(node)
 
-        if len(pair) > 2:
-          if pair[2]:
-            node.name = pair[2]
+        if data[1]:
+          node.gps = data[1]
 
-        node.gps = pair[1]
+        if data[2]:
+          node.name = data[2]
+
