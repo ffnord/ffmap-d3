@@ -205,6 +205,10 @@ function reload() {
       var n
       force.links().forEach(function(x) {if (x.id == d.id) n = x})
       if (n) {
+        for (var key in d)
+          if (d.hasOwnProperty(key))
+            n[key] = d[key]
+
         json.links[i] = n
       }
     })
