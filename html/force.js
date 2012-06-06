@@ -129,6 +129,8 @@ var force = d3.layout.force()
               .friction(0.75)
               .theta(0.1)
               .size([w, h])
+              .linkDistance(function (d) { return d.distance; })
+              .linkStrength(function (d) { return d.strength; })
 
 force.on("tick", function() {
   var size = force.size()
@@ -175,9 +177,6 @@ force.on("tick", function() {
 var data
 
 d3.json("nodes.json", function(json) {
-  force.linkDistance(function (d) { return d.distance; })
-       .linkStrength(function (d) { return d.strength; })
-
   json.links.forEach(function(d) {
     var node, other
 
