@@ -64,6 +64,31 @@ class NodeDB:
           node.add_mac(x['router'])
           self._nodes.append(node)
 
+        # If it's a TT link and the MAC is very similar
+        # consider this MAC as one of the routers
+        # MACs
+        if 'gateway' in x and x['label'] == "TT":
+          router = list(int(i, 16) for i in x['router'].split(":"))
+          gateway = list(int(i, 16) for i in x['gateway'].split(":"))
+
+          # first byte must only differ in bit 2
+          if router[0] == gateway[0] | 2:
+            # count different bytes
+            a = [x for x in zip(router[1:], gateway[1:]) if x[0] != x[1]]
+
+            # no more than two additional bytes must differ
+            if len(a) <= 2:
+              delta = 0
+              if len(a) > 0:
+                delta = sum(abs(i[0] -i[1]) for i in a)
+
+              if delta < 8:
+                # This TT link looks like a mac of the router!
+                node.add_mac(x['gateway'])
+
+                # skip processing as regular link
+                continue
+
         try:
           if 'gateway' in x:
             x['neighbor'] = x['gateway']
