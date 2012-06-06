@@ -1,74 +1,161 @@
-{ "router" : "3e:48:f7:6c:40:68", "neighbor" : "56:47:05:ab:00:2d", "label" : "1.000" }
-{ "router" : "b0:48:7a:e7:f3:1e", "neighbor" : "b0:48:7a:cb:30:47", "label" : "1.000" }
-{ "router" : "b0:48:7a:e7:f3:1e", "neighbor" : "c2:66:29:88:3e:bb", "label" : "1.000" }
-{ "primary" : "b0:48:7a:e7:f3:1e" }
-{ "router" : "c6:65:1b:b4:0f:ce", "neighbor" : "56:47:05:ab:00:2b", "label" : "1.000" }
-{ "router" : "c6:65:1b:b4:0f:ce", "neighbor" : "a2:8d:38:3d:d8:5e", "label" : "1.000" }
-{ "router" : "a2:8d:38:3d:d8:5e", "neighbor" : "c6:65:1b:b4:0f:ce", "label" : "1.000" }
-{ "router" : "a2:8d:38:3d:d8:5e", "neighbor" : "56:47:05:ab:00:2b", "label" : "1.000" }
-{ "router" : "ae:c6:c8:62:84:03", "neighbor" : "56:47:05:ab:00:2f", "label" : "1.015" }
-{ "router" : "ae:8d:34:94:cb:c6", "neighbor" : "76:7b:97:59:d1:a7", "label" : "1.000" }
-{ "router" : "ca:a8:ca:2d:c8:b2", "neighbor" : "56:47:05:ac:00:12", "label" : "1.000" }
-{ "secondary" : "ae:c6:c8:62:84:03", "of" : "ca:a8:ca:2d:c8:b2" }
-{ "secondary" : "ae:8d:34:94:cb:c6", "of" : "ca:a8:ca:2d:c8:b2" }
-{ "primary" : "ca:a8:ca:2d:c8:b2" }
-{ "router" : "56:47:05:ab:00:2c", "neighbor" : "8e:3d:c2:10:cd:1d", "label" : "1.000" }
-{ "router" : "56:47:05:ab:00:2f", "neighbor" : "ae:c6:c8:62:84:03", "label" : "1.000" }
-{ "router" : "56:47:05:ab:00:3a", "neighbor" : "f2:01:43:67:04:33", "label" : "1.000" }
-{ "router" : "56:47:05:ab:00:40", "neighbor" : "56:47:05:ac:00:10", "label" : "1.000" }
-{ "router" : "56:47:05:ab:00:2d", "neighbor" : "3e:48:f7:6c:40:68", "label" : "1.011" }
-{ "router" : "56:47:05:ab:00:2b", "neighbor" : "c6:65:1b:b4:0f:ce", "label" : "1.000" }
-{ "router" : "56:47:05:ab:00:2b", "neighbor" : "a2:8d:38:3d:d8:5e", "label" : "1.000" }
-{ "secondary" : "56:47:05:ab:00:2c", "of" : "56:47:05:ab:00:2b" }
-{ "secondary" : "56:47:05:ab:00:2f", "of" : "56:47:05:ab:00:2b" }
-{ "secondary" : "56:47:05:ab:00:3a", "of" : "56:47:05:ab:00:2b" }
-{ "secondary" : "56:47:05:ab:00:40", "of" : "56:47:05:ab:00:2b" }
-{ "secondary" : "56:47:05:ab:00:2d", "of" : "56:47:05:ab:00:2b" }
-{ "primary" : "56:47:05:ab:00:2b" }
-{ "router" : "04:11:6b:98:08:21", "neighbor" : "8e:3d:c2:10:10:28", "label" : "1.000" }
-{ "primary" : "04:11:6b:98:08:21" }
-{ "secondary" : "c2:66:29:88:3e:bb", "of" : "04:11:6b:98:08:21" }
-{ "router" : "c2:66:29:88:3e:bb", "neighbor" : "b0:48:7a:cb:30:47", "label" : "1.000" }
-{ "router" : "c2:66:29:88:3e:bb", "neighbor" : "b0:48:7a:e7:f3:1e", "label" : "1.000" }
-{ "router" : "56:47:05:ac:00:11", "neighbor" : "da:7b:6f:c1:63:d4", "label" : "1.015" }
-{ "router" : "56:47:05:ac:00:10", "neighbor" : "56:47:05:ab:00:40", "label" : "1.003" }
-{ "router" : "56:47:05:ac:00:12", "neighbor" : "ca:a8:ca:2d:c8:b2", "label" : "1.000" }
-{ "router" : "52:54:00:f3:62:da", "neighbor" : "52:54:00:25:1b:0e", "label" : "1.015" }
-{ "secondary" : "56:47:05:ac:00:11", "of" : "52:54:00:f3:62:da" }
-{ "secondary" : "56:47:05:ac:00:10", "of" : "52:54:00:f3:62:da" }
-{ "secondary" : "56:47:05:ac:00:12", "of" : "52:54:00:f3:62:da" }
-{ "primary" : "52:54:00:f3:62:da" }
-{ "router" : "b0:48:7a:cb:30:47", "neighbor" : "c2:66:29:88:3e:bb", "label" : "1.000" }
-{ "router" : "b0:48:7a:cb:30:47", "neighbor" : "b0:48:7a:e7:f3:1e", "label" : "1.000" }
-{ "primary" : "b0:48:7a:cb:30:47" }
-{ "router" : "f6:ec:38:eb:f1:f5", "neighbor" : "0e:18:84:d0:34:21", "label" : "1.000" }
-{ "router" : "f2:01:43:67:04:33", "neighbor" : "56:47:05:ab:00:3a", "label" : "1.000" }
-{ "router" : "da:7b:6f:c1:63:d2", "neighbor" : "8e:3d:c2:10:34:96", "label" : "1.000" }
-{ "primary" : "da:7b:6f:c1:63:d2" }
-{ "secondary" : "da:7b:6f:c1:63:d3", "of" : "da:7b:6f:c1:63:d2" }
-{ "secondary" : "da:7b:6f:c1:63:d4", "of" : "da:7b:6f:c1:63:d2" }
-{ "router" : "da:7b:6f:c1:63:d3", "neighbor" : "b0:48:7a:e7:d3:64", "label" : "1.000" }
-{ "router" : "da:7b:6f:c1:63:d3", "neighbor" : "00:e0:29:39:34:d7", "label" : "1.000" }
-{ "router" : "da:7b:6f:c1:63:d4", "neighbor" : "56:47:05:ac:00:11", "label" : "1.011" }
-{ "router" : "76:7b:97:59:d1:a7", "neighbor" : "ae:8d:34:94:cb:c6", "label" : "1.000" }
-{ "router" : "66:46:f2:47:1a:38", "neighbor" : "ea:20:13:82:0a:36", "label" : "1.000" }
-{ "router" : "52:54:00:25:1b:0e", "neighbor" : "52:54:00:f3:62:da", "label" : "1.000" }
-{ "secondary" : "66:46:f2:47:1a:38", "of" : "52:54:00:25:1b:0e" }
-{ "primary" : "52:54:00:25:1b:0e" }
-{ "router" : "ea:20:13:82:0a:36", "neighbor" : "66:46:f2:47:1a:38", "label" : "1.000" }
-{ "router" : "8e:3d:c2:10:34:96", "neighbor" : "da:7b:6f:c1:63:d2", "label" : "1.000" }
-{ "router" : "8e:3d:c2:10:10:28", "neighbor" : "04:11:6b:98:08:21", "label" : "1.000" }
-{ "secondary" : "8e:3d:c2:10:34:96", "of" : "8e:3d:c2:10:10:28" }
+{ "router" : "56:e6:fc:af:43:81", "neighbor" : "56:e6:fc:98:58:f3", "label" : "6.375" }
+{ "router" : "56:e6:fc:b0:43:80", "neighbor" : "52:54:00:f3:62:d9", "label" : "1.003" }
+{ "router" : "56:e6:fc:b0:43:80", "gateway" : "54:e6:fc:af:43:80", "label" : "TT" }
+{ "router" : "56:e6:fc:b0:43:80", "gateway" : "de:4e:9a:b3:b7:8f", "label" : "TT" }
+{ "secondary" : "56:e6:fc:af:43:81", "of" : "56:e6:fc:b0:43:80" }
+{ "primary" : "56:e6:fc:b0:43:80" }
+{ "router" : "56:e6:fc:af:43:bb", "neighbor" : "56:e6:fc:98:58:ab", "label" : "1.000" }
+{ "router" : "56:e6:fc:b0:43:ba", "neighbor" : "8e:3d:c2:10:10:28", "label" : "1.000" }
+{ "router" : "56:e6:fc:b0:43:ba", "neighbor" : "52:54:00:f3:62:d9", "label" : "1.015" }
+{ "router" : "56:e6:fc:b0:43:ba", "gateway" : "90:c1:15:b2:9f:b7", "label" : "TT" }
+{ "router" : "56:e6:fc:b0:43:ba", "gateway" : "54:e6:fc:af:43:ba", "label" : "TT" }
+{ "router" : "56:e6:fc:b0:43:ba", "gateway" : "90:c1:15:89:1c:ce", "label" : "TT" }
+{ "router" : "56:e6:fc:b0:43:ba", "gateway" : "ca:9f:87:99:0d:13", "label" : "TT" }
+{ "router" : "56:e6:fc:b0:43:ba", "gateway" : "00:c0:ca:57:d6:b4", "label" : "TT" }
+{ "router" : "56:e6:fc:b0:43:ba", "gateway" : "38:e7:d8:ee:19:7a", "label" : "TT" }
+{ "secondary" : "56:e6:fc:af:43:bb", "of" : "56:e6:fc:b0:43:ba" }
+{ "primary" : "56:e6:fc:b0:43:ba" }
+{ "router" : "56:e6:fc:98:58:f3", "neighbor" : "56:e6:fc:af:43:81", "label" : "2.318" }
+{ "router" : "56:e6:fc:99:58:f2", "gateway" : "e2:c0:bd:3e:6c:72", "label" : "TT" }
+{ "router" : "56:e6:fc:99:58:f2", "gateway" : "54:e6:fc:98:58:f2", "label" : "TT" }
+{ "secondary" : "56:e6:fc:98:58:f3", "of" : "56:e6:fc:99:58:f2" }
+{ "primary" : "56:e6:fc:99:58:f2" }
+{ "router" : "b0:48:7a:e7:d3:64", "neighbor" : "00:25:86:e6:f1:bf", "label" : "1.000" }
+{ "router" : "b0:48:7a:e7:d3:64", "neighbor" : "00:e0:29:39:34:d7", "label" : "1.000" }
+{ "router" : "b2:48:7a:e7:d3:65", "gateway" : "00:04:13:29:20:76", "label" : "TT" }
+{ "router" : "b2:48:7a:e7:d3:65", "gateway" : "bc:ae:c5:5a:e8:85", "label" : "TT" }
+{ "router" : "b2:48:7a:e7:d3:65", "gateway" : "00:08:9b:be:1b:14", "label" : "TT" }
+{ "router" : "b2:48:7a:e7:d3:65", "gateway" : "82:43:a4:6d:bc:12", "label" : "TT" }
+{ "secondary" : "b0:48:7a:e7:d3:64", "of" : "b2:48:7a:e7:d3:65" }
+{ "primary" : "b2:48:7a:e7:d3:65" }
+{ "router" : "b2:48:7a:cb:30:49", "neighbor" : "76:ea:3a:be:22:40", "label" : "1.094" }
+{ "router" : "b2:48:7a:cc:30:48", "gateway" : "b0:48:7a:cb:30:47", "label" : "TT" }
+{ "router" : "b2:48:7a:cc:30:48", "gateway" : "0e:5d:f2:e9:4f:9a", "label" : "TT" }
+{ "secondary" : "b2:48:7a:cb:30:49", "of" : "b2:48:7a:cc:30:48" }
+{ "primary" : "b2:48:7a:cc:30:48" }
+{ "router" : "92:f6:52:3f:b9:26", "neighbor" : "8e:3d:c2:10:10:28", "label" : "1.000" }
+{ "router" : "92:f6:52:3f:b9:26", "neighbor" : "52:54:00:f3:62:d9", "label" : "1.000" }
+{ "router" : "92:f6:52:3e:b9:28", "gateway" : "90:f6:52:3e:b9:26", "label" : "TT" }
+{ "router" : "92:f6:52:3e:b9:28", "gateway" : "9e:e7:5c:8e:b4:52", "label" : "TT" }
+{ "secondary" : "92:f6:52:3f:b9:26", "of" : "92:f6:52:3e:b9:28" }
+{ "primary" : "92:f6:52:3e:b9:28" }
+{ "router" : "b2:48:7a:9a:d8:ce", "neighbor" : "8e:3d:c2:10:10:28", "label" : "1.000" }
+{ "router" : "b2:48:7a:9a:d8:ce", "neighbor" : "52:54:00:f3:62:d9", "label" : "1.000" }
+{ "router" : "b2:48:7a:9a:d8:ce", "gateway" : "1e:2b:ac:f5:4e:13", "label" : "TT" }
+{ "primary" : "b2:48:7a:9a:d8:ce" }
+{ "router" : "fa:d1:11:24:be:44", "neighbor" : "b2:48:7a:cb:26:8e", "label" : "1.231" }
+{ "router" : "fa:d1:11:25:be:42", "neighbor" : "8e:3d:c2:10:10:28", "label" : "1.000" }
+{ "router" : "fa:d1:11:25:be:42", "neighbor" : "52:54:00:f3:62:d9", "label" : "1.000" }
+{ "router" : "fa:d1:11:25:be:42", "gateway" : "22:e7:3e:10:6b:8e", "label" : "TT" }
+{ "secondary" : "fa:d1:11:24:be:44", "of" : "fa:d1:11:25:be:42" }
+{ "primary" : "fa:d1:11:25:be:42" }
+{ "router" : "56:e6:fc:98:58:ab", "neighbor" : "56:e6:fc:af:43:bb", "label" : "1.071" }
+{ "router" : "56:e6:fc:99:58:aa", "gateway" : "ea:13:b6:5c:41:ae", "label" : "TT" }
+{ "router" : "56:e6:fc:99:58:aa", "gateway" : "54:e6:fc:98:58:aa", "label" : "TT" }
+{ "secondary" : "56:e6:fc:98:58:ab", "of" : "56:e6:fc:99:58:aa" }
+{ "primary" : "56:e6:fc:99:58:aa" }
+{ "router" : "fa:d1:11:80:41:d4", "neighbor" : "8e:3d:c2:10:10:28", "label" : "1.000" }
+{ "router" : "fa:d1:11:80:41:d4", "neighbor" : "52:54:00:f3:62:d9", "label" : "1.000" }
+{ "router" : "fa:d1:11:7f:41:d5", "gateway" : "f8:d1:11:7f:41:d4", "label" : "TT" }
+{ "router" : "fa:d1:11:7f:41:d5", "gateway" : "fe:7f:f7:83:c0:e5", "label" : "TT" }
+{ "secondary" : "fa:d1:11:80:41:d4", "of" : "fa:d1:11:7f:41:d5" }
+{ "primary" : "fa:d1:11:7f:41:d5" }
+{ "router" : "56:e6:fc:99:64:9c", "neighbor" : "8e:3d:c2:10:10:28", "label" : "1.000" }
+{ "router" : "56:e6:fc:99:64:9c", "neighbor" : "52:54:00:f3:62:d9", "label" : "1.000" }
+{ "router" : "56:e6:fc:99:64:9c", "gateway" : "54:e6:fc:98:64:9c", "label" : "TT" }
+{ "router" : "56:e6:fc:99:64:9c", "gateway" : "56:54:c2:34:54:0a", "label" : "TT" }
+{ "primary" : "56:e6:fc:99:64:9c" }
+{ "router" : "00:25:86:e6:f1:c0", "neighbor" : "8e:3d:c2:10:10:28", "label" : "1.000" }
+{ "router" : "00:25:86:e6:f1:c0", "neighbor" : "52:54:00:f3:62:d9", "label" : "1.000" }
+{ "router" : "00:25:86:e6:f1:bf", "neighbor" : "b0:48:7a:e7:d3:64", "label" : "1.000" }
+{ "router" : "00:25:86:e6:f1:bf", "neighbor" : "00:e0:29:39:34:d7", "label" : "1.000" }
+{ "router" : "00:25:86:e6:f1:bf", "gateway" : "66:44:30:0f:15:e5", "label" : "TT" }
+{ "secondary" : "00:25:86:e6:f1:c0", "of" : "00:25:86:e6:f1:bf" }
+{ "primary" : "00:25:86:e6:f1:bf" }
+{ "router" : "52:54:00:f3:62:d9", "neighbor" : "76:ea:3a:bf:22:3e", "label" : "1.000" }
+{ "router" : "52:54:00:f3:62:d9", "neighbor" : "8e:3d:c2:10:10:28", "label" : "1.000" }
+{ "router" : "52:54:00:f3:62:d9", "neighbor" : "fa:d1:11:80:41:d4", "label" : "1.000" }
+{ "router" : "52:54:00:f3:62:d9", "neighbor" : "56:e6:fc:b0:43:80", "label" : "1.015" }
+{ "router" : "52:54:00:f3:62:d9", "neighbor" : "b2:48:7a:9a:d8:ce", "label" : "1.000" }
+{ "router" : "52:54:00:f3:62:d9", "neighbor" : "02:22:b0:45:94:af", "label" : "1.000" }
+{ "router" : "52:54:00:f3:62:d9", "neighbor" : "56:e6:fc:99:64:9c", "label" : "1.000" }
+{ "router" : "52:54:00:f3:62:d9", "neighbor" : "56:e6:fc:b1:1a:7e", "label" : "1.000" }
+{ "router" : "52:54:00:f3:62:d9", "neighbor" : "fa:d1:11:25:9d:a2", "label" : "1.000" }
+{ "router" : "52:54:00:f3:62:d9", "neighbor" : "fa:d1:11:25:95:58", "label" : "1.015" }
+{ "router" : "52:54:00:f3:62:d9", "neighbor" : "92:f6:52:3f:b9:26", "label" : "1.000" }
+{ "router" : "52:54:00:f3:62:d9", "neighbor" : "00:25:86:e6:f1:c0", "label" : "1.000" }
+{ "router" : "52:54:00:f3:62:d9", "neighbor" : "fa:d1:11:25:be:42", "label" : "1.000" }
+{ "router" : "52:54:00:f3:62:d9", "neighbor" : "b2:48:7a:bc:50:54", "label" : "1.000" }
+{ "router" : "52:54:00:f3:62:d9", "neighbor" : "56:e6:fc:b0:43:ba", "label" : "1.003" }
+{ "router" : "52:54:00:f3:62:d9", "neighbor" : "b2:48:7a:cc:26:8c", "label" : "1.000" }
+{ "router" : "52:54:00:f3:62:d9", "gateway" : "de:66:21:dc:a9:c8", "label" : "TT" }
+{ "router" : "52:54:00:f3:62:d9", "gateway" : "52:54:00:eb:bb:15", "label" : "TT" }
+{ "router" : "52:54:00:f3:62:d9", "gateway" : "52:54:00:ee:5c:d5", "label" : "TT" }
+{ "router" : "52:54:00:f3:62:d9", "gateway" : "52:54:00:a7:2f:8f", "label" : "TT" }
+{ "router" : "52:54:00:f3:62:d9", "gateway" : "fe:54:00:a7:2f:8f", "label" : "TT" }
+{ "router" : "52:54:00:f3:62:d9", "gateway" : "52:54:00:b3:2d:41", "label" : "TT" }
+{ "primary" : "52:54:00:f3:62:d9" }
+{ "router" : "b2:48:7a:bc:50:54", "neighbor" : "8e:3d:c2:10:10:28", "label" : "1.000" }
+{ "router" : "b2:48:7a:bc:50:54", "neighbor" : "52:54:00:f3:62:d9", "label" : "1.000" }
+{ "router" : "b2:48:7a:bc:50:54", "gateway" : "4a:32:c8:a8:3f:4d", "label" : "TT" }
+{ "primary" : "b2:48:7a:bc:50:54" }
+{ "router" : "56:e6:fc:b1:1a:7e", "neighbor" : "8e:3d:c2:10:10:28", "label" : "1.000" }
+{ "router" : "56:e6:fc:b1:1a:7e", "neighbor" : "52:54:00:f3:62:d9", "label" : "1.000" }
+{ "router" : "56:e6:fc:b1:1a:7e", "gateway" : "54:e6:fc:b0:1a:7e", "label" : "TT" }
+{ "router" : "56:e6:fc:b1:1a:7e", "gateway" : "aa:56:e7:36:97:35", "label" : "TT" }
+{ "primary" : "56:e6:fc:b1:1a:7e" }
+{ "router" : "b2:48:7a:cb:26:8e", "neighbor" : "fa:d1:11:24:be:44", "label" : "1.003" }
+{ "router" : "b2:48:7a:cc:26:8c", "neighbor" : "8e:3d:c2:10:10:28", "label" : "1.000" }
+{ "router" : "b2:48:7a:cc:26:8c", "neighbor" : "52:54:00:f3:62:d9", "label" : "1.000" }
+{ "router" : "b2:48:7a:cc:26:8c", "gateway" : "b0:48:7a:cb:26:8c", "label" : "TT" }
+{ "router" : "b2:48:7a:cc:26:8c", "gateway" : "d2:b7:58:56:f6:41", "label" : "TT" }
+{ "secondary" : "b2:48:7a:cb:26:8e", "of" : "b2:48:7a:cc:26:8c" }
+{ "primary" : "b2:48:7a:cc:26:8c" }
+{ "router" : "02:22:b0:45:94:af", "neighbor" : "8e:3d:c2:10:10:28", "label" : "1.000" }
+{ "router" : "02:22:b0:45:94:af", "neighbor" : "52:54:00:f3:62:d9", "label" : "1.000" }
+{ "router" : "02:22:b0:44:94:b0", "gateway" : "f2:23:10:89:62:17", "label" : "TT" }
+{ "router" : "02:22:b0:44:94:b0", "gateway" : "00:22:b0:44:94:af", "label" : "TT" }
+{ "secondary" : "02:22:b0:45:94:af", "of" : "02:22:b0:44:94:b0" }
+{ "primary" : "02:22:b0:44:94:b0" }
+{ "router" : "8e:3d:c2:10:10:28", "neighbor" : "fa:d1:11:80:41:d4", "label" : "1.000" }
+{ "router" : "8e:3d:c2:10:10:28", "neighbor" : "52:54:00:f3:62:d9", "label" : "1.000" }
+{ "router" : "8e:3d:c2:10:10:28", "neighbor" : "b2:48:7a:9a:d8:ce", "label" : "1.000" }
+{ "router" : "8e:3d:c2:10:10:28", "neighbor" : "02:22:b0:45:94:af", "label" : "1.000" }
+{ "router" : "8e:3d:c2:10:10:28", "neighbor" : "56:e6:fc:99:64:9c", "label" : "1.000" }
+{ "router" : "8e:3d:c2:10:10:28", "neighbor" : "56:e6:fc:b1:1a:7e", "label" : "1.000" }
+{ "router" : "8e:3d:c2:10:10:28", "neighbor" : "fa:d1:11:25:9d:a2", "label" : "1.000" }
+{ "router" : "8e:3d:c2:10:10:28", "neighbor" : "fa:d1:11:25:95:58", "label" : "1.000" }
+{ "router" : "8e:3d:c2:10:10:28", "neighbor" : "92:f6:52:3f:b9:26", "label" : "1.000" }
+{ "router" : "8e:3d:c2:10:10:28", "neighbor" : "00:25:86:e6:f1:c0", "label" : "1.000" }
+{ "router" : "8e:3d:c2:10:10:28", "neighbor" : "fa:d1:11:25:be:42", "label" : "1.000" }
+{ "router" : "8e:3d:c2:10:10:28", "neighbor" : "b2:48:7a:bc:50:54", "label" : "1.000" }
+{ "router" : "8e:3d:c2:10:10:28", "neighbor" : "56:e6:fc:b0:43:ba", "label" : "1.000" }
+{ "router" : "8e:3d:c2:10:10:28", "neighbor" : "b2:48:7a:cc:26:8c", "label" : "1.000" }
+{ "router" : "8e:3d:c2:10:10:28", "gateway" : "56:47:05:ac:00:2c", "label" : "TT" }
+{ "router" : "8e:3d:c2:10:10:28", "gateway" : "f8:d1:11:24:76:12", "label" : "TT" }
+{ "router" : "8e:3d:c2:10:10:28", "gateway" : "00:18:84:d0:34:20", "label" : "TT" }
+{ "router" : "8e:3d:c2:10:10:28", "gateway" : "04:a8:2a:8a:81:2b", "label" : "TT" }
+{ "router" : "8e:3d:c2:10:10:28", "gateway" : "52:54:00:0c:bb:eb", "label" : "TT" }
+{ "router" : "8e:3d:c2:10:10:28", "gateway" : "50:cc:f8:1b:0e:87", "label" : "TT" }
+{ "router" : "8e:3d:c2:10:10:28", "gateway" : "9e:1f:3c:eb:f2:ae", "label" : "TT" }
+{ "router" : "8e:3d:c2:10:10:28", "gateway" : "56:47:05:ab:00:2c", "label" : "TT" }
+{ "router" : "8e:3d:c2:10:10:28", "gateway" : "f4:ec:38:eb:f1:f2", "label" : "TT" }
 { "primary" : "8e:3d:c2:10:10:28" }
-{ "secondary" : "8e:3d:c2:10:cd:1d", "of" : "8e:3d:c2:10:10:28" }
-{ "router" : "8e:3d:c2:10:cd:1d", "neighbor" : "56:47:05:ab:00:2c", "label" : "1.000" }
-{ "router" : "b0:48:7a:e7:d3:64", "neighbor" : "00:e0:29:39:34:d7", "label" : "1.007" }
-{ "router" : "b0:48:7a:e7:d3:64", "neighbor" : "da:7b:6f:c1:63:d3", "label" : "1.000" }
-{ "primary" : "b0:48:7a:e7:d3:64" }
+{ "router" : "fa:d1:11:25:9d:a2", "neighbor" : "8e:3d:c2:10:10:28", "label" : "1.000" }
+{ "router" : "fa:d1:11:25:9d:a2", "neighbor" : "52:54:00:f3:62:d9", "label" : "1.000" }
+{ "router" : "fa:d1:11:25:9d:a2", "gateway" : "da:91:8e:4c:4f:49", "label" : "TT" }
+{ "primary" : "fa:d1:11:25:9d:a2" }
+{ "router" : "76:ea:3a:bf:22:3e", "neighbor" : "52:54:00:f3:62:d9", "label" : "1.000" }
+{ "router" : "76:ea:3a:be:22:40", "neighbor" : "b2:48:7a:cb:30:49", "label" : "1.099" }
+{ "router" : "76:ea:3a:be:22:40", "gateway" : "76:ea:3a:be:22:3f", "label" : "TT" }
+{ "router" : "76:ea:3a:be:22:40", "gateway" : "b2:da:f9:9f:6e:a9", "label" : "TT" }
+{ "secondary" : "76:ea:3a:bf:22:3e", "of" : "76:ea:3a:be:22:40" }
+{ "primary" : "76:ea:3a:be:22:40" }
 { "router" : "00:e0:29:39:34:d7", "neighbor" : "b0:48:7a:e7:d3:64", "label" : "1.000" }
-{ "router" : "00:e0:29:39:34:d7", "neighbor" : "da:7b:6f:c1:63:d3", "label" : "1.000" }
+{ "router" : "00:e0:29:39:34:d7", "neighbor" : "00:25:86:e6:f1:bf", "label" : "1.000" }
+{ "router" : "00:e0:29:39:34:d7", "gateway" : "0a:3a:e5:45:f1:bb", "label" : "TT" }
 { "primary" : "00:e0:29:39:34:d7" }
-{ "router" : "00:18:84:d0:34:20", "neighbor" : "f4:ec:38:eb:f1:f2", "label" : "1.000" }
-{ "primary" : "00:18:84:d0:34:20" }
-{ "secondary" : "0e:18:84:d0:34:21", "of" : "00:18:84:d0:34:20" }
-{ "router" : "0e:18:84:d0:34:21", "neighbor" : "f6:ec:38:eb:f1:f5", "label" : "1.049" }
+{ "router" : "fa:d1:11:25:95:58", "neighbor" : "8e:3d:c2:10:10:28", "label" : "1.000" }
+{ "router" : "fa:d1:11:25:95:58", "neighbor" : "52:54:00:f3:62:d9", "label" : "1.015" }
+{ "router" : "fa:d1:11:25:95:58", "gateway" : "16:44:d8:37:99:cf", "label" : "TT" }
+{ "primary" : "fa:d1:11:25:95:58" }
