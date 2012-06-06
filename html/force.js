@@ -20,18 +20,17 @@ var cp = d3.select("#chart").append("div")
 
 var btns = cp.append("div")
            .attr("class", "btn-group")
-           .attr("data-toggle", "buttons-radio")
 
 btns.append("button")
     .attr("class", "btn active left")
-    .attr("value", "all")
-    .text("Alles")
+    .attr("value", "clients")
+    .text("Clients")
     .on("click", update_graph)
 
 btns.append("button")
-    .attr("class", "btn right")
-    .attr("value", "mesh")
-    .text("nur Mesh")
+    .attr("class", "btn active right")
+    .attr("value", "vpn")
+    .text("VPN")
     .on("click", update_graph)
 
 cp.append("label")
@@ -109,8 +108,10 @@ function show_node_info(d) {
 }
 
 function update_graph() {
+  jQuery(this).toggleClass("active")
   var value = jQuery(this).val()
-  update(data, value)
+  visible[value] = jQuery(this).hasClass("active")
+  update(data)
 }
 
 var vis = d3.select("#chart").append("svg")
@@ -176,8 +177,20 @@ force.on("tick", function() {
 
 var data
 
+var visible = {clients: true, vpn: true}
+
 d3.json("nodes.json", function(json) {
-  json.links.forEach(function(d) {
+  data = json
+
+  // start force-layout early as it will
+  // replace indexes to source and target
+  // in data.links with actual elements from
+  // nodes
+  force.nodes(data.nodes)
+       .links(data.links)
+       .start()
+
+  data.links.forEach(function(d) {
     var node, other
 
     if (d.source.group == 2) {
@@ -192,27 +205,25 @@ d3.json("nodes.json", function(json) {
 
     if (node) {
       if (node.uplinks === undefined)
-    node.uplinks = new Array();
+        node.uplinks = new Array();
 
-    node.uplinks.push(other);
+      node.uplinks.push(other);
     }
   })
 
-  data = json
-
-  update(data, "all")
+  update(data)
 })
 
-function update(src, type) {
-  var linkdata = data.links;
-
+function update(src) {
   var links = force.links(data.links
                    .filter(function (d) {
-                     return type != "mesh" ||
-                            d.source.group != 2 &&
-                            d.source.group != 3 &&
-                            d.target.group != 2 &&
-                            d.target.group != 3
+                     if (!visible.clients && (d.source.group == 3 || d.target.group == 3))
+                       return false 
+
+                     if (!visible.vpn && (d.source.group == 2 || d.target.group == 2))
+                       return false 
+
+                     return true
                    })
                ).links()
 
@@ -247,8 +258,16 @@ function update(src, type) {
 
   var nodes = force.nodes(data.nodes
                 .filter(function (d) {
-                  return type != "mesh" ||
-                        (d.group != 2 && d.group != 3)
+                  if (!visible.vpn && d.group == 2)
+                    return false
+
+                  if (!visible.vpn && d.group == 3 && d.uplinks)
+                    return false
+
+                  if (!visible.clients && d.group == 3)
+                    return false
+
+                  return true
                 })
               ).nodes()
 
@@ -294,26 +313,29 @@ function update(src, type) {
   nodeEnter.append("title")
     .text(function(d) { return d.macs })
 
-  if (type == "mesh") {
+  if (!visible.vpn) {
     var uplink_info = node.filter(function (d) {
       if (d.uplinks !== undefined)
-      return d.uplinks.length > 0;
+        return d.uplinks.length > 0
       else
-      return false;
+        return false
     })
-    .append("g");
+    .append("g")
+    .attr("class", "uplinks")
 
     uplink_info.append("path")
       .attr("d","m -2.8850049,-13.182327"
           + "c 7.5369165,0.200772 12.1529864,-1.294922 12.3338513,-10.639456"
           + "l 2.2140476,1.018191 -3.3137621,-5.293097 -3.2945999,5.20893 2.4339957,-0.995747"
           + "c -0.4041883,5.76426 -1.1549641,10.561363 -10.3735326,10.701179 z")
-      .style("fill", "#333");
+      .style("fill", "#333")
 
     uplink_info.append("text")
       .attr("text-anchor", "middle")
       .attr("y", 3 - 20)
-      .text(function (d) {return d.uplinks.length});
+      .text(function (d) {return d.uplinks.length})
+  } else {
+    node.selectAll(".uplinks").remove()
   }
 
   node.exit().remove()
