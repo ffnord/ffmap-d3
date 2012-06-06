@@ -18,6 +18,8 @@ var w = window.innerWidth - offset.left,
 var cp = d3.select("#chart").append("div")
            .attr("id", "controlpanel")
 
+var updated_at = cp.append("p")
+
 cp.append("button")
     .attr("class", "btn")
     .attr("value", "reload")
@@ -247,6 +249,8 @@ function reload() {
 
     data = json
 
+    updated_at.text(d3.time.format("%X")(new Date()))
+
     update()
   })
 }
@@ -402,3 +406,5 @@ function update() {
 }
 
 reload()
+
+var timer = window.setInterval(reload, 30000)
