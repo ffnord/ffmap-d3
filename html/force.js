@@ -12,8 +12,7 @@ function getOffset( el ) {
 var offset = getOffset(document.getElementById('chart'))
 
 var w = window.innerWidth - offset.left,
-    h = window.innerHeight - offset.top,
-    fill = d3.scale.category20()
+    h = window.innerHeight - offset.top
 
 var cp = d3.select("#chart").append("div")
            .attr("id", "controlpanel")
@@ -280,7 +279,7 @@ function update() {
 
   link.selectAll("line")
       .style("stroke-width", function(d) {
-        return Math.min(1, d.strength * 2)
+        return Math.max(1, d.strength * 2)
       })
 
   link.selectAll("path.label")
@@ -330,6 +329,9 @@ function update() {
                 .call(force.drag)
 
   nodeEnter.append("ellipse")
+           .attr("class", function(d) {
+             return "group-" + d.group
+           })
 
   node.selectAll("ellipse")
     .attr("rx", function(d) {
@@ -339,13 +341,6 @@ function update() {
     .attr("ry", function(d) {
       if (d.group == 3) return 4
       else return 10
-    })
-    .style("fill", function(d) {
-      if (d.group == 3) return fill(d.group)
-      else return ""
-    })
-    .style("stroke", function(d) {
-      return fill(d.group)
     })
 
   nodeEnter.filter(function(d) {

@@ -1,36 +1,9 @@
-.node ellipse {
-  fill: #fff;
-  stroke-width: 2.5px;
-}
-
-.node text {
-  font-size: 10px;
-  color: #333;
-}
-
-.link line {
-  stroke: #333;
-  stroke-opacity: 1;
-}
-
-.link .label {
-  fill: transparent;
-  stroke: #C83771;
-  stroke-width: 1px;
-}
-
-.strength {
-  font-size: 10px;
-  fill: #C83771;
-}
-
 #chart, #chart svg {
   display: block;
   vertical-align: middle;
 }
 
 #chart {
-  background-image: url(gplaypattern.png);
   position: relative;
 }
 
@@ -59,6 +32,11 @@
 #controlpanel {
   top: 10px;
   right: 10px;
+  font-size: 10pt;
+}
+
+#controlpanel p {
+  margin: 0;
 }
 
 #nodeinfo h1, p {
