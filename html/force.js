@@ -128,7 +128,7 @@ function show_node_info(d) {
       lat: d.geo[0],
       lng: d.geo[1],
       markers: [
-        {lat: d.geo[0], lng: d.geo[1]},
+        {lat: d.geo[0], lng: d.geo[1]}
       ]
     })
 
