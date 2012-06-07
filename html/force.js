@@ -170,10 +170,10 @@ force.on("tick", function() {
   for (i = 0; i < n; i++) {
     var o = nodes[i]
     if (!o.fixed) {
-      if (o.x < 0) o.x = 10
-      if (o.x > size[0]) o.x = size[0] - 10
-      if (o.y < 0) o.y = 10
-      if (o.y > size[1]) o.y = size[1] - 10
+      if (o.x < 10) o.x = 10
+      if (o.x > size[0] - 10) o.x = size[0] - 10
+      if (o.y < 10) o.y = 10
+      if (o.y > size[1] - 10) o.y = size[1] - 10
     }
   }
 
