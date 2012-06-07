@@ -47,7 +47,7 @@ class NodeDB:
           node = self.maybe_node_by_mac((x['of'], x['secondary']))
         except:
           node = Node()
-          node.online = True
+          node.flags['online'] = True
           self._nodes.append(node)
 
         node.add_mac(x['of'])
@@ -61,7 +61,7 @@ class NodeDB:
           node = self.maybe_node_by_mac((x['router'], ))
         except:
           node = Node()
-          node.online = True
+          node.flags['online'] = True
           node.add_mac(x['router'])
           self._nodes.append(node)
 
@@ -97,9 +97,9 @@ class NodeDB:
           node = self.maybe_node_by_mac((x['neighbor'], ))
         except:
           node = Node()
-          node.online = True
+          node.flags['online'] = True
           if x['label'] == 'TT':
-            node.group = 3
+            node.flags['client'] = True
 
           node.add_mac(x['neighbor'])
           self._nodes.append(node)
@@ -142,8 +142,6 @@ class NodeDB:
         continue
 
       node.name = alias['name']
-      if 'group' in alias:
-        node.group = alias['group']
 
   # list of macs
   # if options['gateway']:
@@ -155,12 +153,13 @@ class NodeDB:
       except:
         continue
 
-      node.group = 2
+      node.flags['gateway'] = True
+      node.flags['vpn'] = True
 
   def map_link(self, pair):
     distance = 80
     strength = 0.2
-    if any(filter(lambda x: self._nodes[x].group == 3, pair[0])):
+    if any(filter(lambda x: self._nodes[x].flags['client'], pair[0])):
       distance = 10
       strength = 1
 

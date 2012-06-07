@@ -85,7 +85,7 @@ class GeoNode:
       raise
 
     name = self._node.name
-    status = "up" if self._node.online else "down"
+    status = "up" if self._node.flags['online'] else "down"
     gps = gps_format(self._node.gps)
     text = " ".join(self._node.macs)
 

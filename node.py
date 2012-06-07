@@ -3,14 +3,13 @@ class Node():
     self.name = ""
     self.id = ""
     self.macs = set()
-    self.group = 0
-    self.online = False
+    self.flags = dict({
+      "online": False,
+      "vpn": False,
+      "gateway": False,
+      "client": False
+    })
     self.gps = None
-    # groups:
-    # 0 normal node
-    # 1 aftermath
-    # 2 gateways
-    # 3 TT
 
   def add_mac(self, mac):
     mac = mac.lower()

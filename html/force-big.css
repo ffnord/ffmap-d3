@@ -17,16 +17,16 @@
   stroke-width: 5px !important;
 }
 
-.node ellipse.group-0 {
+.node ellipse {
   fill: #fff;
   stroke: #04f;
 }
 
-.node ellipse.group-2 {
+.node ellipse.gateway {
   stroke: #FF7F0E;
 }
 
-.node ellipse.group-3 {
+.node ellipse.client {
   stroke: #ff0;
   fill: #ff0;
   stroke-width: 5px;

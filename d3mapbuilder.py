@@ -9,10 +9,11 @@ class D3MapBuilder:
 
     nodes = self._db.get_nodes()
 
-    output['nodes'] = [{'group': x.group, 'name': x.name, 'id': x.id,
+    output['nodes'] = [{'name': x.name, 'id': x.id,
                         'macs': ', '.join(x.macs),
-                        'geo': x.gps.split(" ") if x.gps else None
-                       } for x in nodes if x.online]
+                        'geo': x.gps.split(" ") if x.gps else None,
+                        'flags': x.flags
+                       } for x in nodes if x.flags['online']]
     output['links'] = [{'source': x.pair[0], 'target': x.pair[1],
                         'distance': x.distance,
                         'strength': x.strength,

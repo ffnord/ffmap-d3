@@ -251,12 +251,12 @@ function reload() {
     json.links.forEach(function(d) {
       var node, other
 
-      if (d.source.group == 2) {
+      if (d.source.flags.vpn) {
         node = d.target;
         other = d.source;
       }
 
-      if (d.target.group == 2) {
+      if (d.target.flags.vpn) {
         node = d.source;
         other = d.target;
       }
@@ -280,10 +280,10 @@ function reload() {
 function update() {
   var links = data.links
                    .filter(function (d) {
-                     if (!visible.clients && (d.source.group == 3 || d.target.group == 3))
+                     if (!visible.clients && (d.source.flags.client || d.target.flags.client))
                        return false 
 
-                     if (!visible.vpn && (d.source.group == 2 || d.target.group == 2))
+                     if (!visible.vpn && (d.source.flags.vpn || d.target.flags.vpn))
                        return false 
 
                      return true
@@ -324,13 +324,13 @@ function update() {
   link.exit().remove()
 
   var nodes = data.nodes.filter(function (d) {
-                  if (!visible.vpn && d.group == 2)
+                  if (!visible.vpn && d.flags.vpn)
                     return false
 
-                  if (!visible.vpn && d.group == 3 && d.uplinks)
+                  if (!visible.vpn && d.flags.client && d.uplinks)
                     return false
 
-                  if (!visible.clients && d.group == 3)
+                  if (!visible.clients && d.flags.client)
                     return false
 
                   return true
@@ -353,21 +353,26 @@ function update() {
 
   nodeEnter.append("ellipse")
            .attr("class", function(d) {
-             return "group-" + d.group
+             var s = []
+             for (var key in d.flags)
+               if (d.flags.hasOwnProperty(key) && d.flags[key])
+                 s.push(key)
+
+             return s.join(" ")
            })
 
   node.selectAll("ellipse")
     .attr("rx", function(d) {
-      if (d.group == 3) return 4
+      if (d.flags.client) return 4
       else return Math.max(10, d.name.length * 5)
     })
     .attr("ry", function(d) {
-      if (d.group == 3) return 4
+      if (d.flags.client) return 4
       else return 10
     })
 
   nodeEnter.filter(function(d) {
-      return d.group != 3
+      return !d.flags.client
     })
     .append("text")
     .attr("class", "name")

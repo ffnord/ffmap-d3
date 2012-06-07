@@ -17,15 +17,15 @@
   stroke-opacity: 1;
 }
 
-.node ellipse.group-0 {
+.node ellipse {
   stroke: #AEC7E8;
 }
 
-.node ellipse.group-2 {
+.node ellipse.gateway {
   stroke: #FF7F0E;
 }
 
-.node ellipse.group-3 {
+.node ellipse.client {
   stroke: #1F77B4;
   fill: #1F77B4;
 }
