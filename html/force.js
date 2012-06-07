@@ -160,8 +160,20 @@ var force = d3.layout.force()
               .friction(0.75)
               .theta(0.1)
               .size([w, h])
-              .linkDistance(function (d) { return d.distance; })
-              .linkStrength(function (d) { return d.strength; })
+              .linkDistance(function (d) {
+                switch (d.type) {
+                  case "vpn": return 150
+                  case "client": return 20
+                  default: return 70
+                }
+              })
+              .linkStrength(function (d) {
+                switch (d.type) {
+                  case "vpn": return 0.15
+                  case "client": return 1
+                  default: return 0.5
+                }
+              })
 
 force.on("tick", function() {
   var size = force.size()

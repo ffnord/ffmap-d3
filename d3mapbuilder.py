@@ -15,9 +15,8 @@ class D3MapBuilder:
                         'flags': x.flags
                        } for x in nodes if x.flags['online']]
     output['links'] = [{'source': x.pair[0], 'target': x.pair[1],
-                        'distance': x.distance,
-                        'strength': x.strength,
                         'quality': x.quality,
+                        'type': x.type,
                         'id': "-".join(nodes[i].id for i in x.pair)
                        } for x in self._db.get_links()]
 

@@ -157,16 +157,16 @@ class NodeDB:
       node.flags['vpn'] = True
 
   def map_link(self, pair):
-    distance = 80
-    strength = 0.2
+    type = None
+    if any(filter(lambda x: self._nodes[x].flags['vpn'], pair[0])):
+      type = "vpn"
+
     if any(filter(lambda x: self._nodes[x].flags['client'], pair[0])):
-      distance = 10
-      strength = 1
+      type = "client"
 
     link = Link()
     link.pair = pair[0]
-    link.distance = distance
-    link.strength = strength
+    link.type = type
     link.quality = pair[1]
     return link
 
