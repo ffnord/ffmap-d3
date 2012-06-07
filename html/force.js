@@ -182,10 +182,12 @@ force.on("tick", function() {
   for (i = 0; i < n; i++) {
     var o = nodes[i]
     if (!o.fixed) {
-      if (o.x < 10) o.x = 10
-      if (o.x > size[0] - 10) o.x = size[0] - 10
-      if (o.y < 10) o.y = 10
-      if (o.y > size[1] - 10) o.y = size[1] - 10
+      node = d3.select(document.getElementById(o.id))[0][0]
+      box = bounding_box(node)
+      if (o.x < box.rx) o.x = box.rx
+      if (o.x > size[0] - box.rx) o.x = size[0] - box.rx
+      if (o.y < box.ry) o.y = box.ry
+      if (o.y > size[1] - box.ry) o.y = size[1] - box.ry
     }
   }
 
@@ -357,6 +359,9 @@ function update() {
                 )
 
   var nodeEnter = node.enter().append("g")
+                .attr("id", function (d) {
+                  return d.id
+                })
                 .attr("class", "node")
                 .on("mouseover", fade(.2))
                 .on("mouseout", fade(1))
@@ -439,6 +444,24 @@ function update() {
 
   if (hashstr.length != 0)
     show_node(hashstr)
+}
+
+function bounding_box(d) {
+  var c = d.firstChild
+  var r = {}
+  switch(c.nodeName) {
+    case "ellipse":
+      r.rx = c.rx.animVal.value
+      r.ry = c.ry.animVal.value
+      break;
+    case "circle":
+      r.rx = r.rz = c.r.animVal.value
+      break;
+    default:
+      r.rx = r.ry = 10
+  }
+
+  return r
 }
 
 reload()
