@@ -29,7 +29,7 @@ var w = window.innerWidth - offset.left,
     h = window.innerHeight - offset.top - 1
 
 function next_style() {
-  var s = d3.select("head link[title]:not([disabled]) + link[title][disabled]")
+  var s = d3.select("head link[title]:not([disabled]) * link[title]")
   
   if (s[0][0] == null)
     s = d3.select("head link[title][disabled]")
