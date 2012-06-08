@@ -32,10 +32,8 @@
   stroke-width: 5px;
 }
 
-.link .label {
-  fill: transparent;
-  stroke: #C83771;
-  stroke-width: 15px;
+.uplinks path, .uplinks text {
+  fill: #0ff;
 }
 
 .strength {

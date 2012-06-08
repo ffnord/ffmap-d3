@@ -22,6 +22,10 @@
   stroke-width: 5px;
 }
 
+.uplinks path {
+  fill: #333;
+}
+
 .node ellipse {
   stroke: #AEC7E8;
 }
