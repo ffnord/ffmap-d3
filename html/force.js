@@ -12,7 +12,7 @@ function getOffset( el ) {
 var offset = getOffset(document.getElementById('chart'))
 
 var w = window.innerWidth - offset.left,
-    h = window.innerHeight - offset.top
+    h = window.innerHeight - offset.top - 1
 
 var cp = d3.select("#chart").append("div")
            .attr("id", "controlpanel")
