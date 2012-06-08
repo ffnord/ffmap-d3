@@ -7,8 +7,8 @@
 }
 
 .node text {
-  font-size: 10px;
-  fill: #fff;
+  font-size: 11px;
+  fill: #000;
   font-weight: bold;
 }
 
@@ -19,8 +19,8 @@
 }
 
 .node ellipse {
-  fill: #04f;
-  stroke: #04f;
+  fill: #fff;
+  stroke: #48f;
 }
 
 .node ellipse.gateway {
