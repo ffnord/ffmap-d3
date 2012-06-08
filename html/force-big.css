@@ -8,7 +8,8 @@
 
 .node text {
   font-size: 10px;
-  color: #333;
+  fill: #fff;
+  font-weight: bold;
 }
 
 .link line {
@@ -18,12 +19,13 @@
 }
 
 .node ellipse {
-  fill: #fff;
+  fill: #04f;
   stroke: #04f;
 }
 
 .node ellipse.gateway {
-  stroke: #FF7F0E;
+  stroke: #ff7f0e;
+  fill: #ff7f03;
 }
 
 .node ellipse.client {

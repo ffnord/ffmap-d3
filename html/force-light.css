@@ -9,7 +9,7 @@
 
 .node text {
   font-size: 10px;
-  color: #333;
+  fill: #333;
 }
 
 .link line {
