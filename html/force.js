@@ -199,21 +199,6 @@ force.on("tick", function() {
       .attr("x2", function(d) { return d.target.x })
       .attr("y2", function(d) { return d.target.y })
 
-  link.selectAll(".label")
-      .attr("transform", function(d) { 
-        π = Math.PI
-        Δx = d.source.x - d.target.x
-        Δy = d.source.y - d.target.y
-        m = Δy/Δx
-        α = Math.atan(m)
-        α += Δx<0?π:0
-        sin = Math.sin(α)
-        cos = Math.cos(α)
-        x = (Math.min(d.source.x, d.target.x) + Math.abs(Δx) / 2)
-        y = (Math.min(d.source.y, d.target.y) + Math.abs(Δy) / 2)
-        return "matrix(" + [cos, sin, -sin, cos, x, y].join(",") + ")"
-      })
-
   vis.selectAll(".node").attr("transform", function(d) { 
     return "translate(" + d.x + "," + d.y + ")";
   })
@@ -291,6 +276,10 @@ function reload() {
   })
 }
 
+var linkcolor = d3.scale.linear()
+                  .domain([1, 1.2, 2])
+                  .range(["#0a3", "orange", "red"]);
+
 function update() {
   var links = data.links
                    .filter(function (d) {
@@ -314,21 +303,17 @@ function update() {
 
   linkEnter.append("line")
 
-  link.selectAll("path.label")
-      .remove()
-
-  link.filter(function (d) {
-        return d.quality != "TT" && d.quality != "1.000"
+  link.selectAll("line")
+      .filter( function (d) {
+        return d.type != 'client'
       })
-      .append("path")
-      .attr("class", "label")
-      .attr("d", d3.svg.zigzag()
-                       .amplitude(function (d) {
-                         return Math.pow((1 - 1/d.quality), 0.5) * 8;
-                       })
-                       .len(30)
-                       .angularFrequency(4)
-      )
+      .style("stroke", function(d) {
+        return linkcolor(d.quality)
+      })
+      .append("title")
+      .text( function (d) {
+        return d.quality
+      })
 
   link.exit().remove()
 
