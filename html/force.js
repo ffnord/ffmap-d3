@@ -300,6 +300,14 @@ function update() {
 
   var linkEnter = link.enter().append("g")
                       .attr("class", "link")
+                      .on("mouseover", function(d) {
+                        d.source.fixed |= 2
+                        d.target.fixed |= 2
+                      })
+                      .on("mouseout", function(d) {
+                        d.source.fixed &= 1
+                        d.target.fixed &= 1
+                      })
 
   linkEnter.append("line")
 
