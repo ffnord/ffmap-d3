@@ -314,11 +314,6 @@ function update() {
 
   linkEnter.append("line")
 
-  link.selectAll("line")
-      .style("stroke-width", function(d) {
-        return Math.max(1, d.strength * 2)
-      })
-
   link.selectAll("path.label")
       .remove()
 
