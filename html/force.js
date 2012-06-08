@@ -1,3 +1,17 @@
+function switch_style(s) {
+  var el = document.getElementsByTagName("link")
+  for (var i = 0; i < el.length; i++ ) {
+    if (el[i].getAttribute("rel").indexOf("style") != -1
+        && el[i].getAttribute("title")) {
+          if (el[i].getAttribute("title") == s) {
+            style_btn.text(s)
+            el[i].disabled = false
+          } else
+            el[i].disabled = true
+        }
+  }
+}
+
 function getOffset( el ) {
   var _x = 0, _y = 0
 
@@ -14,6 +28,15 @@ var offset = getOffset(document.getElementById('chart'))
 var w = window.innerWidth - offset.left,
     h = window.innerHeight - offset.top - 1
 
+function next_style() {
+  var s = d3.select("head link[title]:not([disabled]) + link[title][disabled]")
+  
+  if (s[0][0] == null)
+    s = d3.select("head link[title][disabled]")
+
+  switch_style(s[0][0].getAttribute("title"))
+}
+
 var cp = d3.select("header").append("div")
            .attr("id", "controlpanel")
 
@@ -24,6 +47,12 @@ cp.append("button")
     .attr("value", "reload")
     .text("Aktualisieren")
     .on("click", reload)
+
+var style_btn = cp.append("button")
+                  .attr("class", "btn")
+                  .attr("value", "reload")
+                  .text("Farbwechsler")
+                  .on("click", next_style)
 
 var btns = cp.append("div")
            .attr("class", "btn-group")
