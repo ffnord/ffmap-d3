@@ -14,7 +14,7 @@ var offset = getOffset(document.getElementById('chart'))
 var w = window.innerWidth - offset.left,
     h = window.innerHeight - offset.top - 1
 
-var cp = d3.select("#chart").append("div")
+var cp = d3.select("header").append("div")
            .attr("id", "controlpanel")
 
 var updated_at = cp.append("p")
@@ -39,11 +39,6 @@ btns.append("button")
     .attr("value", "vpn")
     .text("VPN")
     .on("click", update_graph)
-
-cp.append("label")
-  .text("Knoten hervorheben:")
-
-cp.append("br")
 
 cp.append("input")
   .on("keyup", function(){show_node(this.value)})
