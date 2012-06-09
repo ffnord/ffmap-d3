@@ -13,9 +13,9 @@
 }
 
 .link line {
-  stroke: #f50;
+  stroke: #ddd;
   stroke-opacity: 1;
-  stroke-width: 5px !important;
+  stroke-width: 5px;
 }
 
 .node ellipse {
