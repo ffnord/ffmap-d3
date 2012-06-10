@@ -199,10 +199,6 @@ var force = d3.layout.force()
                 }
               })
 
-var angle = d3.scale.linear()
-                  .domain([0, 1, 2, 3])
-                  .range([0.01, Math.PI/4, 0.01, Math.PI/4])
-
 force.on("tick", function() {
   var size = force.size()
   var nodes = force.nodes()
@@ -229,7 +225,7 @@ force.on("tick", function() {
 
   vis.selectAll(".node").attr("transform", function(d) { 
     return "translate(" + d.x + "," + d.y + ")";
- })
+  })
 })
 
 var data

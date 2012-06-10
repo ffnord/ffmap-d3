@@ -1,3 +1,7 @@
+var angle = d3.scale.linear()
+                  .domain([0, 1, 2, 3])
+                  .range([0.01, Math.PI/4, 0.01, Math.PI/4])
+
 d3.timer(pacman)
 var a = 0
 
