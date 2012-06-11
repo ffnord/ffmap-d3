@@ -57,7 +57,6 @@ class GeoMapBuilder:
         continue
 
     for link in self._db.get_links():
-      print(link.type)
       if link.type == "vpn":
         continue
 
