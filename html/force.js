@@ -371,6 +371,9 @@ function update() {
                   if (!visible.clients && d.flags.client)
                     return false
 
+                  if (!d.flags.online)
+                    return false
+
                   return true
                 }) 
 

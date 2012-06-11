@@ -13,7 +13,7 @@ class D3MapBuilder:
                         'macs': ', '.join(x.macs),
                         'geo': x.gps.split(" ") if x.gps else None,
                         'flags': x.flags
-                       } for x in nodes if x.flags['online']]
+                       } for x in nodes]
 
     links = self._db.get_links()
 
