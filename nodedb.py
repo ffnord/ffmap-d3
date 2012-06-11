@@ -110,6 +110,10 @@ class NodeDB:
         except:
           continue
 
+        # filter TT links merged in previous step
+        if router == neighbor:
+          continue
+
         link = Link()
         link.source = LinkConnector()
         link.source.interface = x['router']
