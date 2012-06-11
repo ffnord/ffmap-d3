@@ -54,6 +54,12 @@ var style_btn = cp.append("button")
                   .text("Farbwechsler")
                   .on("click", next_style)
 
+cp.append("button")
+  .attr("class", "btn")
+  .attr("value", "reload")
+  .text("Click me!")
+  .on("click", pacman)
+
 var btns = cp.append("div")
            .attr("class", "btn-group")
 
