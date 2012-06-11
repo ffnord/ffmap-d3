@@ -334,6 +334,7 @@ function update() {
                       })
 
   linkEnter.append("line")
+           .append("title")
 
   link.selectAll("line")
       .filter( function (d) {
@@ -342,7 +343,7 @@ function update() {
       .style("stroke", function(d) {
         return linkcolor(d.quality)
       })
-      .append("title")
+  link.selectAll("title")
       .text( function (d) {
         return d.quality
       })
