@@ -301,7 +301,7 @@ function reload() {
 }
 
 var linkcolor = d3.scale.linear()
-                  .domain([1, 1.2, 2])
+                  .domain([1, 1.5, 3])
                   .range(["#0a3", "orange", "red"]);
 
 function update() {
