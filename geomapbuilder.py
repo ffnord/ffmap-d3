@@ -57,6 +57,10 @@ class GeoMapBuilder:
         continue
 
     for link in self._db.get_links():
+      print(link.type)
+      if link.type == "vpn":
+        continue
+
       try:
         text.append(GeoEdge(nodes, link).render())
       except:
@@ -101,7 +105,7 @@ class GeoEdge:
 
   def __init__(self, nodes, link):
     self._link = link
-    self.pair = [nodes[k] for k in link.pair]
+    self.pair = [nodes[k.id] for k in (link.source, link.target)]
 
   def render(self):
     if not (self.pair[0].gps and self.pair[1].gps):

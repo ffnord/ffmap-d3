@@ -18,7 +18,7 @@ if [ `cat /sys/class/net/bat0/mesh/gw_mode` = server ]; then
 fi
 
 batctl vd json | "$(dirname "$0")"/bat2nodes.py -a "$(dirname "$0")"/aliases.json $GWS - > $DEST/nodes.json.new
-batctl vd json | "$(dirname "$0")"/bat2geomap.py -a "$(dirname "$0")"/aliases.json - > $DEST/geomap.kml.new
+batctl vd json | "$(dirname "$0")"/bat2geomap.py -a "$(dirname "$0")"/aliases.json $GWS - > $DEST/geomap.kml.new
 
 mv $DEST/nodes.json.new $DEST/nodes.json
 mv $DEST/geomap.kml.new $DEST/geomap.kml

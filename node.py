@@ -3,6 +3,7 @@ class Node():
     self.name = ""
     self.id = ""
     self.macs = set()
+    self.interfaces = dict()
     self.flags = dict({
       "online": False,
       "vpn": False,
@@ -18,7 +19,12 @@ class Node():
 
     self.macs.add(mac)
 
+    self.interfaces[mac] = Interface()
+
   def __repr__(self):
     return self.macs.__repr__()
 
+class Interface():
+  def __init__(self):
+    self.vpn = False
 

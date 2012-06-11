@@ -17,6 +17,9 @@ parser.add_argument('-a', '--aliases',
                   help='read aliases from FILE',
                   metavar='FILE')
 
+parser.add_argument('-g', '--gateway', action='append',
+                  help='MAC of a gateway')
+
 parser.add_argument('batmanjson', help='output of batman vd json')
 
 args = parser.parse_args()
@@ -30,9 +33,10 @@ db.import_batman(list(fileinput.input(options['batmanjson'])))
 if options['aliases']:
   db.import_aliases(json.load(open(options['aliases'])))
 
-db.import_wikigps("http://freifunk.metameute.de/Knoten")
+if options['gateway']:
+  db.mark_gateways(options['gateway'])
 
-#db.wilder_scheiss()
+db.import_wikigps("http://freifunk.metameute.de/Knoten")
 
 m = GeoMapBuilder(db)
 

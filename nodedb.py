@@ -1,6 +1,8 @@
 import json
-from node import Node
-from link import Link
+from functools import reduce
+from collections import defaultdict
+from node import Node, Interface
+from link import Link, LinkConnector
 from itertools import zip_longest
 
 from bs4 import BeautifulSoup
@@ -13,20 +15,11 @@ class NodeDB:
 
   # fetch list of links
   def get_links(self):
-    return [self.map_link(x) for x in self._links]
+    return self.reduce_links()
 
   # fetch list of nodes
   def get_nodes(self):
     return self._nodes
-
-  def add_link(self, a, b, q):
-    l = tuple(sorted((a,b)))
-    for link in self._links:
-      if l == link[0]:
-        if link[1] != str(q):
-          link[1] = max(float(link[1]), float(q))
-        return
-    self._links.append([l,str(q)])
 
   def maybe_node_by_mac(self, macs):
     for node in self._nodes:
@@ -117,11 +110,20 @@ class NodeDB:
         except:
           continue
 
-        a = self._nodes.index(router)
-        b = self._nodes.index(neighbor)
+        link = Link()
+        link.source = LinkConnector()
+        link.source.interface = x['router']
+        link.source.id = self._nodes.index(router)
+        link.target = LinkConnector()
+        link.target.interface = x['neighbor']
+        link.target.id = self._nodes.index(neighbor)
+        link.quality = x['label']
+        link.id = "-".join(sorted((link.source.interface, link.target.interface)))
 
-        if a != b:
-          self.add_link(a, b, x['label'])
+        if x['label'] == "TT":
+          link.type = "client"
+
+        self._links.append(link)
 
     for line in lines:
       x = json.loads(line)
@@ -133,6 +135,29 @@ class NodeDB:
           continue
 
         node.id = x['primary']
+
+  def reduce_links(self):
+    tmp_links = defaultdict(list)
+
+    for link in self._links:
+      tmp_links[link.id].append(link)
+
+    links = []
+
+    def reduce_link(a, b):
+      a.id = b.id
+      a.source = b.source
+      a.target = b.target
+      a.type = b.type
+      a.quality = ", ".join([x for x in (a.quality, b.quality) if x])
+
+      return a
+
+    for k, v in tmp_links.items():
+      new_link = reduce(reduce_link, v, Link())
+      links.append(new_link)
+
+    return links
 
   def import_aliases(self, aliases):
     for mac, alias in aliases.items():
@@ -156,19 +181,25 @@ class NodeDB:
       node.flags['gateway'] = True
       node.flags['vpn'] = True
 
-  def map_link(self, pair):
-    type = None
-    if any(filter(lambda x: self._nodes[x].flags['vpn'], pair[0])):
-      type = "vpn"
+      for k, v in node.interfaces.items():
+        node.interfaces[k].vpn = "vpn"
 
-    if any(filter(lambda x: self._nodes[x].flags['client'], pair[0])):
-      type = "client"
+    changes = 1
+    while changes > 0:
+      changes = 0
+      for link in self._links:
+        if link.type == "client":
+          continue
 
-    link = Link()
-    link.pair = pair[0]
-    link.type = type
-    link.quality = pair[1]
-    return link
+        source_interface = self._nodes[link.source.id].interfaces[link.source.interface]
+        target_interface = self._nodes[link.target.id].interfaces[link.target.interface]
+        if source_interface.vpn or target_interface.vpn:
+          source_interface.vpn = True
+          target_interface.vpn = True
+          if link.type != "vpn":
+            changes += 1
+
+          link.type = "vpn"
 
   def import_wikigps(self, url):
     def fetch_wikitable(url):

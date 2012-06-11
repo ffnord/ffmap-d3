@@ -275,20 +275,20 @@ function reload() {
       var node, other
 
       if (d.source.flags.vpn) {
-        node = d.target;
-        other = d.source;
+        node = d.target
+        other = d.source
       }
 
       if (d.target.flags.vpn) {
-        node = d.source;
-        other = d.target;
+        node = d.source
+        other = d.target
       }
 
       if (node) {
         if (node.uplinks === undefined)
-          node.uplinks = new Array();
+          node.uplinks = 0
 
-        node.uplinks.push(other);
+        node.uplinks++
       }
     })
 
@@ -307,9 +307,13 @@ var linkcolor = d3.scale.linear()
 function update() {
   var links = data.links
                    .filter(function (d) {
+                     if (!visible.vpn && d.type == "vpn")
+                       return false
+
                      if (!visible.clients && (d.source.flags.client || d.target.flags.client))
                        return false 
 
+                     // hides links to clients
                      if (!visible.vpn && (d.source.flags.vpn || d.target.flags.vpn))
                        return false 
 
@@ -343,7 +347,7 @@ function update() {
         return d.type != 'client'
       })
       .style("stroke", function(d) {
-        return linkcolor(d.quality)
+        return linkcolor(Math.max.apply(null, d.quality.split(",")))
       })
 
   link.selectAll("title")
@@ -429,7 +433,7 @@ function update() {
   if (!visible.vpn) {
     var uplink_info = node.filter(function (d) {
       if (d.uplinks !== undefined)
-        return d.uplinks.length > 0
+        return d.uplinks > 0
       else
         return false
     })
@@ -445,7 +449,7 @@ function update() {
     uplink_info.append("text")
       .attr("text-anchor", "middle")
       .attr("y", 3 - 20)
-      .text(function (d) {return d.uplinks.length})
+      .text(function (d) {return d.uplinks})
   }
 
   node.exit().remove()
