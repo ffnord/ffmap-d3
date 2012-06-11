@@ -18,6 +18,11 @@
   stroke-width: 5px;
 }
 
+.link.vpn line {
+  stroke-dasharray: 2.5px 10px;
+  stroke-linecap: round;
+}
+
 .node ellipse {
   fill: #fff;
   stroke: #48f;

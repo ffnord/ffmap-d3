@@ -18,6 +18,11 @@
   stroke-width: 1.5px;
 }
 
+.link.vpn line {
+  stroke-dasharray: 0.75px 4px;
+  stroke-linecap: round;
+}
+
 .link:hover line {
   stroke-width: 5px;
 }

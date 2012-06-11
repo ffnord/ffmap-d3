@@ -323,7 +323,9 @@ function update() {
                 })
 
   var linkEnter = link.enter().append("g")
-                      .attr("class", "link")
+                      .attr("class", function(d) {
+                        return "link " + d.type
+                      })
                       .on("mouseover", function(d) {
                         d.source.fixed |= 2
                         d.target.fixed |= 2
@@ -343,9 +345,14 @@ function update() {
       .style("stroke", function(d) {
         return linkcolor(d.quality)
       })
+
   link.selectAll("title")
       .text( function (d) {
-        return d.quality
+        var s = d.quality
+        if (d.type)
+          s += " (" + d.type + ")"
+
+        return s
       })
 
   link.exit().remove()
