@@ -185,23 +185,28 @@ vis.append("g").attr("class", "nodes")
 var linkedByIndex
 
 var force = d3.layout.force()
-              .charge(-100)
-              .gravity(0.07)
-              .friction(0.75)
-              .theta(0.1)
+              .charge( function (d) {
+                if (d.flags.client)
+                  return -30
+
+                return -200
+              })
+              .gravity(0.035)
+              .friction(0.73)
+              .theta(0.8)
               .size([w, h])
               .linkDistance(function (d) {
                 switch (d.type) {
-                  case "vpn": return 150
+                  case "vpn": return 200
                   case "client": return 20
                   default: return 70
                 }
               })
               .linkStrength(function (d) {
                 switch (d.type) {
-                  case "vpn": return 0.15
+                  case "vpn": return 0.05
                   case "client": return 1
-                  default: return 0.5
+                  default: return 0.8
                 }
               })
 
