@@ -15,6 +15,7 @@ class NodeDB:
 
   # fetch list of links
   def get_links(self):
+    self.update_vpn_links()
     return self.reduce_links()
 
   # fetch list of nodes
@@ -172,6 +173,12 @@ class NodeDB:
 
       node.name = alias['name']
 
+      if 'vpn' in alias and alias['vpn']:
+        node.flags['vpn'] = True
+
+        for k, v in node.interfaces.items():
+          node.interfaces[k].vpn = "vpn"
+
   # list of macs
   # if options['gateway']:
   #   mark_gateways(options['gateway'])
@@ -183,11 +190,8 @@ class NodeDB:
         continue
 
       node.flags['gateway'] = True
-      node.flags['vpn'] = True
 
-      for k, v in node.interfaces.items():
-        node.interfaces[k].vpn = "vpn"
-
+  def update_vpn_links(self):
     changes = 1
     while changes > 0:
       changes = 0

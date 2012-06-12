@@ -30,10 +30,10 @@ db = NodeDB()
 
 db.import_batman(list(fileinput.input(options['batmanjson'])))
 
+db.import_wikigps("http://freifunk.metameute.de/Knoten")
+
 if options['aliases']:
   db.import_aliases(json.load(open(options['aliases'])))
-
-db.import_wikigps("http://freifunk.metameute.de/Knoten")
 
 if options['gateway']:
   db.mark_gateways(options['gateway'])
