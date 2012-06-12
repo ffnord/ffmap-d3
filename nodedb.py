@@ -174,10 +174,7 @@ class NodeDB:
       node.name = alias['name']
 
       if 'vpn' in alias and alias['vpn']:
-        node.flags['vpn'] = True
-
-        for k, v in node.interfaces.items():
-          node.interfaces[k].vpn = "vpn"
+        node.interfaces[mac].vpn = True
 
   # list of macs
   # if options['gateway']:

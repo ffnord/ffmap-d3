@@ -186,7 +186,7 @@ var linkedByIndex
 
 var force = d3.layout.force()
               .charge(-100)
-              .gravity(0.02)
+              .gravity(0.07)
               .friction(0.75)
               .theta(0.1)
               .size([w, h])
