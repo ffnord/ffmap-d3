@@ -75,9 +75,9 @@ btns.append("button")
     .text("VPN")
     .on("click", update_graph)
 
-cp.append("input")
-  .on("keyup", function(){show_node(this.value)})
-  .on("change", function(){show_node(this.value)})
+//cp.append("input")
+//  .on("keyup", function(){show_node(this.value)})
+//  .on("change", function(){show_node(this.value)})
 
 function show_node(mac) {
   d3.selectAll("#chart .node")
