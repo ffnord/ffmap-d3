@@ -9,12 +9,12 @@ header h1, ul {
   padding: 0;
 }
 
-header h1, ul, ul li {
+header h1, header ul, header ul li {
   display: inline-block;
   font-size: 10pt;
 }
 
-header h1, ul li a {
+header h1, header ul li a {
   padding: 0.5em;
 }
 
