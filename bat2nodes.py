@@ -11,6 +11,15 @@ import argparse
 from nodedb import NodeDB
 from d3mapbuilder import D3MapBuilder
 
+# Force encoding to UTF-8
+import locale                                  # Ensures that subsequent open()s
+locale.getpreferredencoding = lambda: 'UTF-8'  # are UTF-8 encoded.
+
+import sys
+sys.stdin = open('/dev/stdin', 'r')
+sys.stdout = open('/dev/stdout', 'w')
+sys.stderr = open('/dev/stderr', 'w')
+
 parser = argparse.ArgumentParser()
 
 parser.add_argument('-a', '--aliases',
