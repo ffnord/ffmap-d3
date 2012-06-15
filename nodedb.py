@@ -85,6 +85,12 @@ class NodeDB:
                 continue
 
         try:
+          if 'neighbor' in x:
+            try:
+              node = self.maybe_node_by_mac((x['neighbor']))
+            except:
+              continue
+
           if 'gateway' in x:
             x['neighbor'] = x['gateway']
 
