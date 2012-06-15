@@ -21,7 +21,39 @@
         <li><a href="geomap.html">Knotenkarte</a></li>
       </ul>
     </header>
-    <div id="chart"></div>
+    <div id="chart">
+      <div id="legend">
+        <h2>Legende</h2>
+        <ul>
+          <li><svg width=30 height=20 class="node">
+              <ellipse cx=15 cy=10 ry=8 rx=8 />
+            </svg>
+            <label>Knoten</label>
+          </li>
+          <li><svg width=30 height=20 class="node">
+              <ellipse cx=15 cy=10 ry=8 rx=8 class="gateway"/>
+            </svg>
+            <label>Gateway</label>
+          </li>
+          <li><svg width=30 height=20 class="node">
+              <ellipse cx=15 cy=10 ry=4 rx=4 class="client"/>
+            </svg>
+            <label>Client</label>
+          </li>
+          <li><svg width=30 height=20 class="link">
+              <line x1="2" y1="10" x2="28" y2="10"/>
+            </svg>
+            <label>Link</label>
+          </li>
+
+          <li><svg width=30 height=20 class="link vpn">
+              <line x1="2" y1="10" x2="28" y2="10"/>
+            </svg>
+            <label>VPN-Link</label>
+          </li>
+        </ul>
+      </div>
+    </div>
     <script src='force.js' type='text/javascript'></script>
   </body>
 </html>

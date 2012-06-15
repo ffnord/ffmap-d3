@@ -130,3 +130,32 @@
     color: #fff;
     text-shadow: none;
 }
+
+#legend {
+  position: absolute;
+  top: 1em;
+  right: 1.5em;
+  z-index: 0;
+}
+
+#legend ul {
+  list-style: none;
+  font-size: 9pt;
+  color: #888;
+}
+
+#legend li {
+  margin-bottom: 0.5em;
+}
+
+#legend li svg {
+  margin-right: 0.5em;
+  display: inline;
+  vertical-align: center;
+}
+
+#legend h2 {
+  margin-top: 0;
+  font-size: 9pt;
+  color: #888;
+}
