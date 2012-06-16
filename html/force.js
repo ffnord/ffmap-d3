@@ -90,6 +90,20 @@ btns.append("button")
     .text("VPN")
     .on("click", update_graph)
 
+var meshinfo = d3.select("sidebar")
+                 .insert("div", ":first-child")
+
+meshinfo.append("h2").text("Mesh")
+
+meshinfo.append("p")
+        .attr("id", "nodecount")
+
+meshinfo.append("p")
+        .attr("id", "clientcount")
+
+meshinfo.append("p")
+        .attr("id", "gatewaycount")
+
 //cp.append("input")
 //  .on("keyup", function(){show_node(this.value)})
 //  .on("change", function(){show_node(this.value)})
@@ -309,6 +323,21 @@ function reload() {
     data = json
 
     updated_at.text(d3.time.format("%X")(new Date()))
+
+    d3.select("#nodecount")
+      .text((data.nodes.filter(function(d) {
+        return !d.flags.client
+      }).length) + " Knoten")
+
+    d3.select("#gatewaycount")
+      .text((data.nodes.filter(function(d) {
+        return d.flags.gateway
+      }).length) + " Gateways")
+
+    d3.select("#clientcount")
+      .text((data.nodes.filter(function(d) {
+        return d.flags.client
+      }).length) + " Clients")
 
     update()
   })

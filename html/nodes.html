@@ -22,49 +22,51 @@
       </ul>
     </header>
     <div id="chart">
-      <div id="legend">
-        <h2>Legende</h2>
-        <ul>
-          <li><svg width=30 height=20 class="node">
-              <ellipse cx=15 cy=10 ry=8 rx=8 />
-            </svg>
-            <label>Knoten</label>
-          </li>
-          <li><svg width=30 height=20 class="node">
-              <ellipse cx=15 cy=10 ry=8 rx=8 class="gateway"/>
-            </svg>
-            <label>Gateway</label>
-          </li>
-          <li><svg width=30 height=20 class="node">
-              <ellipse cx=15 cy=10 ry=4 rx=4 class="client"/>
-            </svg>
-            <label>Client</label>
-          </li>
-          <li><svg width=30 height=20 class="link">
-              <line x1="2" y1="10" x2="28" y2="10"/>
-            </svg>
-            <label>Link</label>
-          </li>
+      <sidebar>
+        <div id="legend">
+          <h2>Legende</h2>
+          <ul>
+            <li><svg width=30 height=20 class="node">
+                <ellipse cx=15 cy=10 ry=8 rx=8 />
+              </svg>
+              <label>Knoten</label>
+            </li>
+            <li><svg width=30 height=20 class="node">
+                <ellipse cx=15 cy=10 ry=8 rx=8 class="gateway"/>
+              </svg>
+              <label>Gateway</label>
+            </li>
+            <li><svg width=30 height=20 class="node">
+                <ellipse cx=15 cy=10 ry=4 rx=4 class="client"/>
+              </svg>
+              <label>Client</label>
+            </li>
+            <li><svg width=30 height=20 class="link">
+                <line x1="2" y1="10" x2="28" y2="10"/>
+              </svg>
+              <label>Link</label>
+            </li>
 
-          <li><svg width=30 height=20 class="link vpn">
-              <line x1="2" y1="10" x2="28" y2="10"/>
-            </svg>
-            <label>VPN-Link</label>
-          </li>
-          <li><svg width=30 height=20 class="node uplinks">
-              <g transform="translate(12,28)">
-                <line x1="2" y1="10" x2="28" y2="10" stroke="#000"/>
-                <path d="m -2.8850049,-13.182327 c 7.5369165,0.200772 12.1529864,-1.294922
-                         12.3338513,-10.639456 l 2.2140476,1.018191 -3.3137621,-5.293097
-                         -3.2945999,5.20893 2.4339957,-0.995747 c -0.4041883,5.76426
-                         -1.1549641,10.561363 -10.3735326,10.701179 z"/>
-                <text text-anchor="middle" y=-17>ℕ</text>
-              </g>
-            </svg>
-            <label>Anzahl VPN-Links</label>
-          </li>
-        </ul>
-      </div>
+            <li><svg width=30 height=20 class="link vpn">
+                <line x1="2" y1="10" x2="28" y2="10"/>
+              </svg>
+              <label>VPN-Link</label>
+            </li>
+            <li><svg width=30 height=20 class="node uplinks">
+                <g transform="translate(12,28)">
+                  <line x1="2" y1="10" x2="28" y2="10" stroke="#000"/>
+                  <path d="m -2.8850049,-13.182327 c 7.5369165,0.200772 12.1529864,-1.294922
+                           12.3338513,-10.639456 l 2.2140476,1.018191 -3.3137621,-5.293097
+                           -3.2945999,5.20893 2.4339957,-0.995747 c -0.4041883,5.76426
+                           -1.1549641,10.561363 -10.3735326,10.701179 z"/>
+                  <text text-anchor="middle" y=-17>ℕ</text>
+                </g>
+              </svg>
+              <label>Anzahl VPN-Links</label>
+            </li>
+          </ul>
+        </div>
+      </sidebar>
     </div>
     <script src='force.js' type='text/javascript'></script>
   </body>
