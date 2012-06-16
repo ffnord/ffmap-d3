@@ -344,13 +344,13 @@ function reload() {
     updated_at.text(d3.time.format("%X")(new Date()))
 
     var nNodes = data.nodes.filter(function(d) {
-                   return !d.flags.client
+                   return !d.flags.client && d.flags.online
                  }).length,
         nGateways = data.nodes.filter(function(d) {
-                   return d.flags.gateway
+                   return d.flags.gateway && d.flags.online
                  }).length,
         nClients = data.nodes.filter(function(d) {
-                   return d.flags.client
+                   return d.flags.client && d.flags.online
                  }).length
 
     d3.select("#nodecount")
