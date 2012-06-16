@@ -1,3 +1,5 @@
+var style;
+
 function switch_style(s) {
   var el = document.getElementsByTagName("link")
   for (var i = 0; i < el.length; i++ ) {
@@ -29,12 +31,15 @@ var w = window.innerWidth - offset.left,
     h = window.innerHeight - offset.top - 1
 
 function next_style() {
-  var s = d3.select("head link[title]:not([disabled]) * link[title]")
+  var s;
+  if (style !== undefined)
+    s = d3.select("head link[title=" + style + "] + link")
   
-  if (s[0][0] == null)
-    s = d3.select("head link[title][disabled]")
+  if (s == null || s[0][0] == null)
+    s = d3.select("head link[title]")
 
-  switch_style(s[0][0].getAttribute("title"))
+  style = s[0][0].getAttribute("title")
+  switch_style(style)
 }
 
 var cp = d3.select("header").append("div")
