@@ -27,8 +27,27 @@ function getOffset( el ) {
 
 var offset = getOffset(document.getElementById('chart'))
 
-var w = window.innerWidth - offset.left,
-    h = window.innerHeight - offset.top - 1
+var w, h
+
+resize()
+
+window.onresize = resize
+
+function resize() {
+  var offset = getOffset(document.getElementById('chart'))
+
+  w = window.innerWidth - offset.left
+  h = window.innerHeight - offset.top - 1
+
+  d3.select("#chart")
+    .attr("width", w).attr("height", h)
+ 
+  if (vis)
+    vis.attr("width", w).attr("height", h)
+
+  if (force)
+    force.size([w, h]).start()
+}
 
 function next_style() {
   var s;
