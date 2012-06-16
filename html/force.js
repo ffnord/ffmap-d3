@@ -118,10 +118,10 @@ meshinfo.append("p")
         .attr("id", "nodecount")
 
 meshinfo.append("p")
-        .attr("id", "clientcount")
+        .attr("id", "gatewaycount")
 
 meshinfo.append("p")
-        .attr("id", "gatewaycount")
+        .attr("id", "clientcount")
 
 //cp.append("input")
 //  .on("keyup", function(){show_node(this.value)})
@@ -343,20 +343,24 @@ function reload() {
 
     updated_at.text(d3.time.format("%X")(new Date()))
 
+    var nNodes = data.nodes.filter(function(d) {
+                   return !d.flags.client
+                 }).length,
+        nGateways = data.nodes.filter(function(d) {
+                   return d.flags.gateway
+                 }).length,
+        nClients = data.nodes.filter(function(d) {
+                   return d.flags.client
+                 }).length
+
     d3.select("#nodecount")
-      .text((data.nodes.filter(function(d) {
-        return !d.flags.client
-      }).length) + " Knoten")
+      .text(nNodes + " Knoten")
 
     d3.select("#gatewaycount")
-      .text((data.nodes.filter(function(d) {
-        return d.flags.gateway
-      }).length) + " Gateways")
+      .text(nGateways + " Gateways")
 
     d3.select("#clientcount")
-      .text((data.nodes.filter(function(d) {
-        return d.flags.client
-      }).length) + " Clients")
+      .text("ungefähr " + (nClients - nNodes) + " Clients")
 
     update()
   })
