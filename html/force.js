@@ -1,3 +1,19 @@
+var style;
+
+function switch_style(s) {
+  var el = document.getElementsByTagName("link")
+  for (var i = 0; i < el.length; i++ ) {
+    if (el[i].getAttribute("rel").indexOf("style") != -1
+        && el[i].getAttribute("title")) {
+          if (el[i].getAttribute("title") == s) {
+            style_btn.text(s)
+            el[i].disabled = false
+          } else
+            el[i].disabled = true
+        }
+  }
+}
+
 function getOffset( el ) {
   var _x = 0, _y = 0
 
@@ -34,16 +50,15 @@ function resize() {
 }
 
 function next_style() {
-  var n = document.styleSheetSets.length
-  var i;
-  for (i = 0; i < n; i++) {
-    if (document.styleSheetSets[i] == document.selectedStyleSheetSet)
-      break
-  }
+  var s;
+  if (style !== undefined)
+    s = d3.select("head link[title=" + style + "] + link")
+  
+  if (s == null || s[0][0] == null)
+    s = d3.select("head link[title]")
 
-  var s = document.styleSheetSets[(i+1) % n]
-  style_btn.text(s)
-  document.selectedStyleSheetSet = s
+  style = s[0][0].getAttribute("title")
+  switch_style(style)
 }
 
 var cp = d3.select("header").append("div")
