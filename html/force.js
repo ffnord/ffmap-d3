@@ -5,13 +5,15 @@ function switch_style(s) {
   for (var i = 0; i < el.length; i++ ) {
     if (el[i].getAttribute("rel").indexOf("style") != -1
         && el[i].getAttribute("title")) {
-          if (el[i].getAttribute("title") == s) {
-            style_btn.text(s)
+          /* always set to true first to workaround Chrome bug */
+          el[i].disabled = true
+
+          if (el[i].getAttribute("title") == s)
             el[i].disabled = false
-          } else
-            el[i].disabled = true
         }
   }
+
+  style_btn.text(s)
 }
 
 function getOffset( el ) {
