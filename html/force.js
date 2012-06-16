@@ -94,7 +94,7 @@ btns.append("button")
     .text("VPN")
     .on("click", update_graph)
 
-var meshinfo = d3.select("sidebar")
+var meshinfo = d3.select("#sidebar")
                  .insert("div", ":first-child")
 
 meshinfo.append("h2").text("Mesh")
