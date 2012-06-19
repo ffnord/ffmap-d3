@@ -1,36 +1,61 @@
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta http-equiv="content-type" content="text/html;charset=utf-8">
-  <link rel="stylesheet" href="theme/default/style.css" type="text/css" />
-  <link href='style.css' rel='stylesheet' type='text/css' />
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <link rel="stylesheet" href="theme/default/style.css" type="text/css" />
+    <link href='style.css' rel='stylesheet' type='text/css' />
 
-  <style type="text/css">
-    #map {
-    float: left;
-    width: 100%;
+    <style type="text/css">
+      #map {
+        width: 100%;
+        box-sizing:border-box;
+      }
+      .olPopup p { margin:0px; }
+      .nodePopup { font-size: 0.8em; }
+      .nodePopup .label { font-weight: bold; }
+    </style>
 
-    box-sizing:border-box;
+    <title>Freifunk Lübeck - Knotenkarte</title>
 
-    }
-    .olPopup p { margin:0px; }
-  </style>
+    <script src="http://maps.burningsilicon.net/OpenLayers-2.8/OpenLayers.js"></script>
+    <script src="http://maps.burningsilicon.net/OpenLayers-2.8/OpenStreetMap.js"></script>
+    <script type="text/javascript" src="d3.v2.js"></script>
+    <script type="text/javascript" src="geomap.js"></script>
 
-  <title>Freifunk Lübeck - Knotenkarte</title>
+    <script type="text/javascript">
+      window.onresize = resize
 
-  <script src="http://maps.burningsilicon.net/OpenLayers-2.8/OpenLayers.js"></script>
-  <script src="http://maps.burningsilicon.net/OpenLayers-2.8/OpenStreetMap.js"></script>
-  <script type="text/javascript" src="d3.v2.js"></script>
-  <script type="text/javascript" src="geomap.js"></script>
-</head>
+      function getOffset( el ) {
+        var _x = 0, _y = 0
 
-<body onload="init()">
-  <header>
-    <h1>luebeck.freifunk.net</h1>
-    <ul>
-      <li><a href="nodes.html">Knotengraph</a></li>
-      <li><a href="geomap.html">Knotenkarte</a></li>
-    </ul>
-  </header>
-	<div id="map"></div>
-</body>
+        while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
+          _x += el.offsetLeft - el.scrollLeft
+          _y += el.offsetTop - el.scrollTop
+          el = el.offsetParent
+        }
+        return { top: _y, left: _x }
+      }
+
+      function resize() {
+        var offset = getOffset(document.getElementById('map'))
+
+        var w = window.innerWidth - offset.left
+        var h = window.innerHeight - offset.top - 1
+
+        d3.select("#map").style("width", w+"px").style("height", h+"px")
+        resizeMap()
+      }
+    </script>
+  </head>
+
+  <body onload="resize(); init()">
+    <header>
+      <h1>luebeck.freifunk.net</h1>
+      <ul>
+        <li><a href="nodes.html">Knotengraph</a></li>
+        <li><a href="geomap.html">Knotenkarte</a></li>
+      </ul>
+    </header>
+    <div id="map"></div>
+  </body>
 </html>
