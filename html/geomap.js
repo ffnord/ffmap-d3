@@ -1,4 +1,5 @@
 var map;
+var vectorLayer;
 
 OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control);
 
@@ -43,6 +44,17 @@ function init()
   load_json(vectorLayer, map)
 }
 
+function resizeMap()
+{
+  if (map !== undefined) {
+    map.updateSize()
+
+    // Did someone say Chrome bug?
+    map.removeLayer(vectorLayer)
+    map.addLayer(vectorLayer)
+  }
+}
+
 function onPopupClose(evt)
 {
   selectControl.unselect(selectedFeature);
@@ -54,7 +66,7 @@ function onFeatureSelect(feature)
   popup = new OpenLayers.Popup.FramedCloud("chicken",
       feature.geometry.getBounds().getCenterLonLat(),
       new OpenLayers.Size(100,150),
-      "<div style='font-size:.8em'><b>Name:</b>"+feature.attributes.name+"<br><b>Description:</b>"+feature.attributes.description+"</div>",
+      "<div class='nodePopup'><span class='label'>Name:</span> "+feature.attributes.name+"<br><span class='label'>Description:</span> "+feature.attributes.description+"</div>",
       null, true, onPopupClose);
   feature.popup = popup;
   map.addPopup(popup);

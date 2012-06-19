@@ -27,8 +27,6 @@ function getOffset( el ) {
   return { top: _y, left: _x }
 }
 
-var offset = getOffset(document.getElementById('chart'))
-
 var w, h
 
 resize()
