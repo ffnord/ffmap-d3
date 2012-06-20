@@ -292,7 +292,7 @@ var data
 var visible = {clients: true, vpn: true}
 
 function reload() {
-  d3.json("nodes.json", function(json) {
+  d3.json(nodes_json, function(json) {
     // update existing nodes with new info
     // XXX inefficient data structure
     json.nodes.forEach(function(d, i) {

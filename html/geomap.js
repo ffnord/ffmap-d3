@@ -85,7 +85,7 @@ function kmlLoaded()
 }
 
 function load_json(layer, map) {
-  d3.json("nodes.json", function(json) {
+  d3.json(nodes_json, function(json) {
     // replace indices with real objects
     json.links.forEach( function(d) {
       if (typeof d.source == "number") d.source = json.nodes[d.source]
