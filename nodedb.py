@@ -63,8 +63,11 @@ class NodeDB:
         # consider this MAC as one of the routers
         # MACs
         if 'gateway' in x and x['label'] == "TT":
-          router = list(int(i, 16) for i in x['router'].split(":"))
-          gateway = list(int(i, 16) for i in x['gateway'].split(":"))
+          try:
+            router = list(int(i, 16) for i in x['router'].split(":"))
+            gateway = list(int(i, 16) for i in x['gateway'].split(":"))
+          except ValueError:
+            continue
 
           # first byte must only differ in bit 2
           if router[0] == gateway[0] | 2:
