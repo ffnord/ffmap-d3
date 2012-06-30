@@ -185,6 +185,9 @@ class NodeDB:
       if 'vpn' in alias and alias['vpn']:
         node.interfaces[mac].vpn = True
 
+      if 'gps' in alias:
+        node.gps = alias['gps']
+
   # list of macs
   # if options['gateway']:
   #   mark_gateways(options['gateway'])
