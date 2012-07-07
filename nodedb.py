@@ -64,28 +64,16 @@ class NodeDB:
         # MACs
         if 'gateway' in x and x['label'] == "TT":
           try:
-            router = list(int(i, 16) for i in x['router'].split(":"))
-            gateway = list(int(i, 16) for i in x['gateway'].split(":"))
+            mac_a = list(int(i, 16) for i in x['router'].split(":"))
+            mac_b = list(int(i, 16) for i in x['gateway'].split(":"))
           except ValueError:
             continue
 
-          # first byte must only differ in bit 2
-          if router[0] == gateway[0] | 2:
-            # count different bytes
-            a = [x for x in zip(router[1:], gateway[1:]) if x[0] != x[1]]
+          if is_similar(mac_a, mac_b):
+            node.add_mac(x['gateway'])
 
-            # no more than two additional bytes must differ
-            if len(a) <= 2:
-              delta = 0
-              if len(a) > 0:
-                delta = sum(abs(i[0] -i[1]) for i in a)
-
-              if delta < 8:
-                # This TT link looks like a mac of the router!
-                node.add_mac(x['gateway'])
-
-                # skip processing as regular link
-                continue
+            # skip processing as regular link
+            continue
 
         try:
           if 'neighbor' in x:
@@ -291,4 +279,24 @@ class NodeDB:
 
         if data[2]:
           node.name = data[2]
+
+# compares two MACs and decides whether they are
+# similar and could be from the same node
+def is_similar(a, b):
+  # first byte must only differ in bit 2
+  if a[0] | 2 == b[0] | 2:
+    # count different bytes
+    a = [x for x in zip(a[1:], b[1:]) if x[0] != x[1]]
+  else:
+    return False
+
+  # no more than two additional bytes must differ
+  if len(a) <= 2:
+    delta = 0
+
+  if len(a) > 0:
+    delta = sum(abs(i[0] -i[1]) for i in a)
+
+  # This TT link looks like a mac of the router!
+  return delta < 8
 
