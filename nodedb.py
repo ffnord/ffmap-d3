@@ -22,6 +22,18 @@ class NodeDB:
   def get_nodes(self):
     return self._nodes
 
+  # this methods has evil side-effects!
+  # Better don't call it :-)
+  def maybe_node_by_fuzzy_mac(self, mac):
+    mac_a = mac.lower()
+
+    for node in self._nodes:
+      for mac_b in node.macs:
+        if is_similar(mac_a, mac_b):
+          return node
+
+    raise
+
   def maybe_node_by_mac(self, macs):
     for node in self._nodes:
       for mac in macs:
@@ -268,7 +280,7 @@ class NodeDB:
           continue
 
         try:
-          node = self.maybe_node_by_mac((data[0], ))
+          node = self.maybe_node_by_fuzzy_mac(data[0])
         except:
           node = Node()
           node.add_mac(data[0])
