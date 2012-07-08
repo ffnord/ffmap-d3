@@ -22,8 +22,6 @@ class NodeDB:
   def get_nodes(self):
     return self._nodes
 
-  # this methods has evil side-effects!
-  # Better don't call it :-)
   def maybe_node_by_fuzzy_mac(self, mac):
     mac_a = mac.lower()
 
@@ -32,7 +30,7 @@ class NodeDB:
         if is_similar(mac_a, mac_b):
           return node
 
-    raise
+    raise KeyError
 
   def maybe_node_by_mac(self, macs):
     for node in self._nodes:
@@ -75,13 +73,7 @@ class NodeDB:
         # consider this MAC as one of the routers
         # MACs
         if 'gateway' in x and x['label'] == "TT":
-          try:
-            mac_a = list(int(i, 16) for i in x['router'].split(":"))
-            mac_b = list(int(i, 16) for i in x['gateway'].split(":"))
-          except ValueError:
-            continue
-
-          if is_similar(mac_a, mac_b):
+          if is_similar(x['router'], x['gateway']):
             node.add_mac(x['gateway'])
 
             # skip processing as regular link
@@ -281,7 +273,7 @@ class NodeDB:
 
         try:
           node = self.maybe_node_by_fuzzy_mac(data[0])
-        except:
+        except KeyError:
           node = Node()
           node.add_mac(data[0])
           self._nodes.append(node)
@@ -295,20 +287,29 @@ class NodeDB:
 # compares two MACs and decides whether they are
 # similar and could be from the same node
 def is_similar(a, b):
+  if a == b:
+    return True
+
+  try:
+    mac_a = list(int(i, 16) for i in a.split(":"))
+    mac_b = list(int(i, 16) for i in b.split(":"))
+  except ValueError:
+    return False
+
   # first byte must only differ in bit 2
-  if a[0] | 2 == b[0] | 2:
+  if mac_a[0] | 2 == mac_b[0] | 2:
     # count different bytes
-    a = [x for x in zip(a[1:], b[1:]) if x[0] != x[1]]
+    c = [x for x in zip(mac_a[1:], mac_b[1:]) if x[0] != x[1]]
   else:
     return False
 
   # no more than two additional bytes must differ
-  if len(a) <= 2:
+  if len(c) <= 2:
     delta = 0
 
-  if len(a) > 0:
-    delta = sum(abs(i[0] -i[1]) for i in a)
+  if len(c) > 0:
+    delta = sum(abs(i[0] -i[1]) for i in c)
 
-  # This TT link looks like a mac of the router!
+  # These addresses look pretty similar!
   return delta < 8
 
