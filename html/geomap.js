@@ -1,5 +1,6 @@
 var map;
 var vectorLayer;
+var nodes_json = "nodes.json"
 
 OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control);
 
@@ -19,12 +20,18 @@ function init()
       displayProjection: new OpenLayers.Projection("EPSG:4326")
   } );
 
+arrayOSM = ["http://otile1.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.jpg",
+	    "http://otile2.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.jpg",
+	    "http://otile3.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.jpg",
+	    "http://otile4.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.jpg"];
+
   var layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Mapnik", {opacity: 0.5});
-  map.addLayer(layerMapnik);
+  var baseOSM = new OpenLayers.Layer.OSM("MapQuest-OSM Tiles", arrayOSM);
+  map.addLayer(baseOSM);
 
-  var center = new OpenLayers.LonLat(10.688, 53.866).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+  var center = new OpenLayers.LonLat(10.13846, 54.32260).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
 
-  var zoom = 12
+  var zoom = 13
 
   map.setCenter(center, zoom);
 
