@@ -29,7 +29,7 @@ arrayOSM = ["http://otile1.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.jpg",
   var baseOSM = new OpenLayers.Layer.OSM("MapQuest-OSM Tiles", arrayOSM);
   map.addLayer(baseOSM);
 
-  var center = new OpenLayers.LonLat(10.13846, 54.32260).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+  var center = new OpenLayers.LonLat(10.688, 53.866).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
 
   var zoom = 13
 
