@@ -415,6 +415,9 @@ function update() {
       .style("stroke", function(d) {
         return linkcolor(Math.max.apply(null, d.quality.split(",")))
       })
+      .attr("class", function(d) {
+        return d.quality.split(",").length==1?"unidirectional":"bidirectional"
+      })
 
   link.selectAll("title")
       .text( function (d) {

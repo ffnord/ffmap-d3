@@ -24,6 +24,10 @@
   stroke-width: 2px;
 }
 
+.link line.unidirectional {
+  stroke-width: 2px;
+}
+
 .node ellipse {
   fill: #fff;
   stroke: #48f;
