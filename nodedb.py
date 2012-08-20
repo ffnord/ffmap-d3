@@ -275,8 +275,9 @@ class NodeDB:
           node = self.maybe_node_by_fuzzy_mac(data[0])
         except KeyError:
           node = Node()
-          node.add_mac(data[0])
           self._nodes.append(node)
+
+        node.add_mac(data[0])
 
         if data[1]:
           node.gps = data[1]
