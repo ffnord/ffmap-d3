@@ -284,19 +284,9 @@ class NodeDB:
         if data[2]:
           node.name = data[2]
 
-# 1043nd, vpn, wlan, br-wan
-
 # compares two MACs and decides whether they are
 # similar and could be from the same node
 def is_similar(a, b):
-# a is the base address
-# b is some mac of the host
-# b = 00:00:00:00:00:+1 x
-#     |2:00:00:+1:00:+1 x
-#     |2:00:00:00:00:+1 x
-#     |2:00:00:00:00:+2
-#     |2:00:00:+1:00:00
-
   if a == b:
     return True
 
@@ -306,29 +296,20 @@ def is_similar(a, b):
   except ValueError:
     return False
 
-  x = mac_a
-  x[5] += 1
-  if mac_b == x:
-    return True
+  # first byte must only differ in bit 2
+  if mac_a[0] | 2 == mac_b[0] | 2:
+    # count different bytes
+    c = [x for x in zip(mac_a[1:], mac_b[1:]) if x[0] != x[1]]
+  else:
+    return False
 
-  x[0] |= 2
-  if mac_b == x:
-    return True
+  # no more than two additional bytes must differ
+  if len(c) <= 2:
+    delta = 0
 
-  x[3] += 1
-  if mac_b == x:
-    return True
+  if len(c) > 0:
+    delta = sum(abs(i[0] -i[1]) for i in c)
 
-  x = mac_a
-  x[0] |= 2
-  x[5] += 2
-  if mac_b == x:
-    return True
+  # These addresses look pretty similar!
+  return delta < 8
 
-  x = mac_a
-  x[0] |= 2
-  x[3] += 1
-  if mac_b == x:
-    return True
-
-  return False
