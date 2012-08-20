@@ -325,6 +325,7 @@ def is_derived_mac(a, b):
 
   x = mac_a
   x[5] += 1
+  x[5] %= 255
   if mac_b == x:
     return True
 
@@ -333,18 +334,21 @@ def is_derived_mac(a, b):
     return True
 
   x[3] += 1
+  x[3] %= 255
   if mac_b == x:
     return True
 
   x = mac_a
   x[0] |= 2
   x[5] += 2
+  x[5] %= 255
   if mac_b == x:
     return True
 
   x = mac_a
   x[0] |= 2
   x[3] += 1
+  x[3] %= 255
   if mac_b == x:
     return True
 
