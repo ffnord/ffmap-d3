@@ -27,7 +27,7 @@ class NodeDB:
 
     for node in self._nodes:
       for mac_b in node.macs:
-        if is_similar(mac_a, mac_b):
+        if is_derived_mac(mac_a, mac_b):
           return node
 
     raise KeyError
@@ -313,3 +313,39 @@ def is_similar(a, b):
   # These addresses look pretty similar!
   return delta < 8
 
+def is_derived_mac(a, b):
+  if a == b:
+    return True
+
+  try:
+    mac_a = list(int(i, 16) for i in a.split(":"))
+    mac_b = list(int(i, 16) for i in b.split(":"))
+  except ValueError:
+    return False
+
+  x = mac_a
+  x[5] += 1
+  if mac_b == x:
+    return True
+
+  x[0] |= 2
+  if mac_b == x:
+    return True
+
+  x[3] += 1
+  if mac_b == x:
+    return True
+
+  x = mac_a
+  x[0] |= 2
+  x[5] += 2
+  if mac_b == x:
+    return True
+
+  x = mac_a
+  x[0] |= 2
+  x[3] += 1
+  if mac_b == x:
+    return True
+
+  return False
