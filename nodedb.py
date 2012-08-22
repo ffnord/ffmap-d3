@@ -261,11 +261,11 @@ class NodeDB:
         pass
 
       try:
-        node['Nick'] = node['Nick'].split(',')
+        node['Knotenname'] = node['Knotenname'].split(',')
       except KeyError:
         pass
 
-      nodes = zip_longest(node['MAC'], node['GPS'], node['Nick'])
+      nodes = zip_longest(node['MAC'], node['GPS'], node['Knotenname'])
 
       for data in nodes:
         if not data[0]:
