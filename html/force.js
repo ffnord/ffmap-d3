@@ -366,9 +366,15 @@ function reload() {
   })
 }
 
-var linkcolor = d3.scale.linear()
-                  .domain([1, 1.5, 3])
-                  .range(["#0a3", "orange", "red"]);
+var linkcolor = {'default':
+                  d3.scale.linear()
+                  .domain([1, 1.25, 1.5])
+                  .range(["#0a3", "orange", "red"]),
+                 'wifi':
+                  d3.scale.linear()
+                  .domain([1, 3, 10])
+                  .range(["#0a3", "orange", "red"]),
+                }
 
 function update() {
   var links = data.links
@@ -413,7 +419,12 @@ function update() {
         return d.type != 'client'
       })
       .style("stroke", function(d) {
-        return linkcolor(Math.max.apply(null, d.quality.split(",")))
+        switch (d.type) {
+          case "vpn":
+            return linkcolor['default'](Math.max.apply(null, d.quality.split(",")))
+          default:
+            return linkcolor['wifi'](Math.max.apply(null, d.quality.split(",")))
+        }
       })
       .attr("class", function(d) {
         return d.quality.split(",").length==1?"unidirectional":"bidirectional"
