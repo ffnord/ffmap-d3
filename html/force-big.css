@@ -56,3 +56,8 @@
 #sidebar {
   color: #ddd;
 }
+
+#sidebar text {
+  fill: #ddd;
+  font-size: 0.8em;
+}

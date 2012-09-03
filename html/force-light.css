@@ -63,3 +63,8 @@
 #sidebar {
   color: #777;
 }
+
+#sidebar text {
+  fill: #777;
+  font-size: 0.8em;
+}
