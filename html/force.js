@@ -555,7 +555,7 @@ function bounding_box(d) {
       r.ry = c.ry.animVal.value
       break;
     case "circle":
-      r.rx = r.rz = c.r.animVal.value
+      r.rx = r.ry = c.r.animVal.value
       break;
     default:
       r.rx = r.ry = 10
