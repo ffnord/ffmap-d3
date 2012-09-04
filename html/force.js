@@ -263,14 +263,12 @@ force.on("tick", function() {
   var nodes = force.nodes()
   var n = nodes.length
   for (i = 0; i < n; i++) {
-    var o = nodes[i]
-    if (!o.fixed) {
-      node = d3.select(document.getElementById(o.id))[0][0]
-      box = bounding_box(node)
-      if (o.x < box.rx) o.x = box.rx
-      if (o.x > size[0] - box.rx) o.x = size[0] - box.rx
-      if (o.y < box.ry) o.y = box.ry
-      if (o.y > size[1] - box.ry) o.y = size[1] - box.ry
+    var n = nodes[i]
+    if (!n.fixed) {
+      if (n.x < n.rx) n.x = n.rx
+      if (n.x > size[0] - n.rx) n.x = size[0] - n.rx
+      if (n.y < n.ry) n.y = n.ry
+      if (n.y > size[1] - n.ry) n.y = size[1] - n.ry
     }
   }
 
@@ -484,12 +482,22 @@ function update() {
 
   node.selectAll("ellipse")
     .attr("rx", function(d) {
-      if (d.flags.client) return 4
-      else return Math.max(10, d.name.length * 5)
+      var r
+      if (d.flags.client) r = 4
+      else r = Math.max(10, d.name.length * 5)
+
+      d.rx = r
+
+      return r
     })
     .attr("ry", function(d) {
-      if (d.flags.client) return 4
-      else return 10
+      var r
+      if (d.flags.client) r = 4
+      else r = 10
+
+      d.ry = r
+
+      return r
     })
 
   nodeEnter.filter(function(d) {
@@ -544,24 +552,6 @@ function update() {
 
   if (hashstr.length != 0)
     show_node(hashstr)
-}
-
-function bounding_box(d) {
-  var c = d.firstChild
-  var r = {}
-  switch(c.nodeName) {
-    case "ellipse":
-      r.rx = c.rx.animVal.value
-      r.ry = c.ry.animVal.value
-      break;
-    case "circle":
-      r.rx = r.ry = c.r.animVal.value
-      break;
-    default:
-      r.rx = r.ry = 10
-  }
-
-  return r
 }
 
 reload()
