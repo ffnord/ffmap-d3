@@ -261,8 +261,8 @@ var force = d3.layout.force()
 force.on("tick", function() {
   var size = force.size()
   var nodes = force.nodes()
-  var n = nodes.length
-  for (i = 0; i < n; i++) {
+  var nl = nodes.length
+  for (i = 0; i < nl; i++) {
     var n = nodes[i]
     if (!n.fixed) {
       if (n.x < n.rx) n.x = n.rx
