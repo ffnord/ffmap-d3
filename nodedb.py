@@ -267,23 +267,25 @@ class NodeDB:
 
       nodes = zip_longest(node['MAC'], node['GPS'], node['Knotenname'])
 
+
       for data in nodes:
-        if not data[0]:
+        mac = data[0].strip()
+        if not mac:
           continue
 
         try:
-          node = self.maybe_node_by_fuzzy_mac(data[0])
+          node = self.maybe_node_by_fuzzy_mac(mac)
         except KeyError:
           node = Node()
           self._nodes.append(node)
 
-        node.add_mac(data[0])
+        node.add_mac(mac)
 
         if data[1]:
-          node.gps = data[1]
+          node.gps = data[1].strip()
 
         if data[2]:
-          node.name = data[2]
+          node.name = data[2].strip()
 
 # compares two MACs and decides whether they are
 # similar and could be from the same node
