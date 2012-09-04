@@ -104,9 +104,15 @@ btns.append("button")
     .on("click", update_graph)
 
 btns.append("button")
-    .attr("class", "btn active right")
+    .attr("class", "btn active middle")
     .attr("value", "vpn")
     .text("VPN")
+    .on("click", update_graph)
+
+btns.append("button")
+    .attr("class", "btn active right")
+    .attr("value", "labels")
+    .text("Labels")
     .on("click", update_graph)
 
 var meshinfo = d3.select("#sidebar")
@@ -287,7 +293,7 @@ force.on("tick", function() {
 
 var data
 
-var visible = {clients: true, vpn: true}
+var visible = {clients: true, vpn: true, labels: true}
 
 function reload() {
   d3.json(nodes_json, function(json) {
@@ -484,7 +490,8 @@ function update() {
     .attr("rx", function(d) {
       var r
       if (d.flags.client) r = 4
-      else r = Math.max(10, d.name.length * 5)
+      else if (visible.labels) r = Math.max(10, d.name.length * 5)
+      else r = 10
 
       d.rx = r
 
@@ -493,6 +500,7 @@ function update() {
     .attr("ry", function(d) {
       var r
       if (d.flags.client) r = 4
+      else if (visible.labels) r = 10
       else r = 10
 
       d.ry = r
@@ -509,7 +517,12 @@ function update() {
     .attr("y", "4px")
 
   node.selectAll("text.name")
-      .text(function(d) { return d.name })
+      .text(function(d) {
+        if (visible.labels)
+          return d.name
+
+        return ""
+      })
 
   nodeEnter.append("title")
 
