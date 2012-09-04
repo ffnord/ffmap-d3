@@ -527,7 +527,7 @@ function update() {
   nodeEnter.append("title")
 
   node.selectAll("title")
-    .text(function(d) { return d.macs })
+    .text(function(d) { return d.name?d.name:" " })
 
   node.selectAll(".uplinks").remove()
   
