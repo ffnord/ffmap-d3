@@ -271,10 +271,10 @@ force.on("tick", function() {
   for (i = 0; i < nl; i++) {
     var n = nodes[i]
     if (!n.fixed) {
-      if (n.x < n.rx) n.x = n.rx
-      if (n.x > size[0] - n.rx) n.x = size[0] - n.rx
-      if (n.y < n.ry) n.y = n.ry
-      if (n.y > size[1] - n.ry) n.y = size[1] - n.ry
+      if (n.x < n.rx + 20) n.x = n.rx + 20
+      if (n.x > size[0] - n.rx - 20) n.x = size[0] - n.rx - 20
+      if (n.y < n.ry + 20) n.y = n.ry + 20
+      if (n.y > size[1] - n.ry - 20 ) n.y = size[1] - n.ry - 20
     }
   }
 
