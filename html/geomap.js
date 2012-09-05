@@ -130,6 +130,14 @@ function load_json(layer, map) {
                                   .transform( new OpenLayers.Projection("EPSG:4326"),
                                                   map.getProjectionObject() 
                                   );
+        var color;
+        switch (d.type) {
+          case "vpn":
+            color = linkcolor['default'](Math.max.apply(null, d.quality.split(",")))
+            break;
+          default:
+            color = linkcolor['wifi'](Math.max.apply(null, d.quality.split(",")))
+        }
 
         var feature = new OpenLayers.Feature.Vector(new OpenLayers.Geometry.LineString(
            [new OpenLayers.Geometry.Point(a.lon, a.lat),
@@ -137,9 +145,9 @@ function load_json(layer, map) {
            ]),
            {name: d.name, description: d.id},
            { 
-              strokeColor: '#00ff00', 
-              strokeOpacity: 0.5,
-              strokeWidth: 5
+              strokeColor: color,
+              strokeOpacity: 0.8,
+              strokeWidth: 3
            })
         layer.addFeatures([feature])
       })
