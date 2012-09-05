@@ -158,6 +158,8 @@ function isConnected(a, b) {
 
 function fade(opacity) {
   return function(d) {
+    if (dragging) return
+
     vis.selectAll("g.node")
        .style("stroke-opacity", function(o) {
          var connected = isConnected(d, o)
@@ -380,6 +382,33 @@ var linkcolor = {'default':
                   .range(["#0a3", "orange", "red"]),
                 }
 
+var dragging = false
+
+var node_drag = d3.behavior.drag()
+        .on("dragstart", dragstart)
+        .on("drag", dragmove)
+        .on("dragend", dragend)
+
+var d3_layout_forceDragNode
+
+function dragstart(d) {
+  dragging = true
+  d3_layout_forceDragNode = d
+  d.fixed |= 2
+}
+
+function dragmove() {
+  d3_layout_forceDragNode.px = d3.event.x
+  d3_layout_forceDragNode.py = d3.event.y
+  force.resume() // restart annealing
+}
+
+function dragend() {
+  d3_layout_forceDragNode.fixed &= 1
+  d3_layout_forceDragNode = null
+  dragging = false
+}
+
 function update() {
   var links = data.links
                    .filter(function (d) {
@@ -407,10 +436,14 @@ function update() {
                         return "link " + d.type
                       })
                       .on("mouseover", function(d) {
+                        if (dragging) return
+
                         d.source.fixed |= 2
                         d.target.fixed |= 2
                       })
                       .on("mouseout", function(d) {
+                        if (dragging) return
+
                         d.source.fixed &= 1
                         d.target.fixed &= 1
                       })
@@ -474,7 +507,7 @@ function update() {
                 .on("mouseover", fade(.2))
                 .on("mouseout", fade(1))
                 .on("click", show_node_info)
-                .call(force.drag)
+                .call(node_drag)
 
   nodeEnter.append("ellipse")
            .attr("class", function(d) {
