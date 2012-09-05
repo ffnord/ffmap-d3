@@ -25,8 +25,7 @@ arrayOSM = ["http://otile1.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.jpg",
 	    "http://otile3.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.jpg",
 	    "http://otile4.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.jpg"];
 
-  var layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Mapnik", {opacity: 0.5});
-  var baseOSM = new OpenLayers.Layer.OSM("MapQuest-OSM Tiles", arrayOSM);
+  var baseOSM = new OpenLayers.Layer.OSM("MapQuest-OSM Tiles", arrayOSM, {opacity: 0.6});
   map.addLayer(baseOSM);
 
   var center = new OpenLayers.LonLat(10.688, 53.866).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
@@ -145,7 +144,7 @@ function load_json(layer, map) {
            ]),
            {name: d.name, description: d.id},
            { 
-              strokeColor: color,
+              strokeColor: d3.rgb(color).brighter(1),
               strokeOpacity: 0.8,
               strokeWidth: 3
            })
