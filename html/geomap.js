@@ -52,7 +52,7 @@ arrayOSM = ["http://otile1.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.jpg",
   d3.selectAll("#gpsbutton").on("click",  function() {
     function clickhandler(e) {
       var lonlat = map.getLonLatFromViewPortPx(e.xy).transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"))
-      alert(lonlat.lon + " " + lonlat.lat)
+      alert(lonlat.lat + " " + lonlat.lon)
       map.events.unregister("click", map, clickhandler)
     }
     var clickevent = map.events.register("click", map, clickhandler)
