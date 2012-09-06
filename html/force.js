@@ -245,7 +245,7 @@ var force = d3.layout.force()
                 if (d.flags.client)
                   return -30
 
-                return -200
+                return -100
               })
               .gravity(0.035)
               .friction(0.73)
@@ -253,16 +253,15 @@ var force = d3.layout.force()
               .size([w, h])
               .linkDistance(function (d) {
                 switch (d.type) {
-                  case "vpn": return 200
                   case "client": return 20
                   default: return 70
                 }
               })
               .linkStrength(function (d) {
                 switch (d.type) {
-                  case "vpn": return 0.05
+                  case "vpn": return 0.01
                   case "client": return 1
-                  default: return 0.8
+                  default: return 0.5
                 }
               })
 
