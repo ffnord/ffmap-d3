@@ -263,7 +263,7 @@ var force = d3.layout.force()
                 switch (d.type) {
                   case "vpn": return 0.01
                   case "client": return 1
-                  default: return 1
+                  default: return 0.2
                 }
               })
 
