@@ -7,14 +7,13 @@
   stroke-width: 2.5px;
 }
 
-.node text {
+.node text, .label text {
   font-size: 10px;
   fill: #333;
 }
 
 .link line {
   stroke: #777;
-  stroke-opacity: 1;
   stroke-width: 2.5px;
 }
 
@@ -67,4 +66,12 @@
 #sidebar text {
   fill: #777;
   font-size: 0.8em;
+}
+
+.label rect {
+  fill: rgba(255, 255, 255, 0.8);
+}
+
+.label.highlight rect {
+  fill: rgba(255, 255, 100, 0.9);
 }

@@ -12,6 +12,11 @@
   stroke-width: 5px;
 }
 
+.faded {
+  stroke-opacity: 0.2;
+  fill-opacity: 0.2;
+}
+
 .node.highlight ellipse {
   fill: #FFF0B3;
 }

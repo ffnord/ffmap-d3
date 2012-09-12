@@ -41,7 +41,7 @@ function resize() {
 
   d3.select("#chart")
     .attr("width", w).attr("height", h)
- 
+
   if (vis)
     vis.attr("width", w).attr("height", h)
 
@@ -53,7 +53,7 @@ function next_style() {
   var s;
   if (style !== undefined)
     s = d3.select("head link[title=" + style + "] + link")
-  
+
   if (s == null || s[0][0] == null)
     s = d3.select("head link[title]")
 
@@ -142,7 +142,7 @@ function show_node(mac) {
 
   d3.selectAll("#chart .node")
     .each( function(d) {
-      if (d.id == mac) 
+      if (d.id == mac)
         d3.select(this)
           .classed("marked", true)
     })
@@ -156,32 +156,32 @@ function isConnected(a, b) {
          a.index == b.index
 }
 
-function fade(opacity) {
+function highlight(b) {
   return function(d) {
     if (dragging) return
 
     vis.selectAll("g.node")
-       .style("stroke-opacity", function(o) {
-         var connected = isConnected(d, o)
+       .classed("faded", function(o) {
+         return !(isConnected(d, o)) && b
+       })
+       .classed("highlight", function(o) {
+         return isConnected(d, o) && b
+       })
 
-         if (connected && opacity != 1)
-           d3.select(this)
-             .classed("highlight", true)
-         else
-           d3.select(this)
-             .classed("highlight", false)
+    vis.selectAll("g.label")
+       .classed("faded", function(o) {
+         return !isConnected(d, o) && b
+       })
+       .classed("highlight", function(o) {
+         return o == d && b
+       })
 
-         thisOpacity = connected?1:opacity
-         this.setAttribute('fill-opacity', thisOpacity)
-         return thisOpacity
-       })
-
-    vis.selectAll(".link *")
-       .style("stroke-opacity", function(o) {
-         return o.source === d || o.target === d ? 1 : opacity
+    vis.selectAll(".link")
+       .classed("faded", function(o) {
+         return !(o.source === d || o.target === d) && b
        })
   }
-} 
+}
 
 function show_node_info(d) {
   d3.selectAll("#nodeinfo").remove()
@@ -238,6 +238,8 @@ vis.append("g").attr("class", "links")
 
 vis.append("g").attr("class", "nodes")
 
+vis.append("g").attr("class", "labels")
+
 var linkedByIndex
 
 var force = d3.layout.force()
@@ -261,11 +263,11 @@ var force = d3.layout.force()
                 switch (d.type) {
                   case "vpn": return 0.01
                   case "client": return 1
-                  default: return 0.5
+                  default: return 1
                 }
               })
 
-force.on("tick", function() {
+force.on("tick", function(e) {
   var size = force.size()
   var nodes = force.nodes()
   var nl = nodes.length
@@ -287,7 +289,11 @@ force.on("tick", function() {
       .attr("x2", function(d) { return d.target.x })
       .attr("y2", function(d) { return d.target.y })
 
-  vis.selectAll(".node").attr("transform", function(d) { 
+  vis.selectAll(".node").attr("transform", function(d) {
+    return "translate(" + d.x + "," + d.y + ")";
+  })
+
+  vis.selectAll(".label").attr("transform", function(d) {
     return "translate(" + d.x + "," + d.y + ")";
   })
 })
@@ -405,11 +411,11 @@ function update() {
                        return false
 
                      if (!visible.clients && (d.source.flags.client || d.target.flags.client))
-                       return false 
+                       return false
 
                      // hides links to clients
                      if (!visible.vpn && (d.source.flags.vpn || d.target.flags.vpn))
-                       return false 
+                       return false
 
                      return true
                    })
@@ -478,7 +484,10 @@ function update() {
                     return false
 
                   return true
-                }) 
+                })
+                .sort(function(a, b) {
+                  return (a.flags.client?1:0) < (b.flags.client?1:0)
+                })
 
   var node = vis.select("g.nodes")
                 .selectAll("g.node")
@@ -493,8 +502,8 @@ function update() {
                   return d.id
                 })
                 .attr("class", "node")
-                .on("mouseover", fade(.2))
-                .on("mouseout", fade(1))
+                .on("mouseover", highlight(true))
+                .on("mouseout", highlight(false))
                 .on("click", show_node_info)
                 .call(node_drag)
 
@@ -512,8 +521,7 @@ function update() {
     .attr("rx", function(d) {
       var r
       if (d.flags.client) r = 4
-      else if (visible.labels) r = Math.max(10, d.name.length * 5)
-      else r = 10
+      else r = 8
 
       d.rx = r
 
@@ -522,29 +530,47 @@ function update() {
     .attr("ry", function(d) {
       var r
       if (d.flags.client) r = 4
-      else if (visible.labels) r = 10
-      else r = 10
+      else r = 8
 
       d.ry = r
 
       return r
     })
 
-  nodeEnter.filter(function(d) {
-      return !d.flags.client
-    })
-    .append("text")
-    .attr("class", "name")
-    .attr("text-anchor", "middle")
-    .attr("y", "4px")
+  var label = vis.select("g.labels")
+                .selectAll("g.label")
+                .data(nodes.filter(function(d) {
+                      return !d.flags.client && visible.labels
+                    }), function(d) {
+                    return d.id
+                  }
+                )
 
-  node.selectAll("text.name")
+  var labelEnter = label.enter()
+                    .append("g")
+                    .attr("id", function (d) {
+                      return d.id
+                    })
+                    .attr("class", "label")
+
+  labelEnter.append("rect")
+            .attr("y", "10px")
+            .attr("x", function(d) { return - d.name.length * 7/2 })
+            .attr("width", function(d) { return d.name.length * 7 })
+            .attr("height", "15px")
+
+  labelEnter.append("text")
+            .attr("class", "name")
+            .attr("text-anchor", "middle")
+            .attr("y", "21px")
+            .attr("x", "0px")
+
+  label.selectAll("text.name")
       .text(function(d) {
-        if (visible.labels)
-          return d.name
-
-        return ""
+        return d.name
       })
+
+  label.exit().remove()
 
   nodeEnter.append("title")
 
@@ -552,7 +578,7 @@ function update() {
     .text(function(d) { return d.name?d.name:" " })
 
   node.selectAll(".uplinks").remove()
-  
+
   if (!visible.vpn) {
     var uplink_info = node.filter(function (d) {
       return d.vpns > 0

@@ -6,15 +6,13 @@
   stroke-width: 2.5px;
 }
 
-.node text {
-  font-size: 11px;
+.node text, .label text {
+  font-size: 10px;
   fill: #000;
-  font-weight: bold;
 }
 
 .link line {
   stroke: #ddd;
-  stroke-opacity: 1;
   stroke-width: 5px;
 }
 
@@ -60,4 +58,8 @@
 #sidebar text {
   fill: #ddd;
   font-size: 0.8em;
+}
+
+.label rect {
+  fill: rgba(255, 255, 255, 1.0);
 }
