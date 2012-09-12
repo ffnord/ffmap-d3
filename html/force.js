@@ -508,14 +508,16 @@ function update() {
                 .call(node_drag)
 
   nodeEnter.append("ellipse")
-           .attr("class", function(d) {
-             var s = []
-             for (var key in d.flags)
-               if (d.flags.hasOwnProperty(key) && d.flags[key])
-                 s.push(key)
 
-             return s.join(" ")
-           })
+  node.selectAll("ellipse")
+      .attr("class", function(d) {
+        var s = []
+        for (var key in d.flags)
+          if (d.flags.hasOwnProperty(key) && d.flags[key])
+            s.push(key)
+
+        return s.join(" ")
+      })
 
   node.selectAll("ellipse")
     .attr("rx", function(d) {
