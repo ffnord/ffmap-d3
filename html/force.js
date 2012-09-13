@@ -183,17 +183,29 @@ function highlight(b) {
   }
 }
 
+function goto_node(d) {
+  show_node_info(d)
+}
+
 function show_node_info(d) {
   d3.selectAll("#nodeinfo").remove()
 
   nodeinfo = d3.select("#chart")
                .append("div")
                .attr("id", "nodeinfo")
+
   nodeinfo.append("button")
           .attr("class", "close")
           .text("x")
-          .on("click", function(d) {
+          .on("click", function() {
              nodeinfo.remove()
+          })
+
+  nodeinfo.append("button")
+          .attr("class", "refresh")
+          .text("refresh")
+          .on("click", function() {
+            goto_node(d)
           })
 
   nodeinfo.append("h1")
@@ -210,7 +222,7 @@ function show_node_info(d) {
           .data(d.vpns)
           .enter().append("li")
                   .append("a")
-                  .on("click", show_node_info)
+                  .on("click", goto_node)
                   .attr("href", "#")
                   .text(function(d) {
                     return d.name || d.macs
@@ -558,7 +570,7 @@ function update() {
                 .attr("class", "node")
                 .on("mouseover", highlight(true))
                 .on("mouseout", highlight(false))
-                .on("click", show_node_info)
+                .on("click", goto_node)
                 .call(node_drag)
 
   nodeEnter.append("ellipse")
