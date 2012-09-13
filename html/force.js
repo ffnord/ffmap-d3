@@ -267,7 +267,7 @@ var force = d3.layout.force()
                 }
               })
 
-force.on("tick", function(e) {
+function tick_event(e) {
   var size = force.size()
   var nodes = force.nodes()
   var nl = nodes.length
@@ -296,7 +296,7 @@ force.on("tick", function(e) {
   vis.selectAll(".label").attr("transform", function(d) {
     return "translate(" + d.x + "," + d.y + ")";
   })
-})
+}
 
 var data
 
@@ -373,8 +373,49 @@ function reload() {
     d3.select("#clientcount")
       .text("ungefähr " + (nClients - nNodes) + " Clients")
 
+    data = wilder_scheiß(data)
+
     update()
   })
+}
+
+function fix_geonodes(nodes, x) {
+  nodes.filter(function(d) {
+    return d.geo !== null
+  }).forEach(function(d) {
+    d.fixed = x
+  })
+}
+
+function wilder_scheiß(data) {
+  var nodes = data.nodes.filter(function(d) {
+    return d.geo !== null
+  })
+
+  var lat = nodes.map(function(d) { return d.geo[0] })
+  var lon = nodes.map(function(d) { return d.geo[1] })
+
+  var max_lat = Math.min.apply(null, lat)
+  var min_lat = Math.max.apply(null, lat)
+
+  var min_lon = Math.min.apply(null, lon)
+  var max_lon = Math.max.apply(null, lon)
+
+  var width = force.size()[0]
+  var height = force.size()[1]
+
+  var scale_x = width / (max_lon - min_lon)
+  var scale_y = height / (max_lat - min_lat)
+
+  nodes.forEach(function(d) {
+    if (d.x || d.y)
+      return
+
+    d.x = (d.geo[1] - min_lon) * scale_x
+    d.y = (d.geo[0] - min_lat) * scale_y
+  })
+
+  return data
 }
 
 var dragging = false
@@ -607,6 +648,25 @@ function update() {
        .alpha(0.1)
        .start()
 
+  if (initial == 1) {
+    fix_geonodes(data.nodes, true)
+
+    force.alpha(0.1)
+    while(force.alpha() > 0.05)
+      force.tick()
+
+    fix_geonodes(data.nodes, false)
+
+    force.alpha(0.1)
+    while(force.alpha() > 0.05)
+      force.tick()
+
+    force.on("tick", tick_event)
+    force.start()
+  }
+
+  initial = 0
+
   linkedByIndex = {}
 
   links.forEach(function(d) {
@@ -616,6 +676,8 @@ function update() {
   if (hashstr.length != 0)
     show_node(hashstr)
 }
+
+var initial = 1
 
 reload()
 
