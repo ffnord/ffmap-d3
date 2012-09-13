@@ -203,6 +203,19 @@ function show_node_info(d) {
           .append("label")
           .text("macs: " + d.macs)
 
+  nodeinfo.append("h2").text("VPN-Links")
+
+  nodeinfo.append("ul")
+          .selectAll("li")
+          .data(d.vpns)
+          .enter().append("li")
+                  .append("a")
+                  .on("click", show_node_info)
+                  .attr("href", "#")
+                  .text(function(d) {
+                    return d.name || d.macs
+                  })
+
   if (d.geo) {
     nodeinfo.append("h2").text("Geodaten")
 
@@ -338,15 +351,15 @@ function reload() {
 
     // count vpn links
     json.nodes.forEach(function(d) {
-      d.vpns = 0
+      d.vpns = []
     })
 
     json.links.forEach(function(d) {
       var node, other
 
       if (d.type == "vpn") {
-        d.source.vpns++
-        d.target.vpns++
+        d.source.vpns.push(d.target)
+        d.target.vpns.push(d.source)
       }
     })
 
@@ -624,7 +637,7 @@ function update() {
 
   if (!visible.vpn) {
     var uplink_info = node.filter(function (d) {
-      return d.vpns > 0
+      return d.vpns.length > 0
     })
     .append("g")
     .attr("class", "uplinks")
@@ -638,7 +651,7 @@ function update() {
     uplink_info.append("text")
       .attr("text-anchor", "middle")
       .attr("y", 3 - 20)
-      .text(function (d) {return d.vpns})
+      .text(function (d) {return d.vpns.length})
   }
 
   node.exit().remove()
