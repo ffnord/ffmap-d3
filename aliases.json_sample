@@ -1,9 +1,0 @@
-{
-   "b0:48:7a:e7:d3:64" : {
-      "name" : "Meute-AP"
-   },
-   "8e:3d:c2:10:10:28" : {
-      "name" : "holstentor",
-      "vpn" : true
-   }
-}
