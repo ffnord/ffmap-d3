@@ -328,53 +328,9 @@ var data
 var visible = {clients: true, vpn: true, labels: true}
 
 function reload() {
-  d3.json(nodes_json, function(json) {
-    // update existing nodes with new info
-    // XXX inefficient data structure
-    json.nodes.forEach(function(d, i) {
-      var n
-      force.nodes().forEach(function(x) {if (x.id == d.id) n = x})
-      if (n) {
-        for (var key in d)
-          if (d.hasOwnProperty(key))
-            n[key] = d[key]
+  load_nodes(nodes_json, handler)
 
-        json.nodes[i] = n
-      }
-    })
-
-    json.links.forEach(function(d, i) {
-      var n
-      force.links().forEach(function(x) {if (x.id == d.id) n = x})
-      if (n) {
-        for (var key in d)
-          if (d.hasOwnProperty(key))
-            n[key] = d[key]
-
-        json.links[i] = n
-      }
-    })
-
-    // replace indices with real objects
-    json.links.forEach( function(d) {
-      if (typeof d.source == "number") d.source = json.nodes[d.source];
-      if (typeof d.target == "number") d.target = json.nodes[d.target];
-    })
-
-    // count vpn links
-    json.nodes.forEach(function(d) {
-      d.vpns = []
-    })
-
-    json.links.forEach(function(d) {
-      var node, other
-
-      if (d.type == "vpn") {
-        d.source.vpns.push(d.target)
-        d.target.vpns.push(d.source)
-      }
-    })
-
+  function handler(json) {
     data = json
 
     updated_at.text(d3.time.format("%X")(new Date()))
@@ -401,7 +357,7 @@ function reload() {
     data = wilder_scheiß(data)
 
     update()
-  })
+  }
 }
 
 function fix_geonodes(nodes, x) {
