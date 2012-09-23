@@ -328,7 +328,7 @@ var data
 var visible = {clients: true, vpn: true, labels: true}
 
 function reload() {
-  load_nodes(nodes_json, handler)
+  load_nodes(nodes_json, data, handler)
 
   function handler(json) {
     data = json

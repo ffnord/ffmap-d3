@@ -1,30 +1,32 @@
 function load_nodes(filename, data, fn) {
   d3.json(filename, function(json) {
-    // update existing nodes with new info
-    // XXX inefficient data structure
-    json.nodes.forEach(function(d, i) {
-      var n
-      data.nodes.forEach(function(x) {if (x.id == d.id) n = x})
-      if (n) {
-        for (var key in d)
-          if (d.hasOwnProperty(key))
-            n[key] = d[key]
+    if (data) {
+      // update existing nodes with new info
+      // XXX inefficient data structure
+      json.nodes.forEach(function(d, i) {
+        var n
+        data.nodes.forEach(function(x) {if (x.id == d.id) n = x})
+        if (n) {
+          for (var key in d)
+            if (d.hasOwnProperty(key))
+              n[key] = d[key]
 
-        json.nodes[i] = n
-      }
-    })
+          json.nodes[i] = n
+        }
+      })
 
-    json.links.forEach(function(d, i) {
-      var n
-      data.links.forEach(function(x) {if (x.id == d.id) n = x})
-      if (n) {
-        for (var key in d)
-          if (d.hasOwnProperty(key))
-            n[key] = d[key]
+      json.links.forEach(function(d, i) {
+        var n
+        data.links.forEach(function(x) {if (x.id == d.id) n = x})
+        if (n) {
+          for (var key in d)
+            if (d.hasOwnProperty(key))
+              n[key] = d[key]
 
-        json.links[i] = n
-      }
-    })
+          json.links[i] = n
+        }
+      })
+    }
 
     // replace indices with real objects
     json.links.forEach( function(d) {
