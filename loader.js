@@ -1,10 +1,10 @@
-function load_nodes(filename, fn) {
+function load_nodes(filename, data, fn) {
   d3.json(filename, function(json) {
     // update existing nodes with new info
     // XXX inefficient data structure
     json.nodes.forEach(function(d, i) {
       var n
-      force.nodes().forEach(function(x) {if (x.id == d.id) n = x})
+      data.nodes.forEach(function(x) {if (x.id == d.id) n = x})
       if (n) {
         for (var key in d)
           if (d.hasOwnProperty(key))
@@ -16,7 +16,7 @@ function load_nodes(filename, fn) {
 
     json.links.forEach(function(d, i) {
       var n
-      force.links().forEach(function(x) {if (x.id == d.id) n = x})
+      data.links.forEach(function(x) {if (x.id == d.id) n = x})
       if (n) {
         for (var key in d)
           if (d.hasOwnProperty(key))
@@ -35,6 +35,8 @@ function load_nodes(filename, fn) {
     // count vpn links
     json.nodes.forEach(function(d) {
       d.vpns = []
+      d.wifilinks = []
+      d.clients = []
     })
 
     json.links.forEach(function(d) {
@@ -43,6 +45,12 @@ function load_nodes(filename, fn) {
       if (d.type == "vpn") {
         d.source.vpns.push(d.target)
         d.target.vpns.push(d.source)
+      } else if (d.type == "client") {
+        d.source.clients.push(d.target)
+        d.target.clients.push(d.source)
+      } else {
+        d.source.wifilinks.push(d.target)
+        d.target.wifilinks.push(d.source)
       }
     })
 
