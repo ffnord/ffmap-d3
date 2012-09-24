@@ -43,7 +43,7 @@ function resize() {
     .attr("width", w).attr("height", h)
 
   if (vis)
-    vis.attr("width", w).attr("height", h)
+    d3.select("#chart > svg").attr("width", w).attr("height", h)
 
   if (force)
     force.size([w, h]).start()
@@ -266,6 +266,9 @@ function update_graph() {
 var vis = d3.select("#chart").append("svg")
             .attr("width", w)
             .attr("height", h)
+            .attr("pointer-events", "all")
+            .call(d3.behavior.zoom().on("zoom", redraw))
+            .append("g")
 
 vis.append("g").attr("class", "links")
 
@@ -301,22 +304,7 @@ var force = d3.layout.force()
               })
 
 function tick_event(e) {
-  var size = force.size()
-  var nodes = force.nodes()
-  var nl = nodes.length
-  for (i = 0; i < nl; i++) {
-    var n = nodes[i]
-    if (!n.fixed) {
-      if (n.x < n.rx + 20) n.x = n.rx + 20
-      if (n.x > size[0] - n.rx - 20) n.x = size[0] - n.rx - 20
-      if (n.y < n.ry + 20) n.y = n.ry + 20
-      if (n.y > size[1] - n.ry - 20 ) n.y = size[1] - n.ry - 20
-    }
-  }
-
-  var link = vis.selectAll(".link")
-
-  link.selectAll("line")
+  vis.selectAll(".link").selectAll("line")
       .attr("x1", function(d) { return d.source.x })
       .attr("y1", function(d) { return d.source.y })
       .attr("x2", function(d) { return d.target.x })
@@ -671,3 +659,10 @@ var initial = 1
 reload()
 
 var timer = window.setInterval(reload, 30000)
+
+function redraw() {
+  console.log("zoom")
+  vis.attr("transform",
+      "translate(" + d3.event.translate + ") "
+      + "scale(" + d3.event.scale + ")")
+}
