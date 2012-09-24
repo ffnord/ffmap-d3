@@ -356,7 +356,7 @@ function reload() {
   }
 }
 
-function fix_geonodes(nodes, x) {
+function fixate_geonodes(nodes, x) {
   nodes.filter(function(d) {
     return d.geo !== null
   }).forEach(function(d) {
@@ -626,13 +626,13 @@ function update() {
        .start()
 
   if (initial == 1) {
-    fix_geonodes(data.nodes, true)
+    fixate_geonodes(data.nodes, true)
 
     force.alpha(0.1)
     while(force.alpha() > 0.05)
       force.tick()
 
-    fix_geonodes(data.nodes, false)
+    fixate_geonodes(data.nodes, false)
 
     force.alpha(0.1)
     while(force.alpha() > 0.05)
