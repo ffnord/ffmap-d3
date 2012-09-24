@@ -228,6 +228,14 @@ function show_node_info(d) {
                     return d.name || d.macs
                   })
 
+  nodeinfo.append("p")
+          .append("label")
+          .text("Clients: " + d.clients.length)
+
+  nodeinfo.append("p")
+          .append("label")
+          .text("WLAN Verbindungen: " + d.wifilinks.length)
+
   if (d.geo) {
     nodeinfo.append("h2").text("Geodaten")
 
