@@ -169,6 +169,11 @@
   font-size: 9pt;
 }
 
+#sidebar h3 {
+  font-size: 7pt;
+  margin: 0;
+}
+
 footer {
   position: absolute;
   bottom: 0.2em;

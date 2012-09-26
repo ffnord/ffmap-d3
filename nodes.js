@@ -129,6 +129,58 @@ meshinfo.append("p")
 meshinfo.append("p")
         .attr("id", "clientcount")
 
+meshinfo.append("h3").text("Gravity")
+        .append("span").attr("id", "gravity")
+meshinfo.append("input").attr("type", "range").attr("min", "0").attr("max", "0.1").attr("step", "0.001")
+        .on("change", function(d) {
+          d3.select("span#gravity").text(this.value)
+          force.gravity(this.value)
+          force.start()
+        })
+meshinfo.append("h3").text("Friction")
+        .append("span").attr("id", "friction")
+meshinfo.append("input").attr("type", "range").attr("min", "0").attr("max", "1.0").attr("step", "0.01")
+        .on("change", function(d) {
+          d3.select("span#friction").text(this.value)
+          force.friction(this.value)
+          force.start()
+        })
+meshinfo.append("h3").text("θ")
+        .append("span").attr("id", "theta")
+meshinfo.append("input").attr("type", "range").attr("min", "0").attr("max", "1.0").attr("step", "0.01")
+        .on("change", function(d) {
+          d3.select("span#theta").text(this.value)
+          force.theta(this.value)
+          force.start()
+        })
+
+meshinfo.append("h3").text("Charge")
+        .append("span").attr("id", "charge")
+meshinfo.append("input").attr("type", "range").attr("min", "0").attr("max", "2.0").attr("step", "0.01")
+        .on("change", function(d) {
+          d3.select("span#charge").text(this.value)
+          chargeScale = this.value
+          force.start()
+        })
+
+meshinfo.append("h3").text("Distance")
+        .append("span").attr("id", "distance")
+meshinfo.append("input").attr("type", "range").attr("min", "0").attr("max", "2.0").attr("step", "0.01")
+        .on("change", function(d) {
+          d3.select("span#distance").text(this.value)
+          distScale = this.value
+          force.start()
+        })
+
+meshinfo.append("h3").text("Strength")
+        .append("span").attr("id", "strength")
+meshinfo.append("input").attr("type", "range").attr("min", "0").attr("max", "2.0").attr("step", "0.01")
+        .on("change", function(d) {
+          d3.select("span#strength").text(this.value)
+          strengthScale = this.value
+          force.start()
+        })
+
 //cp.append("input")
 //  .on("keyup", function(){show_node(this.value)})
 //  .on("change", function(){show_node(this.value)})
@@ -278,12 +330,16 @@ vis.append("g").attr("class", "labels")
 
 var linkedByIndex
 
+var chargeScale = 1,
+    distScale = 1,
+    strengthScale = 1
+
 var force = d3.layout.force()
               .charge( function (d) {
                 if (d.flags.client)
-                  return -30
+                  return -30 * chargeScale
 
-                return -100
+                return -100 * chargeScale
               })
               .gravity(0.035)
               .friction(0.73)
@@ -291,15 +347,15 @@ var force = d3.layout.force()
               .size([w, h])
               .linkDistance(function (d) {
                 switch (d.type) {
-                  case "client": return 20
-                  default: return 70
+                  case "client": return 20 * distScale
+                  default: return 70 * distScale
                 }
               })
               .linkStrength(function (d) {
                 switch (d.type) {
-                  case "vpn": return 0.01
-                  case "client": return 1
-                  default: return 0.2
+                  case "vpn": return 0.01 * strengthScale
+                  case "client": return 1 * strengthScale
+                  default: return 0.2 * strengthScale
                 }
               })
 
