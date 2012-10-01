@@ -293,18 +293,6 @@ function show_node_info(d) {
 
     nodeinfo.append("p")
             .text(d.geo)
-
-    url = GMaps.staticMapURL({
-      size: [300, 100],
-      lat: d.geo[0],
-      lng: d.geo[1],
-      markers: [
-        {lat: d.geo[0], lng: d.geo[1]}
-      ]
-    })
-
-    nodeinfo.append("img")
-            .attr("src", url)
   }
 }
 
