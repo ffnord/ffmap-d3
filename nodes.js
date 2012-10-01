@@ -296,10 +296,16 @@ function show_node_info(d) {
   }
 }
 
+function toggle_button(button) {
+  button.classed("active", !button.classed("active"))
+}
+
 function update_graph() {
-  jQuery(this).toggleClass("active")
-  var value = jQuery(this).val()
-  visible[value] = jQuery(this).hasClass("active")
+  var button = d3.select(this)
+  var value = button.attr("value")
+  toggle_button(button)
+
+  visible[value] = button.classed("active")
   update()
 }
 
