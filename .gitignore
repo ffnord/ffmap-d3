@@ -1,1 +1,2 @@
-*.pyc
+*_compiled.js
+nodes.json
