@@ -358,9 +358,9 @@ function tick_event(e) {
       .attr("x2", function(d) { return d.target.x })
       .attr("y2", function(d) { return d.target.y })
 
-  vis.selectAll(".node").attr("transform", function(d) {
-    return "translate(" + d.x + "," + d.y + ")";
-  })
+  vis.selectAll(".node")
+     .attr("cx", function(d) { return d.x })
+     .attr("cy", function(d) { return d.y })
 
   vis.selectAll(".label").attr("transform", function(d) {
     return "translate(" + d.x + "," + d.y + ")";
