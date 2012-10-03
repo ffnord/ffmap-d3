@@ -181,22 +181,20 @@ meshinfo.append("input").attr("type", "range").attr("min", "0").attr("max", "2.0
           force.start()
         })
 
-//cp.append("input")
-//  .on("keyup", function(){show_node(this.value)})
-//  .on("change", function(){show_node(this.value)})
+cp.append("input")
+  .on("keyup", function(){show_node(this.value)})
+  .on("change", function(){show_node(this.value)})
 
-function show_node(mac) {
-  d3.selectAll("#chart .node")
-    .classed("marked", false)
-
-  if (mac.length == 0)
+function show_node(query) {
+  if (query.length == 0) {
+    vis.selectAll(".node").classed("marked", false)
     return
+  }
 
-  d3.selectAll("#chart .node")
-    .each( function(d) {
-      if (d.id == mac)
-        d3.select(this)
-          .classed("marked", true)
+  vis.selectAll(".node")
+    .classed("marked", function(d) {
+      return d.macs.indexOf(query.toLowerCase()) >= 0 ||
+             d.name.toLowerCase().indexOf(query.toLowerCase()) >= 0
     })
 }
 
