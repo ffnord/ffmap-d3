@@ -104,7 +104,7 @@ btns.append("button")
     .on("click", update_graph)
 
 btns.append("button")
-    .attr("class", "btn active middle")
+    .attr("class", "btn middle")
     .attr("value", "vpn")
     .text("VPN")
     .on("click", update_graph)
@@ -369,7 +369,7 @@ function tick_event(e) {
 
 var data
 
-var visible = {clients: true, vpn: true, labels: true}
+var visible = {clients: true, vpn: false, labels: true}
 
 function reload() {
   load_nodes(nodes_json, data, handler)
