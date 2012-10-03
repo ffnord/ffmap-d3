@@ -689,7 +689,6 @@ reload()
 var timer = window.setInterval(reload, 30000)
 
 function redraw() {
-  console.log("zoom")
   vis.attr("transform",
       "translate(" + d3.event.translate + ") "
       + "scale(" + d3.event.scale + ")")
