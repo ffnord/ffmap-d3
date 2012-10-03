@@ -2,7 +2,7 @@
   background: #000;
 }
 
-.node ellipse {
+.node circle {
   stroke-width: 2.5px;
 }
 
@@ -26,17 +26,17 @@
   stroke-width: 2px;
 }
 
-.node ellipse {
+.node circle {
   fill: #fff;
   stroke: #48f;
 }
 
-.node ellipse.gateway {
+.node circle.gateway {
   stroke: #ff7f0e;
   fill: #ff7f03;
 }
 
-.node ellipse.client {
+.node circle.client {
   stroke: #ff0;
   fill: #ff0;
   stroke-width: 5px;

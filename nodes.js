@@ -570,9 +570,9 @@ function update() {
                 .on("click", goto_node)
                 .call(node_drag)
 
-  nodeEnter.append("ellipse")
+  nodeEnter.append("circle")
 
-  node.selectAll("ellipse")
+  node.selectAll("circle")
       .attr("class", function(d) {
         var s = []
         for (var key in d.flags)
@@ -582,24 +582,12 @@ function update() {
         return s.join(" ")
       })
 
-  node.selectAll("ellipse")
-    .attr("rx", function(d) {
-      var r
-      if (d.flags.client) r = 4
-      else r = 8
-
-      d.rx = r
-
-      return r
-    })
-    .attr("ry", function(d) {
-      var r
-      if (d.flags.client) r = 4
-      else r = 8
-
-      d.ry = r
-
-      return r
+  node.selectAll("circle")
+    .attr("r", function(d) {
+      if (d.flags.client)
+        return 4
+      else
+        return 8
     })
 
   var label = vis.select("g.labels")

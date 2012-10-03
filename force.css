@@ -7,7 +7,7 @@
   position: relative;
 }
 
-.node.marked ellipse {
+.node.marked circle {
   stroke: #C83771 !important;
   stroke-width: 5px;
 }
@@ -21,7 +21,7 @@
   fill-opacity: 0.1;
 }
 
-.node.highlight ellipse {
+.node.highlight circle {
   fill: #FFF0B3;
 }
 

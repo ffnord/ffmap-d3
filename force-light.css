@@ -2,7 +2,7 @@
   background-image: url(gplaypattern.png);
 }
 
-.node ellipse {
+.node circle {
   fill: #fff;
   stroke-width: 2.5px;
 }
@@ -35,15 +35,15 @@
   fill: #333;
 }
 
-.node ellipse {
+.node circle {
   stroke: #AEC7E8;
 }
 
-.node ellipse.gateway {
+.node circle.gateway {
   stroke: #FF7F0E;
 }
 
-.node ellipse.client {
+.node circle.client {
   stroke: #1F77B4;
   fill: #1F77B4;
 }
