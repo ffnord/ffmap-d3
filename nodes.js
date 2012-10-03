@@ -642,10 +642,10 @@ function update() {
   node.selectAll("title")
     .text(function(d) { return d.name?d.name:" " })
 
-  node.selectAll(".uplinks").remove()
+  label.selectAll(".uplinks").remove()
 
   if (!visible.vpn) {
-    var uplink_info = node.filter(function (d) {
+    var uplink_info = label.filter(function (d) {
       return d.vpns.length > 0
     })
     .append("g")
