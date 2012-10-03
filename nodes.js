@@ -566,9 +566,6 @@ function update() {
                 )
 
   var nodeEnter = node.enter().append("g")
-                .attr("id", function (d) {
-                  return d.id
-                })
                 .attr("class", "node")
                 .on("mouseover", highlight(true))
                 .on("mouseout", highlight(false))
