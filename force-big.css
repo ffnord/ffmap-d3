@@ -2,7 +2,7 @@
   background: #000;
 }
 
-.node circle {
+.node {
   stroke-width: 2.5px;
 }
 
@@ -26,17 +26,17 @@
   stroke-width: 2px;
 }
 
-.node circle {
+.node {
   fill: #fff;
   stroke: #48f;
 }
 
-.node circle.gateway {
+.node.gateway {
   stroke: #ff7f0e;
   fill: #ff7f03;
 }
 
-.node circle.client {
+.node.client {
   stroke: #ff0;
   fill: #ff0;
   stroke-width: 5px;

@@ -2,7 +2,7 @@
   background-image: url(gplaypattern.png);
 }
 
-.node circle {
+.node {
   fill: #fff;
   stroke-width: 2.5px;
 }
@@ -35,15 +35,15 @@
   fill: #333;
 }
 
-.node circle {
+.node {
   stroke: #AEC7E8;
 }
 
-.node circle.gateway {
+.node.gateway {
   stroke: #FF7F0E;
 }
 
-.node circle.client {
+.node.client {
   stroke: #1F77B4;
   fill: #1F77B4;
 }

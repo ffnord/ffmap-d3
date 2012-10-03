@@ -210,7 +210,7 @@ function highlight(b) {
   return function(d) {
     if (dragging) return
 
-    vis.selectAll("g.node")
+    vis.selectAll(".node")
        .classed("faded", function(o) {
          return !(isConnected(d, o)) && b
        })
@@ -218,7 +218,7 @@ function highlight(b) {
          return isConnected(d, o) && b
        })
 
-    vis.selectAll("g.label")
+    vis.selectAll(".label")
        .classed("faded", function(o) {
          return !isConnected(d, o) && b
        })
@@ -556,39 +556,34 @@ function update() {
                 })
 
   var node = vis.select("g.nodes")
-                .selectAll("g.node")
+                .selectAll(".node")
                 .data(nodes,
                   function(d) {
                     return d.id
                   }
                 )
 
-  var nodeEnter = node.enter().append("g")
+  var nodeEnter = node.enter().append("circle")
                 .attr("class", "node")
                 .on("mouseover", highlight(true))
                 .on("mouseout", highlight(false))
                 .on("click", goto_node)
                 .call(node_drag)
+                .attr("r", function(d) {
+                    if (d.flags.client)
+                      return 4
+                    else
+                      return 8
+                })
 
-  nodeEnter.append("circle")
-
-  node.selectAll("circle")
-      .attr("class", function(d) {
-        var s = []
+  node.attr("class", function(d) {
+        var s = ["node"]
         for (var key in d.flags)
           if (d.flags.hasOwnProperty(key) && d.flags[key])
             s.push(key)
 
         return s.join(" ")
       })
-
-  node.selectAll("circle")
-    .attr("r", function(d) {
-      if (d.flags.client)
-        return 4
-      else
-        return 8
-    })
 
   var label = vis.select("g.labels")
                 .selectAll("g.label")
