@@ -601,6 +601,16 @@ function update() {
                     })
                     .attr("class", "label")
 
+  var geodot = labelEnter.filter(function(d) { return d.geo })
+
+  geodot.append("circle")
+                .attr("class", "dot")
+                .attr("r", 3)
+
+  var geodot = labelEnter.filter(function(d) { return !d.geo })
+
+  geodot.selectAll(".dot").remove()
+
   labelEnter.append("rect")
             .attr("y", "10px")
             .attr("x", function(d) { return - d.name.length * 7/2 })
