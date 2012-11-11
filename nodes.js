@@ -319,6 +319,7 @@ vis.append("g").attr("class", "links")
 vis.append("g").attr("class", "nodes")
 
 vis.append("g").attr("class", "labels")
+               .attr("pointer-events", "none")
 
 var linkedByIndex
 
