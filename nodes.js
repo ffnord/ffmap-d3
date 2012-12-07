@@ -612,12 +612,6 @@ function update() {
 
   geodot.selectAll(".dot").remove()
 
-  labelEnter.append("rect")
-            .attr("y", "10px")
-            .attr("x", function(d) { return - d.name.length * 7/2 })
-            .attr("width", function(d) { return d.name.length * 7 })
-            .attr("height", "15px")
-
   labelEnter.append("text")
             .attr("class", "name")
             .attr("text-anchor", "middle")
@@ -628,6 +622,17 @@ function update() {
       .text(function(d) {
         return d.name
       })
+
+  labelTextWidth = function (e) {
+    return e.parentNode.querySelector("text").getBBox().width + 3
+  }
+
+  labelEnter.insert("rect", "text")
+            .attr("y", "10px")
+            .attr("x", function(d) { return labelTextWidth(this) / (-2)})
+            .attr("width", function(d) { return labelTextWidth(this)})
+            .attr("height", "15px")
+
 
   label.exit().remove()
 
