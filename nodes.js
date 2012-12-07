@@ -620,7 +620,10 @@ function update() {
 
   label.selectAll("text.name")
       .text(function(d) {
-        return d.name
+        if (d.name != "")
+          return d.name;
+
+        return d.id;
       })
 
   labelTextWidth = function (e) {
