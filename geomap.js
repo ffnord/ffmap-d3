@@ -16,6 +16,9 @@ function init() {
 
   svg = d3.select(map.getPanes().overlayPane).append("svg")
   g   = svg.append("g").attr("class", "leaflet-zoom-hide")
+  g.append("g").attr("class", "links")
+  g.append("g").attr("class", "nodes")
+
   svg.attr("width", 1000)
   svg.attr("height", 1000)
 
@@ -53,6 +56,10 @@ function update(data) {
     return d.geo != null
   })
 
+  var links = data.links.filter( function(d) {
+    return d.source.geo !== null && d.target.geo !== null && d.type != "vpn"
+  })
+
   var t = [
     d3.extent(nodes, function (d) { return d.geo[0] }),
     d3.extent(nodes, function (d) { return d.geo[1] })
@@ -63,7 +70,8 @@ function update(data) {
 
   map.fitBounds(bounds)
 
-  var nodes_svg = g.selectAll(".node").data(nodes, function(d) { return d.id })
+  var nodes_svg = g.select(".nodes").selectAll(".node").data(nodes, function(d) { return d.id })
+  var links_svg = g.select(".links").selectAll(".link").data(links, function(d) { return d.id })
   
   nodes_svg.enter().append("circle")
            .attr("class", "node")
@@ -73,7 +81,28 @@ function update(data) {
            })
            .attr("stroke-width", "0.5px")
            .attr("stroke", "#444")
-  
+
+  links_svg.enter().append("line")
+            .attr("class", "link")
+            .attr("stroke-width", "2.5pt")
+            .attr("opacity", 0.5)
+
+  links_svg.style("stroke", function(d) {
+        switch (d.type) {
+          case "vpn":
+            return linkcolor['default'](Math.max.apply(null, d.quality.split(",")))
+          default:
+            var q;
+            try {
+              q = Math.max.apply(null, d.quality.split(","))
+            } catch(e) {
+              q = d.quality
+            }
+            return linkcolor['wifi'](q)
+
+        }
+      })
+
   map.on("viewreset", reset)
   reset()
 
@@ -90,9 +119,16 @@ function update(data) {
 
     g   .attr("transform", "translate(" + -bottomLeft[0] + "," + -topRight[1] + ")")
 
-    var nodes_svg = g.selectAll(".node").data(nodes, function(d) { return d.id })
+    var nodes_svg = g.selectAll(".node")
+    var links_svg = g.selectAll(".link")
     
     nodes_svg.attr("cx", function (d) { return project(d.geo)[0]})
     nodes_svg.attr("cy", function (d) { return project(d.geo)[1]})
+
+    links_svg.attr("x1", function (d) { return project(d.source.geo)[0] })
+             .attr("y1", function (d) { return project(d.source.geo)[1] })
+             .attr("x2", function (d) { return project(d.target.geo)[0] })
+             .attr("y2", function (d) { return project(d.target.geo)[1] })
+
   }
 }
