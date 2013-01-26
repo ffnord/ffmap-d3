@@ -3,15 +3,12 @@ var svg, g
 var nodes_json = "nodes.json"
 
 function init() {
-  map = new L.Map("map", {
-    center: [37.8, -96.9],
-    zoom: 4
-  })
+  map = new L.Map("map")
 
   map.addLayer(new L.TileLayer("http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg", {
     subdomains: '1234',
     type: 'osm',
-    attribution: 'Map data ' + L.TileLayer.OSM_ATTR 
+    attribution: 'Map data Tiles &copy; <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png" />',
   }))
 
   svg = d3.select(map.getPanes().overlayPane).append("svg")
