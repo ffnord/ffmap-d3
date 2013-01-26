@@ -82,6 +82,8 @@ function update(data) {
            .attr("stroke-width", "0.5px")
            .attr("stroke", "#444")
 
+  nodes_svg.on("click",  function (d) { alert(d.name) })
+
   links_svg.enter().append("line")
             .attr("class", "link")
             .attr("stroke-width", "2.5pt")
