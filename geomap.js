@@ -1,163 +1,98 @@
-var map;
-var vectorLayer;
+var map
+var svg, g
 var nodes_json = "nodes.json"
 
-OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control);
+function init() {
+  map = new L.Map("map", {
+    center: [37.8, -96.9],
+    zoom: 4
+  })
 
-function init()
-{
-  map = new OpenLayers.Map ("map", {
-    controls:[
-    new OpenLayers.Control.Navigation(),
-      new OpenLayers.Control.PanZoomBar(),
-      new OpenLayers.Control.Attribution(),
-      new OpenLayers.Control.ScaleLine(),
-      new OpenLayers.Control.MousePosition()],
-      maxResolution: 156543.0399,
-      numZoomLevels: 19,
-      units: 'm',
-      projection: new OpenLayers.Projection("EPSG:900913"),
-      displayProjection: new OpenLayers.Projection("EPSG:4326")
-  } );
+  map.addLayer(new L.TileLayer("http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg", {
+    subdomains: '1234',
+    type: 'osm',
+    attribution: 'Map data ' + L.TileLayer.OSM_ATTR 
+  }))
 
-arrayOSM = ["http://otile1.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.jpg",
-	    "http://otile2.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.jpg",
-	    "http://otile3.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.jpg",
-	    "http://otile4.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.jpg"];
-
-  var baseOSM = new OpenLayers.Layer.OSM("MapQuest-OSM Tiles", arrayOSM, {opacity: 0.6});
-  map.addLayer(baseOSM);
-
-  var center = new OpenLayers.LonLat(10.688, 53.866).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
-
-  var zoom = 13
-
-  map.setCenter(center, zoom);
-
-  vectorLayer = new OpenLayers.Layer.Vector("Nodes");
-
-  map.addLayer(vectorLayer);
-
-  selectControl = new OpenLayers.Control.SelectFeature(map.layers[1],
-      {onSelect: onFeatureSelect, onUnselect: onFeatureUnselect});
-  map.addControl(selectControl);
-  selectControl.activate();
-
-  var click = new OpenLayers.Control.Click();
-  map.addControl(click);
-  click.activate();
-
-  load_json(vectorLayer, map)
+  svg = d3.select(map.getPanes().overlayPane).append("svg")
+  g   = svg.append("g").attr("class", "leaflet-zoom-hide")
+  svg.attr("width", 1000)
+  svg.attr("height", 1000)
 
   d3.selectAll("#gpsbutton").on("click",  function() {
     function clickhandler(e) {
-      var lonlat = map.getLonLatFromViewPortPx(e.xy).transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"))
-      alert(lonlat.lat + " " + lonlat.lon)
-      map.events.unregister("click", map, clickhandler)
+      var latlng = e.latlng
+      alert(latlng.lat + " " + latlng.lng)
+      map.off("click", clickhandler)
     }
-    var clickevent = map.events.register("click", map, clickhandler)
+    var clickevent = map.on('click', clickhandler)
   })
+
+  reload()
 }
 
-function resizeMap()
-{
-  if (map !== undefined) {
-    map.updateSize()
+function project(x) {
+  var point = map.latLngToLayerPoint(new L.LatLng(x[0], x[1]))
+  return [point.x, point.y]
+}
 
-    // Did someone say Chrome bug?
-    map.removeLayer(vectorLayer)
-    map.addLayer(vectorLayer)
+var data 
+
+function reload() {
+  load_nodes(nodes_json, data, handler)
+
+  function handler(json) {
+    data = json
+
+    update(data)
   }
 }
 
-function onPopupClose(evt)
-{
-  selectControl.unselect(selectedFeature);
-}
-
-function onFeatureSelect(feature)
-{
-  selectedFeature = feature;
-  popup = new OpenLayers.Popup.FramedCloud("chicken",
-      feature.geometry.getBounds().getCenterLonLat(),
-      new OpenLayers.Size(100,150),
-      "<div class='nodePopup'><span class='label'>Name:</span> "+feature.attributes.name+"<br><span class='label'>Description:</span> "+feature.attributes.description+"</div>",
-      null, true, onPopupClose);
-  feature.popup = popup;
-  map.addPopup(popup);
-}
-
-function onFeatureUnselect(feature)
-{
-  map.removePopup(feature.popup);
-  feature.popup.destroy();
-  feature.popup = null;
-}
-
-function kmlLoaded()
-{
-  map.zoomToExtent(vectorLayer.getDataExtent());
-}
-
-function load_json(layer, map) {
-  d3.json(nodes_json, function(json) {
-    // replace indices with real objects
-    json.links.forEach( function(d) {
-      if (typeof d.source == "number") d.source = json.nodes[d.source]
-      if (typeof d.target == "number") d.target = json.nodes[d.target]
-    })
-
-    json.nodes.filter( function(d) {
-        return d.geo !== null
-      }).forEach( function(d) {
-        var lonlat = new OpenLayers.LonLat(d.geo[1], d.geo[0])
-                                  .transform( new OpenLayers.Projection("EPSG:4326"),
-                                                  map.getProjectionObject() 
-                                  );
-
-        var img = d.flags.online?"router-up.png":"router-down.png"
-
-        var feature = new OpenLayers.Feature.Vector(
-          new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat),
-           {name: d.name, description: d.id},
-           {externalGraphic: img, graphicHeight: 32, graphicWidth: 32}
-          )
-        layer.addFeatures([feature])
-      })
-
-    json.links.filter( function(d) {
-        return d.source.geo !== null && d.target.geo !== null &&
-               d.type != "vpn"
-      }).forEach( function(d) {
-        var a = new OpenLayers.LonLat(d.source.geo[1], d.source.geo[0])
-                                  .transform( new OpenLayers.Projection("EPSG:4326"),
-                                                  map.getProjectionObject() 
-                                  );
-
-        var b = new OpenLayers.LonLat(d.target.geo[1], d.target.geo[0])
-                                  .transform( new OpenLayers.Projection("EPSG:4326"),
-                                                  map.getProjectionObject() 
-                                  );
-        var color;
-        switch (d.type) {
-          case "vpn":
-            color = linkcolor['default'](Math.max.apply(null, d.quality.split(",")))
-            break;
-          default:
-            color = linkcolor['wifi'](Math.max.apply(null, d.quality.split(",")))
-        }
-
-        var feature = new OpenLayers.Feature.Vector(new OpenLayers.Geometry.LineString(
-           [new OpenLayers.Geometry.Point(a.lon, a.lat),
-            new OpenLayers.Geometry.Point(b.lon, b.lat),
-           ]),
-           {name: d.name, description: d.id},
-           { 
-              strokeColor: d3.rgb(color).brighter(1),
-              strokeOpacity: 0.8,
-              strokeWidth: 3
-           })
-        layer.addFeatures([feature])
-      })
+function update(data) {
+  var nodes = data.nodes.filter( function(d) {
+    return d.geo != null
   })
+
+  var t = [
+    d3.extent(nodes, function (d) { return d.geo[0] }),
+    d3.extent(nodes, function (d) { return d.geo[1] })
+  ]
+
+  var border = 0
+  var bounds = [[t[0][0] - border, t[1][0] - border], [t[0][1] + border, t[1][1] + border]]
+
+  map.fitBounds(bounds)
+
+  var nodes_svg = g.selectAll(".node").data(nodes, function(d) { return d.id })
+  
+  nodes_svg.enter().append("circle")
+           .attr("class", "node")
+           .attr("r", "4pt")
+           .attr("fill", function (d) {
+             return d.flags.online?"rgba(0, 255, 0, 0.8)":"rgba(255, 128, 128, 0.5)"
+           })
+           .attr("stroke-width", "0.5px")
+           .attr("stroke", "#444")
+  
+  map.on("viewreset", reset)
+  reset()
+
+  // Reposition the SVG to cover the features.
+  function reset() {
+    bounds = [[53.8, 10.5], [54, 11]]
+    var bottomLeft = project(bounds[0]),
+        topRight = project(bounds[1])
+
+    svg .attr("width", topRight[0] - bottomLeft[0])
+        .attr("height", bottomLeft[1] - topRight[1])
+        .style("margin-left", bottomLeft[0] + "px")
+        .style("margin-top", topRight[1] + "px")
+
+    g   .attr("transform", "translate(" + -bottomLeft[0] + "," + -topRight[1] + ")")
+
+    var nodes_svg = g.selectAll(".node").data(nodes, function(d) { return d.id })
+    
+    nodes_svg.attr("cx", function (d) { return project(d.geo)[0]})
+    nodes_svg.attr("cy", function (d) { return project(d.geo)[1]})
+  }
 }
