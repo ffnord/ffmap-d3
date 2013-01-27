@@ -522,11 +522,22 @@ function update() {
           case "vpn":
             return linkcolor['default'](Math.max.apply(null, d.quality.split(",")))
           default:
-            return linkcolor['wifi'](Math.max.apply(null, d.quality.split(",")))
+            var q;
+            try {
+              q = Math.max.apply(null, d.quality.split(","))
+            } catch(e) {
+              q = d.quality
+            }
+            return linkcolor['wifi'](q)
+
         }
       })
       .attr("class", function(d) {
-        return d.quality.split(",").length==1?"unidirectional":"bidirectional"
+        try {
+          return d.quality.split(",").length==1?"unidirectional":"bidirectional"
+        } catch(e) {
+          return "bidirectional"
+        }
       })
 
   link.selectAll("title")
