@@ -9,13 +9,14 @@ function init() {
     subdomains: '1234',
     type: 'osm',
     attribution: 'Map data Tiles &copy; <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png" />, Map data © OpenStreetMap contributors, CC-BY-SA',
+    opacity: 0.7,
   }))
 
   svg = d3.select(map.getPanes().overlayPane).append("svg")
   g   = svg.append("g").attr("class", "leaflet-zoom-hide")
   g.append("g").attr("class", "links")
-  g.append("g").attr("class", "nodes")
   g.append("g").attr("class", "labels")
+  g.append("g").attr("class", "nodes")
 
   svg.attr("width", 1000)
   svg.attr("height", 1000)
@@ -63,7 +64,7 @@ function update(data) {
     d3.extent(nodes, function (d) { return d.geo[1] })
   ]
 
-  var border = 0
+  var border = 0.0
   var bounds = [[t[0][0] - border, t[1][0] - border], [t[0][1] + border, t[1][1] + border]]
 
   map.fitBounds(bounds)
@@ -80,34 +81,6 @@ function update(data) {
            })
            .attr("stroke-width", "0.5px")
            .attr("stroke", "#444")
-
-  var labels = new_nodes.append("g").attr("class", "label").attr("transform", "translate(0, 22)")
-                        .style("visibility", "hidden")
-
-  labels.append("text")
-           .text(function(d) {
-             if (d.name != "")
-               return d.name;
-
-             return d.id;
-           })
-
-  labelTextWidth = function (e) {
-    return e.parentNode.querySelector("text").getBBox().width + 3
-  }
-
-  labelTextHeight = function (e) {
-    return e.parentNode.querySelector("text").getBBox().height
-  }
-
-  labels.insert("rect", "text")
-            .attr("y", function(d) { return labelTextHeight(this) / (-2)})
-            .attr("x", function(d) { return labelTextWidth(this) / (-2)})
-            .attr("width", function(d) { return labelTextWidth(this)})
-            .attr("height", function (d) { return labelTextHeight(this)})
-
-
-  nodes_svg.on("click",  function (d) { alert(d.name) })
 
   links_svg.enter().append("line")
             .attr("class", "link")
@@ -134,16 +107,17 @@ function update(data) {
 
   // Reposition the SVG to cover the features.
   function reset() {
-    bounds = [[53.8, 10.5], [54, 11]]
     var bottomLeft = project(bounds[0]),
         topRight = project(bounds[1])
 
-    svg .attr("width", topRight[0] - bottomLeft[0])
-        .attr("height", bottomLeft[1] - topRight[1])
-        .style("margin-left", bottomLeft[0] + "px")
-        .style("margin-top", topRight[1] + "px")
+    var margin = 300
 
-    g   .attr("transform", "translate(" + -bottomLeft[0] + "," + -topRight[1] + ")")
+    svg .attr("width", topRight[0] - bottomLeft[0] + 2 * margin)
+        .attr("height", bottomLeft[1] - topRight[1] + 2 * margin)
+        .style("margin-left", (bottomLeft[0] - margin)+ "px")
+        .style("margin-top", (topRight[1] - margin)+ "px")
+
+    g   .attr("transform", "translate(" + (margin-bottomLeft[0]) + "," + (margin-topRight[1]) + ")")
 
     var nodes_svg = g.selectAll(".node")
     var links_svg = g.selectAll(".link")
@@ -166,115 +140,109 @@ function update(data) {
   }
 }
 
-var timer
+function rect_intersect(a, b) {
+  return (a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y)
+}
 
-function position_labels(nodes) {
-  var labels = []
-  var POINT_SIZE = 30
-
-  nodes.selectAll(".label").each( function (d) {
-    var label = {
-      object: this,
-      box: d3.select(this).select("text")[0][0].getBBox(),
-      angle: 0.0, // rotated around center 
-      node: d,
-      x: project(d.geo)[0],
-      y: project(d.geo)[1],
-      v: [0, 0]
-    }
-    labels.push(label)
-  })
-  console.log("break!")
-
-  function push(array, o) {
-    if (array.indexOf(o) != -1)
-      array.push(o)
+function rect_uncenter(rect) {
+  return {
+    x: rect.x - rect.width/2,
+    y: rect.y - rect.height/2,
+    width: rect.width,
+    height: rect.height
   }
+}
 
-  function merge_group(group, other) {
-    other.labels.forEach( function (d) {
-      if (group.labels.indexOf(d) != -1)
-        group.labels.push(d)
-    })
+function rect_add(rect, point) {
+  return {
+    x: rect.x + point[0],
+    y: rect.y + point[1],
+    width: rect.width,
+    height: rect.height
   }
+}
 
-  function rect_intersect(a, b) {
-    return (a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y)
+function rect_grow(rect, x) {
+  return {
+    x: rect.x - x/2,
+    y: rect.y - x/2,
+    width: rect.width + x,
+    height: rect.height + x,
   }
+}
 
-  function rect_uncenter(rect) {
-    return {
-      x: rect.x - rect.width/2,
-      y: rect.y - rect.height/2,
-      width: rect.width,
-      height: rect.height
-    }
-  }
+function cluster_labels(labels, max_distance) {
+  max_distance *= max_distance
 
-  function rect_add(rect, point) {
-    return {
-      x: rect.x + point[0],
-      y: rect.y + point[1],
-      width: rect.width,
-      height: rect.height
-    }
-  }
+  while (labels.length > 1) {
+    var min_distance = Infinity
+    var best = [0, 0]
 
-  var i = 0
-
-  function tick() {
-    labels.forEach( function (d) {
-      d3.select(d.object).classed("overlap", false)
-    })
-
-    labels.forEach( function (d) {
-      d.v = [0, 0]
-    })
-
-    labels.forEach( function (d) {
-      labels.forEach( function (o, i) {
-        if (d == o)
-          return
-
-        var boxd = label_box(d)
-        var boxo = label_box(o)
-
-        if (rect_intersect(rect_add(rect_uncenter(boxd), [d.x, d.y]), rect_add(rect_uncenter(boxo), [o.x, o.y]))) {
-          d3.select(d.object).classed("overlap", true)
-          d3.select(o.object).classed("overlap", true)
-          var dx = boxd.x + d.x - boxo.x - o.x
-          var dy = boxd.y + d.y - boxo.y - o.y
-
-          d.v = [d.v[0] - dx/2, d.v[1] - dy/2]
-          o.v = [o.v[0] + dx/2, o.v[1] + dy/2]
+    labels.forEach( function (d, i) {
+      labels.slice(i+1).forEach( function (o, j) {
+        j += i + 1
+        var dx = d.x - o.x
+        var dy = d.y - o.y
+        var abs = dx*dx + dy*dy
+        if (abs < min_distance) {
+          min_distance = abs
+          best = [i, j]
         }
       })
     })
 
-    labels.forEach( function (d) {
-      var x = Math.cos(d.angle)
-      var y = Math.sin(d.angle)
-      var rx = x + d.v[0]
-      var ry = y + d.v[1]
+    if (min_distance > max_distance)
+      break
 
-      var s = x * rx + y * ry
-      var b = Math.sqrt(rx*rx + ry*ry) * Math.sqrt(x*x + y*y)
-      var beta = Math.acos(s/b)
+    var i = best[0], j = best[1]
+    var d = labels[i]
+    var o = labels[j]
 
-      d.angle -= beta
-    })
+    d.x = (d.x * d.nodes.length + o.x * o.nodes.length) / (d.nodes.length + o.nodes.length)
+    d.y = (d.y * d.nodes.length + o.y * o.nodes.length) / (d.nodes.length + o.nodes.length)
+    d.nodes = d.nodes.concat(o.nodes)
 
-    labels.forEach( function (d) {
-      label_at_angle(d)
-    })
-
-    console.log(i)
-
-    i = i + 0.01
+    labels[j] = labels[labels.length - 1]
+    labels.pop()
   }
 
-  clearInterval(timer)
-  timer = setInterval(tick, 100)
+  return labels
+}
+
+function position_labels(nodes) {
+  var labels = []
+  var POINT_SIZE = 15
+
+  var occupied = []
+
+  nodes.each( function (d) {
+    var xy = project(d.geo)
+    var label = {
+      angle: 0.0, // rotated around center 
+      offset: 0,
+      nodes: [d],
+      x: xy[0], y: xy[1],
+      v: [0, 0]
+    }
+    labels.push(label)
+  })
+
+  nodes.each( function (d) {
+    var p = project(d.geo)
+    occupied.push({ x: p[0] - POINT_SIZE/2, y: p[1] - POINT_SIZE/2, width: POINT_SIZE, height: POINT_SIZE })
+  })
+
+  labels = cluster_labels(labels, 30)
+
+  /*
+  labels.forEach( function (d) {
+    var t = d.nodes.map( function (d) { return project(d.geo) })
+    var s = t.reduce( function (p, n) { return [p[0] + n[0], p[1] + n[1]] })
+    s = [s[0]/t.length, s[1]/t.length]
+    d.x = s[0]
+    d.y = s[1]
+  })
+  */
 
   labels.forEach( function (d) {
     labels.forEach( function (o, i) {
@@ -286,25 +254,116 @@ function position_labels(nodes) {
   
   labels = labels.filter(function (d) { return d != undefined })
 
-  var voronoi = d3.geom.voronoi(labels.map( function (d){ return [d.x, d.y] }))
+  g.select(".labels").selectAll(".label").remove()
 
-  var tree = d3.geom.quadtree(labels)
+  var labels_svg = g.select(".labels").selectAll(".label").data(labels)
 
-  g.selectAll(".quad").remove()
+  var label_nodes = labels_svg.enter().append("g")
+                         .attr("class", "label")
+                         .attr("transform", function (d) { return "translate(" + [d.x, d.y].join(",") + ")"})
 
-  tree.visit( function (node, x1, y1, x2, y2) {
-    return false
-    g.append("rect").attr("class", "quad")
-     .attr("x", x1)
-     .attr("y", y1)
-     .attr("width", x2 - x1)
-     .attr("height", y2 - y1)
-     .style("fill", "rgba(0, 0, 255, 0.03)")
-     .style("stroke", "#fff")
+  label_nodes.append("line")
 
-    return false
+  label_g = label_nodes.append("g")
+
+  label_g.append("text")
+           .text(function(d, i) {
+             var text = d.nodes.map(function (d) {
+               if (d.name)
+                 return d.name
+
+               return d.id
+             }).reduce( function (p, n) {
+               return p + "<br/> " + n
+             })
+             return d.nodes.length
+           })
+
+  labelTextWidth = function (e) {
+    return e.parentNode.querySelector("text").getBBox().width + 3
+  }
+
+  labelTextHeight = function (e) {
+    return e.parentNode.querySelector("text").getBBox().height
+  }
+
+  label_g.insert("rect", "text")
+            .attr("y", function(d) { return labelTextHeight(this) / (-2)})
+            .attr("x", function(d) { return labelTextWidth(this) / (-2)})
+            .attr("width", function(d) { return labelTextWidth(this)})
+            .attr("height", function (d) { return labelTextHeight(this)})
+
+  label_nodes.each( function (d) {
+    d.box = this.getBBox()
   })
 
+  var voronoi = d3.geom.voronoi(labels.map( function (d){ return [d.x, d.y] }))
+
+  var area_centers = voronoi.map( function (poly) {
+    var poly = d3.geom.polygon(poly)
+    return [poly.area(), poly.centroid()]
+  })
+
+  labels.forEach( function (d, i) {
+    var poly = voronoi[i]
+    var vectors = poly.map( function (p) {
+      return [p[0] - d.x, p[1] - d.y]
+    }).sort( function (b, a) {
+      return (a[0]*a[0] + a[1]*a[1]) - (b[0]*b[0] + b[1]*b[1])
+    })
+
+    var v = poly.map( function (p) {
+      return [p[0] - d.x, p[1] - d.y]
+    }).reduce( function (p, n) {
+      return [p[0] + n[0], p[1] + n[1]]
+    })
+
+    var v = vectors[0]//area_centers[i][1]
+    d.voronoi_area = area_centers[i][0]
+    d.voronoi_center = v
+    var dx = v[0]// - d.x
+    var dy = v[1]// - d.y
+    var abs = Math.sqrt(dx*dx + dy*dy)
+    d.angle = Math.atan2(dy/abs, dx/abs) / (2*Math.PI)
+  })
+
+  labels = labels.sort( function (a, b) {
+    return a.voronoi_area - b.voronoi_area
+  })
+
+  labels.forEach( function (d, i) {
+    var box
+    var intersects = true
+
+    var i = 30
+
+    while (intersects) {
+      i--
+
+      if (i == 0) {
+        d.angle += Math.random()*0.05
+        d.offset -= 25
+
+        i = 30
+      }
+
+      d.offset += 1
+
+      box = rect_add(rect_grow(rect_uncenter(label_box(d)), POINT_SIZE/2), [d.x, d.y])
+      intersects = false
+      occupied.forEach( function (d) {
+        if (rect_intersect(d, box))
+          intersects = true
+      })
+    }
+
+    box = rect_add(rect_uncenter(label_box(d)), [d.x, d.y])
+    occupied.push(box)
+  })
+
+  label_nodes.each(label_at_angle)
+
+    /*
   g.select("#voronoi").remove()
 
   var path = g.append("g").attr("id", "voronoi").selectAll("path");
@@ -313,13 +372,20 @@ function position_labels(nodes) {
   path.enter().append("path").attr("class", function(d, i) { return "q" + (i % 9) + "-9"; }).attr("d", String);
   path.order();
 
-  labels.forEach( function (d) {
-    label_at_angle(d)
-  })
+  g.select("#occupied").remove()
+
+  var boxes = g.append("g").attr("id", "occupied").selectAll("rect").data(occupied)
+
+  boxes.enter().append("rect").style("fill", "rgba(255, 0, 0, 0.5)")
+               .attr("x", function (d) { return d.x })
+               .attr("y", function (d) { return d.y })
+               .attr("width", function (d) { return d.width })
+               .attr("height", function (d) { return d.height })
+               */
 }
 
 function label_box(label) {
-  var offset = 10
+  var offset = 10 + label.offset
   var x, y, a, b
   var angle = Math.PI*2 * label.angle
 
@@ -333,6 +399,12 @@ function label_box(label) {
 }
 
 function label_at_angle(label) {
+  var object = d3.select(this)
   var box = label_box(label)
-  d3.select(label.object).attr("transform", "translate(" + box.x + "," + box.y + ")")
+  object.select("g").attr("transform", "translate(" + box.x + "," + box.y + ")")
+  object.select("line")
+    .attr("x1", 0)
+    .attr("y1", 0)
+    .attr("x2", box.x)
+    .attr("y2", box.y)
 }
