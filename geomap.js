@@ -280,7 +280,12 @@ function position_labels(nodes) {
         o.append("text").text(name).attr("y", -i * 15)
       })
     else {
-      var clients = d.nodes.filter(function (d) { return d.flags.online }).map(function (d) { return d.clients.length - 1 }).reduce(function (p, n) { return p + n })
+      var clients
+      try {
+        clients = d.nodes.filter(function (d) { return d.flags.online }).map(function (d) { return d.clients.length - 1 }).reduce(function (p, n) { return p + n })
+      } catch (e) {
+        clients = 0
+      }
       o.append("text").text(d.nodes.length + " Knoten (" + clients + ")").attr("y", 0).style("font-weight", "bold")
     }
   })
