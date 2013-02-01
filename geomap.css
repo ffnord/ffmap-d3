@@ -2,12 +2,10 @@
   fill: #ff8;
   opacity: 0.9;
   stroke: rgba(0, 0, 0, 0.5);
-  stroke-width: 0.5pt;
+  stroke-width: 1px;
 }
 
 .label text {
-  text-anchor: middle;
-  alignment-baseline: middle;
 }
 
 line.link {
@@ -15,11 +13,11 @@ line.link {
   opacity: 0.5;
 }
 
-path {
+#voronoi path {
   stroke: #000;
 }
 
-path {
+#voronoi path {
   opacity: 0.2;
 }
 
@@ -34,11 +32,17 @@ path {
 .q8-9{fill:rgb(77,146,33)}
 
 .label line {
-  stroke-width: 1pt;
+  stroke-width: 2px;
   stroke: #000;
   opacity: 0.3;
 }
 
 .overlap rect {
   fill: red
+}
+
+.hulls {
+  fill: rgba(50, 100, 200, 0.4);
+  stroke: rgba(50, 100, 200, 0.8);
+  stroke-width: 1pt;
 }
