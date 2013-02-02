@@ -3,7 +3,9 @@ var svg, g
 var nodes_json = "nodes.json"
 
 function init() {
-  map = new L.Map("map")
+  map = new L.Map("map", {
+    worldCopyJump: true,
+  })
 
   map.addLayer(new L.TileLayer("http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg", {
     subdomains: '1234',
