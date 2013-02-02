@@ -414,7 +414,7 @@ function position_labels(nodes) {
 
   g.select(".labels").selectAll(".hulls").remove()
 
-  var path = g.select(".labels").append("g").attr("class", "hulls").selectAll("path")
+  var path = g.select(".labels").insert("g", ":first-child").attr("class", "hulls").selectAll("path")
   path = path.data(hulls.map(function(d) { return "M" + d.join("L") + "Z"; }), String)
   path.exit().remove()
   path.enter().append("path").attr("d", String)
