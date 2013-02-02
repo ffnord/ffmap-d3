@@ -450,104 +450,74 @@ function isLeft(P0, P1, P2) {
 function convexhull(points) {
     var P = points.sort(function (a, b) {
                     var t = a[0] - b[0]
-                    if (t==0)
-                      t = a[1] - b[1]
-
+                    if (t==0) t = a[1] - b[1]
                     return t
                   })
 
     var n = P.length
     var H = []
 
-        // the output array H[] will be used as the stack
-    var bot = 0,
-    top = (-1); // indices for bottom and top of the stack
     var i; // array scan index
     // Get the indices of points with min x-coord and min|max y-coord
     var minmin = 0,
-        minmax;
+        minmax
 
-    var xmin = P[0][0];
-    for (i = 1; i < n; i++) {
-        if (P[i][0] != xmin) {
-            break;
-        }
-    }
+    var xmin = P[0][0]
+    for (i = 0; i < n; i++) if (P[i][0] > xmin) break
+    minmax = i - 1
 
-    minmax = i - 1;
     if (minmax == n - 1) { // degenerate case: all x-coords == xmin
-        H[++top] = P[minmin];
-        if (P[minmax][1] != P[minmin][1]) // a nontrivial segment
-            H[++top] = P[minmax];
-        H[++top] = P[minmin]; // add polygon endpoint
+        H.push(P[minmin])
+        if (P[minmax][1] != P[minmin][1]) H.push(P[minmax]) // a nontrivial segment
+        H.push(P[minmin]) // add polygon endpoint
         return H
     }
 
     // Get the indices of points with max x-coord and min|max y-coord
-    var maxmin, maxmax = n - 1;
-    var xmax = P[n - 1][0];
-    for (i = n - 2; i >= 0; i--) {
-        if (P[i][0] != xmax) {
-            break;
-        }
-    }
-    maxmin = i + 1;
+    var maxmin, maxmax = n - 1
+    var xmax = P[n - 1][0]
+    for (i = n - 2; i >= 0; i--) if (P[i][0] != xmax) break
+    maxmin = i + 1
 
     // Compute the lower hull on the stack H
-    H[++top] = P[minmin]; // push minmin point onto stack
-    i = minmax;
+    H.push(P[minmin]) // push minmin point onto stack
+    i = minmax
     while (++i <= maxmin) {
         // the lower line joins P[minmin] with P[maxmin]
-        if (isLeft(P[minmin], P[maxmin], P[i]) >= 0 && i < maxmin) {
-            continue; // ignore P[i] above or on the lower line
-        }
+        if (isLeft(P[minmin], P[maxmin], P[i]) >= 0 && i < maxmin) continue // ignore P[i] above or on the lower line
 
-        while (top > 0) { // there are at least 2 points on the stack
+        while (H.length > 1) { // there are at least 2 points on the stack
             // test if P[i] is left of the line at the stack top
-            if (isLeft(H[top - 1], H[top], P[i]) > 0) {
-                break; // P[i] is a new hull vertex
-            }
-            else {
-                top--; // pop top point off stack
-            }
+            var top = H.length - 1
+            if (isLeft(H[top - 1], H[top], P[i]) > 0) break // P[i] is a new hull vertex
+            else H.pop()
         }
 
-        H[++top] = P[i]; // push P[i] onto stack
+        H.push(P[i]) // push P[i] onto stack
     }
 
     // Next, compute the upper hull on the stack H above the bottom hull
-    if (maxmax != maxmin) { // if distinct xmax points
-        H[++top] = P[maxmax]; // push maxmax point onto stack
-    }
+    if (maxmax != maxmin) H.push(P[maxmax]) // if distinct xmax points
 
-    bot = top; // the bottom point of the upper hull stack
-    i = maxmin;
+    var bot = H.length // the bottom point of the upper hull stack
+    i = maxmin
     while (--i >= minmax) {
         // the upper line joins P[maxmax] with P[minmax]
-        if (isLeft(P[maxmax], P[minmax], P[i]) >= 0 && i > minmax) {
-            continue; // ignore P[i] below or on the upper line
-        }
+        if (isLeft(P[maxmax], P[minmax], P[i]) >= 0 && i > minmax) continue // ignore P[i] below or on the upper line
 
-        while (top > bot) { // at least 2 points on the upper stack
+        while (H.length > bot) { // at least 2 points on the upper stack
             // test if P[i] is left of the line at the stack top
-            if (isLeft(H[top - 1], H[top], P[i]) > 0) {
-                break;  // P[i] is a new hull vertex
-            }
-            else {
-                top--; // pop top point off stack
-            }
+            var top = H.length - 1
+            if (isLeft(H[top - 1], H[top], P[i]) > 0) break  // P[i] is a new hull vertex
+            else H.pop()
         }
 
-        if (P[i][0] == H[0][0] && P[i][1] == H[0][1]) {
-            return H
-        }
+        if (P[i][0] == H[0][0] && P[i][1] == H[0][1]) return H
 
-        H[++top] = P[i]; // push P[i] onto stack
+        H.push(P[i]) // push P[i] onto stack
     }
 
-    if (minmax != minmin) {
-        H[++top] = P[minmin]; // push joining endpoint onto stack
-    }
+    if (minmax != minmin) H.push(P[minmin]) // push joining endpoint onto stack
 
     return H
 }
