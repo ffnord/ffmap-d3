@@ -7,6 +7,8 @@ function init() {
     worldCopyJump: true,
   })
 
+  L.control.scale().addTo(map);
+
   map.addLayer(new L.TileLayer("http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg", {
     subdomains: '1234',
     type: 'osm',
