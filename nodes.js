@@ -227,10 +227,10 @@ function highlight(b) {
        })
 
     vis.selectAll(".link")
-       .classed("faded", function(o) {
-         return !(o.source === d || o.target === d) && b
-       })
-  }
+       .classed("faded", function(o) {
+         return !(o.source === d || o.target === d) && b
+       })
+  }
 }
 
 function goto_node(d) {
@@ -310,7 +310,7 @@ function update_graph() {
 var vis = d3.select("#chart").append("svg")
             .attr("width", w)
             .attr("height", h)
-            .attr("pointer-events", "all")
+            .attr("pointer-events", "all")
             .call(d3.behavior.zoom().on("zoom", redraw))
             .append("g")
 
