@@ -378,7 +378,7 @@ function reload() {
   function handler(json) {
     data = json
 
-    date = Date.parse(data.meta.timestamp)
+    date = new Date(data.meta.timestamp)
 
     updated_at.text(date.toString('HH:mm:ss'))
 
