@@ -378,7 +378,9 @@ function reload() {
   function handler(json) {
     data = json
 
-    updated_at.text(d3.time.format("%X")(new Date()))
+    date = Date.parse(data.meta.timestamp)
+
+    updated_at.text(date.toString('HH:mm:ss'))
 
     var nNodes = data.nodes.filter(function(d) {
                    return !d.flags.client && d.flags.online
