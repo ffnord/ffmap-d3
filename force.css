@@ -1,10 +1,52 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  display: table;
+  width: 100%;
+}
+
 #chart, #chart svg {
-  display: block;
-  vertical-align: middle;
+  vertical-align: top;
+}
+
+header, footer {
+  display: table-row;
+}
+
+#content {
+  display: table-row;
+  width: 100%;
+  height: 100%;
+}
+
+#container {
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+
+#chart svg {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
 }
 
 #chart {
+  display: table-cell;
   position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+#sidebar {
+  border-left: 1pt solid #ccc;
+  display: table-cell;
+  vertical-align: top;
+  padding: 1em;
+  z-index: 0;
+  font-size: 9pt;
 }
 
 .node.marked {
@@ -142,14 +184,6 @@
     text-shadow: none;
 }
 
-#sidebar {
-  position: absolute;
-  top: 1em;
-  right: 1.5em;
-  z-index: 0;
-  font-size: 9pt;
-}
-
 #legend ul {
   list-style: none;
 }
@@ -175,10 +209,9 @@
 }
 
 footer {
-  position: absolute;
-  bottom: 0.2em;
-  right: 0.2em;
+  text-align: center;
   font-size: 8pt;
+  padding: 0.5em;
   color: #777;
 }
 
