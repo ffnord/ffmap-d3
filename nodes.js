@@ -16,39 +16,6 @@ function switch_style(s) {
   style_btn.text(s)
 }
 
-function getOffset( el ) {
-  var _x = 0, _y = 0
-
-  while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
-    _x += el.offsetLeft - el.scrollLeft
-    _y += el.offsetTop - el.scrollTop
-    el = el.offsetParent
-  }
-  return { top: _y, left: _x }
-}
-
-var w, h
-
-resize()
-
-window.onresize = resize
-
-function resize() {
-  var offset = getOffset(document.getElementById('chart'))
-
-  w = window.innerWidth - offset.left
-  h = window.innerHeight - offset.top - 1
-
-  d3.select("#chart")
-    .attr("width", w).attr("height", h)
-
-  if (vis)
-    d3.select("#chart > svg").attr("width", w).attr("height", h)
-
-  if (force)
-    force.size([w, h]).start()
-}
-
 function next_style() {
   var s;
   if (style !== undefined)
@@ -59,6 +26,18 @@ function next_style() {
 
   style = s[0][0].getAttribute("title")
   switch_style(style)
+}
+
+window.onresize = resize
+
+function resize() {
+  var chart = document.getElementById("chart")
+
+  var w = chart.offsetWidth
+  var h = chart.offsetHeight
+
+  if (force)
+    force.size([w, h]).start()
 }
 
 var cp = d3.select("header").append("div")
@@ -308,8 +287,6 @@ function update_graph() {
 }
 
 var vis = d3.select("#chart").append("svg")
-            .attr("width", w)
-            .attr("height", h)
             .attr("pointer-events", "all")
             .call(d3.behavior.zoom().on("zoom", redraw))
             .append("g")
@@ -337,7 +314,6 @@ var force = d3.layout.force()
               .gravity(0.035)
               .friction(0.73)
               .theta(0.8)
-              .size([w, h])
               .linkDistance(function (d) {
                 switch (d.type) {
                   case "client": return 20 * distScale
@@ -351,6 +327,7 @@ var force = d3.layout.force()
                   default: return 0.2 * strengthScale
                 }
               })
+resize()
 
 function tick_event(e) {
   vis.selectAll(".link").selectAll("line")
