@@ -5,7 +5,7 @@
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
     <link rel="stylesheet" href="leaflet.css" type="text/css" />
     <link href='style.css' rel='stylesheet' type='text/css' />
-    <link href='geomap.css' rel='stylesheet' type='text/css' />
+    <link href='list.css' rel='stylesheet' type='text/css' />
 
     <style type="text/css">
       #map {
@@ -17,42 +17,21 @@
       .nodePopup .label { font-weight: bold; }
     </style>
 
-    <title>Freifunk Lübeck - Knotenkarte</title>
+    <title>Freifunk Lübeck - Knotenliste</title>
 
     <script type="text/javascript" src="lib/d3.min.js"></script>
-    <script type="text/javascript" src="leaflet.js"></script>
     <script type="text/javascript" src="links.js"></script>
     <script type="text/javascript" src="loader.js"></script>
-    <script type="text/javascript" src="geomap.js"></script>
+    <script type="text/javascript" src="list.js"></script>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.tablesorter.min.js"></script>
 
     <script type="text/javascript">
       var nodes_json = "nodes.json"
-
-      window.onresize = resize
-
-      function getOffset( el ) {
-        var _x = 0, _y = 0
-
-        while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
-          _x += el.offsetLeft - el.scrollLeft
-          _y += el.offsetTop - el.scrollTop
-          el = el.offsetParent
-        }
-        return { top: _y, left: _x }
-      }
-
-      function resize() {
-        var offset = getOffset(document.getElementById('map'))
-
-        var w = window.innerWidth - offset.left
-        var h = window.innerHeight - offset.top - 1
-
-        d3.select("#map").style("width", w+"px").style("height", h+"px")
-      }
     </script>
   </head>
 
-  <body onload="resize(); init()">
+  <body onload="init()">
     <header>
       <h1>luebeck.freifunk.net</h1>
       <ul>
@@ -60,8 +39,10 @@
         <li><a href="geomap.html">Karte</a></li>
         <li><a href="list.html">Liste</a></li>
       </ul>
-      <button id="gpsbutton">Koordinaten beim nächsten Klick anzeigen</button>
     </header>
-    <div id="map"></div>
+    <div class="container">
+      <h1>Knotenliste</h1>
+      <table id="list"></table>
+    </div>
   </body>
 </html>

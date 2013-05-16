@@ -36,3 +36,7 @@ header a {
 header a:hover {
   background: #C83771;
 }
+
+.container {
+  margin: 1em;
+}
