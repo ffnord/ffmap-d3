@@ -17,7 +17,7 @@ function nodetable(table, fn) {
 
   function update(data) {
     var doc = tbody.selectAll("tr")
-                   .data(data.nodes)
+                   .data(data.nodes.filter(function (d) { return !d.flags.client }))
     
     var row = doc.enter().append("tr")
 
