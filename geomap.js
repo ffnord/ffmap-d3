@@ -81,7 +81,7 @@ function update(data) {
   new_nodes.append("circle")
            .attr("r", "4pt")
            .attr("fill", function (d) {
-             return d.flags.online?"rgba(0, 255, 0, 0.8)":"rgba(200, 128, 128, 0.5)"
+             return d.flags.online?"rgba(0, 255, 0, 0.8)":"rgba(128, 128, 128, 0.5)"
            })
            .attr("stroke-width", "0.5px")
            .attr("stroke", "#444")
