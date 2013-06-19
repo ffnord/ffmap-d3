@@ -37,6 +37,10 @@ header a:hover {
   background: #C83771;
 }
 
+header h1 a {
+  color: #FFFFFF;
+}
+
 .container {
   margin: 1em;
 }
