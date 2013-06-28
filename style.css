@@ -35,6 +35,16 @@ header a {
 
 header a:hover {
   background: #C83771;
+  text-decoration: underline;
+}
+
+header h1 a:hover {
+  background:transparent;
+}
+
+
+header h1 a {
+  color: #FFFFFF;
 }
 
 .container {
