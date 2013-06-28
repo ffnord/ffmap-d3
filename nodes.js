@@ -1,3 +1,10 @@
+/* Framework: http://d3js.org/ 
+ * this script only works if you create nodes.json and nodes_compiled.js in the same folder
+ */
+
+// Gravity at pageload: 
+initial_gravity=0.07; // to apply a change here, enter `make` in you terminal
+
 var style;
 
 function switch_style(s) {
@@ -311,7 +318,7 @@ var force = d3.layout.force()
 
                 return -100 * chargeScale
               })
-              .gravity(0.035)
+              .gravity(initial_gravity)
               .friction(0.73)
               .theta(0.8)
               .linkDistance(function (d) {
