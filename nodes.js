@@ -1,3 +1,10 @@
+/* Framework: http://d3js.org/ 
+ * to apply any change in this script, 
+ * 1. create some sample data in nodes.json, for example: https://luebeck.freifunk.net/map/nodes.json
+ * 2. enter `make` in you terminal
+ * (for example if you adjust the initial gravity at page-load)
+ */
+
 var style;
 
 function switch_style(s) {
@@ -311,7 +318,7 @@ var force = d3.layout.force()
 
                 return -100 * chargeScale
               })
-              .gravity(0.035)
+              .gravity(0.035) // initial gravity at page-load
               .friction(0.73)
               .theta(0.8)
               .linkDistance(function (d) {
