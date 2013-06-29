@@ -311,7 +311,7 @@ var force = d3.layout.force()
 
                 return -100 * chargeScale
               })
-              .gravity(0.035)
+              .gravity(0.09) // initial gravity at page-load
               .friction(0.73)
               .theta(0.8)
               .linkDistance(function (d) {
