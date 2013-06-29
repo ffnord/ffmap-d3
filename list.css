@@ -5,6 +5,21 @@ table {
 
 table th.headerSortUp, table th.headerSortDown {
   background-color: lightblue;
+  background-repeat:no-repeat;
+}
+
+table th.headerSortDown {
+  background-image: url('img/sort-down.png');
+  background-position: bottom center;
+}
+
+table th.headerSortUp {
+  background-image: url('img/sort-up.png');
+  background-position: top center;
+}
+
+table th {
+  cursor:pointer;
 }
 
 table td, table th {
