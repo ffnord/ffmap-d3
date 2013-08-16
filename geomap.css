@@ -4,6 +4,21 @@
 }
 
 .label text {
+  cursor: pointer !important;
+}
+
+.node:hover circle {
+  stroke: red !important;
+  stroke-width: 2pt;
+}
+
+.node {
+  cursor: pointer !important;
+}
+
+.node circle {
+  stroke-width: .5pt;
+  stroke: #444;
 }
 
 line.link {
