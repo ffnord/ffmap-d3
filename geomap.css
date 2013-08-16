@@ -1,8 +1,6 @@
 .label rect {
   fill: #ff8;
   opacity: 0.9;
-  stroke: rgba(0, 0, 0, 0.5);
-  stroke-width: 1px;
 }
 
 .label text {
@@ -30,12 +28,6 @@ line.link {
 .q6-9{fill:rgb(184,225,134)}
 .q7-9{fill:rgb(127,188,65)}
 .q8-9{fill:rgb(77,146,33)}
-
-.label line {
-  stroke-width: 2px;
-  stroke: #000;
-  opacity: 0.3;
-}
 
 .overlap rect {
   fill: red

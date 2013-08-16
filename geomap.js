@@ -168,50 +168,9 @@ function rect_grow(rect, x) {
   }
 }
 
-function cluster_labels(labels, max_distance) {
-  max_distance *= max_distance
-
-  while (labels.length > 1) {
-    var min_distance = Infinity
-    var best = [0, 0]
-
-    labels.forEach( function (d, i) {
-      labels.slice(i+1).forEach( function (o, j) {
-        j += i + 1
-        var dx = d.x - o.x
-        var dy = d.y - o.y
-        var abs = dx*dx + dy*dy
-        if (abs < min_distance) {
-          min_distance = abs
-          best = [i, j]
-        }
-      })
-    })
-
-    var i = best[0], j = best[1]
-    var d = labels[i]
-    var o = labels[j]
-
-    var n = d.nodes.length + o.nodes.length
-
-    if (min_distance > max_distance * Math.pow(n, 4))
-      break
-
-    d.x = (d.x * d.nodes.length + o.x * o.nodes.length) / (d.nodes.length + o.nodes.length)
-    d.y = (d.y * d.nodes.length + o.y * o.nodes.length) / (d.nodes.length + o.nodes.length)
-    d.nodes = d.nodes.concat(o.nodes)
-    d.cluster_distance =
-
-    labels[j] = labels[labels.length - 1]
-    labels.pop()
-  }
-
-  return labels
-}
-
 function position_labels(nodes) {
   var labels = []
-  var POINT_SIZE = 15
+  var POINT_SIZE = 8
 
   var occupied = []
 
@@ -233,7 +192,6 @@ function position_labels(nodes) {
   })
 
   var zoom = map.getZoom() / map.getMaxZoom()
-  labels = cluster_labels(labels, 3 * Math.pow(1/zoom, 4))
 
   /*
   labels.forEach( function (d) {
@@ -263,61 +221,33 @@ function position_labels(nodes) {
                          .attr("class", "label")
                          .attr("transform", function (d) { return "translate(" + [d.x, d.y].join(",") + ")"})
 
-  label_nodes.append("line")
-
   label_g = label_nodes.append("g").attr("class", "textbox").append("g")
 
   label_g.append("g").each( function (d) {
     var o = d3.select(this)
 
-    if (d.nodes.length < 4)
-      d.nodes.forEach( function (n, i) {
-        var name
-        if (n.name)
-          name = n.name
-        else
-          name = n.id
+    d.nodes.forEach( function (n, i) {
+      var name
+      if (n.name)
+        name = n.name
+      else
+        name = n.id
 
-        if (n.flags.online)
-          name += " (" + (n.clients.length - 1) + ")"
-
-        o.append("text").text(name).attr("y", -i * 15)
-      })
-    else {
-      var clients
-      try {
-        clients = d.nodes.filter(function (d) { return d.flags.online }).map(function (d) { return d.clients.length - 1 }).reduce(function (p, n) { return p + n })
-      } catch (e) {
-        clients = 0
-      }
-      o.append("text").text(d.nodes.length + " Knoten (" + clients + ")").attr("y", 0).style("font-weight", "bold")
-    }
+      o.append("text").text(name).attr("y", -i * 15)
+    })
   })
-  /*
-           .text(function(d, i) {
-             var text = d.nodes.map(function (d) {
-               if (d.name)
-                 return d.name
-
-               return d.id
-             }).reduce( function (p, n) {
-               return p + "<br/> " + n
-             })
-             return d.nodes.length
-           })
-           */
 
   labelTextWidth = function (e) {
-    return e.parentNode.querySelector("g").getBBox().width + 10
+    return e.parentNode.querySelector("g").getBBox().width
   }
 
   labelTextHeight = function (e) {
-    return e.parentNode.querySelector("g").getBBox().height + 5
+    return e.parentNode.querySelector("g").getBBox().height
   }
 
   label_g.insert("rect", "g")
-            .attr("y", function (d) { return -labelTextHeight(this) + 5})
-            .attr("x", -5)
+            .attr("y", function (d) { return -labelTextHeight(this) + 3})
+            .attr("x", -1)
             .attr("width", function(d) { return labelTextWidth(this)})
             .attr("height", function (d) { return labelTextHeight(this)})
 
@@ -334,200 +264,34 @@ function position_labels(nodes) {
   })
 
   if (labels.length > 1) {
-    var voronoi = d3.geom.voronoi(labels.map( function (d){ return [d.x, d.y] }))
-
-    var area_centers = voronoi.map( function (poly) {
-      var poly = d3.geom.polygon(poly)
-      return [poly.area(), poly.centroid()]
-    })
-
     labels.forEach( function (d, i) {
-      var poly = voronoi[i]
-      var vectors = poly.map( function (p) {
-        return [p[0] - d.x, p[1] - d.y]
-      }).sort( function (b, a) {
-        return (a[0]*a[0] + a[1]*a[1]) - (b[0]*b[0] + b[1]*b[1])
-      })
-
-      var v = poly.map( function (p) {
-        return [p[0] - d.x, p[1] - d.y]
-      }).reduce( function (p, n) {
-        return [p[0] + n[0], p[1] + n[1]]
-      })
-
-      var v = vectors[0]//area_centers[i][1]
-      d.voronoi_area = area_centers[i][0]
-      d.voronoi_center = v
-      var dx = v[0]// - d.x
-      var dy = v[1]// - d.y
-      var abs = Math.sqrt(dx*dx + dy*dy)
-      d.angle = Math.atan2(dy/abs, dx/abs) / (2*Math.PI)
-    })
-
-    labels = labels.sort( function (a, b) {
-      return (a.nodes.length * a.voronoi_area) - (b.nodes.length * b.voronoi_area)
+      d.angle = 0
+      d.offset = 0
     })
   }
 
-  labels.forEach( function (d, i) {
+  label_nodes.each( function (d, i) {
     var box
-    var intersects = true
-
-    var i = 30
-
-    while (intersects) {
-      i--
-
-      if (i == 0) {
-        d.angle += Math.random()*0.02
-        d.offset -= 25
-
-        i = 30
-      }
-
-      d.offset += 1
-
-      box = rect_add(rect_grow(rect_uncenter(label_box(d)), POINT_SIZE/2), [d.x, d.y])
-      intersects = false
-      occupied.forEach( function (d) {
-        if (rect_intersect(d, box))
-          intersects = true
-      })
-    }
+    var intersects = false
 
     box = rect_add(rect_uncenter(label_box(d)), [d.x, d.y])
-    occupied.push(box)
+
+    occupied.forEach( function (d) {
+      if (rect_intersect(d, box))
+        intersects = true
+    })
+
+    if (intersects)
+      this.remove()
+    else
+      occupied.push(box)
   })
 
-  hulls = labels.filter( function (d) { return d.nodes.length > 1 })
-                .map( function (d) {
-                    return convexhull(d.nodes
-                      .map( function (n) { return project(n.geo) })
-                      .map( function (n) {
-                        var d = POINT_SIZE/2
-                        return  ([[-d, -d], [-d, d], [d, d], [d, -d]]).map( function (m) {
-                            return [n[0] + m[0], n[1] + m[1]]
-                          })
-                        }).reduce( function (p, n) {
-                          return p.concat(n)
-                        })
-                  )
-                })
-
   label_nodes.each(label_at_angle)
-
-  g.select(".labels").selectAll(".hulls").remove()
-
-  var path = g.select(".labels").insert("g", ":first-child").attr("class", "hulls").selectAll("path")
-  path = path.data(hulls.map(function(d) { return "M" + d.join("L") + "Z"; }), String)
-  path.exit().remove()
-  path.enter().append("path").attr("d", String)
-  path.order()
-
-    /*
-  g.select("#voronoi").remove()
-
-  var path = g.append("g").attr("id", "voronoi").selectAll("path");
-  path = path.data(voronoi.map(function(d) { return "M" + d.join("L") + "Z"; }), String);
-  path.exit().remove();
-  path.enter().append("path").attr("class", function(d, i) { return "q" + (i % 9) + "-9"; }).attr("d", String);
-  path.order();
-    */
-
-    /*
-  g.select("#occupied").remove()
-
-  var boxes = g.append("g").attr("id", "occupied").selectAll("rect").data(occupied)
-
-  boxes.enter().append("rect").style("fill", "rgba(255, 0, 0, 0.5)")
-               .attr("x", function (d) { return d.x })
-               .attr("y", function (d) { return d.y })
-               .attr("width", function (d) { return d.width })
-               .attr("height", function (d) { return d.height })
-               */
-}
-
-function isLeft(P0, P1, P2) {
-    return (P1[0] - P0[0])*(P2[1] - P0[1]) - (P2[0] - P0[0])*(P1[1] - P0[1])
-}
-
-function convexhull(points) {
-    var P = points.sort(function (a, b) {
-                    var t = a[0] - b[0]
-                    if (t==0) t = a[1] - b[1]
-                    return t
-                  })
-
-    var n = P.length
-    var H = []
-
-    var i; // array scan index
-    // Get the indices of points with min x-coord and min|max y-coord
-    var minmin = 0,
-        minmax
-
-    var xmin = P[0][0]
-    for (i = 0; i < n; i++) if (P[i][0] > xmin) break
-    minmax = i - 1
-
-    if (minmax == n - 1) { // degenerate case: all x-coords == xmin
-        H.push(P[minmin])
-        if (P[minmax][1] != P[minmin][1]) H.push(P[minmax]) // a nontrivial segment
-        H.push(P[minmin]) // add polygon endpoint
-        return H
-    }
-
-    // Get the indices of points with max x-coord and min|max y-coord
-    var maxmin, maxmax = n - 1
-    var xmax = P[n - 1][0]
-    for (i = n - 2; i >= 0; i--) if (P[i][0] != xmax) break
-    maxmin = i + 1
-
-    // Compute the lower hull on the stack H
-    H.push(P[minmin]) // push minmin point onto stack
-    i = minmax
-    while (++i <= maxmin) {
-        // the lower line joins P[minmin] with P[maxmin]
-        if (isLeft(P[minmin], P[maxmin], P[i]) >= 0 && i < maxmin) continue // ignore P[i] above or on the lower line
-
-        while (H.length > 1) { // there are at least 2 points on the stack
-            // test if P[i] is left of the line at the stack top
-            var top = H.length - 1
-            if (isLeft(H[top - 1], H[top], P[i]) > 0) break // P[i] is a new hull vertex
-            else H.pop()
-        }
-
-        H.push(P[i]) // push P[i] onto stack
-    }
-
-    // Next, compute the upper hull on the stack H above the bottom hull
-    if (maxmax != maxmin) H.push(P[maxmax]) // if distinct xmax points
-
-    var bot = H.length // the bottom point of the upper hull stack
-    i = maxmin
-    while (--i >= minmax) {
-        // the upper line joins P[maxmax] with P[minmax]
-        if (isLeft(P[maxmax], P[minmax], P[i]) >= 0 && i > minmax) continue // ignore P[i] below or on the upper line
-
-        while (H.length > bot) { // at least 2 points on the upper stack
-            // test if P[i] is left of the line at the stack top
-            var top = H.length - 1
-            if (isLeft(H[top - 1], H[top], P[i]) > 0) break  // P[i] is a new hull vertex
-            else H.pop()
-        }
-
-        if (P[i][0] == H[0][0] && P[i][1] == H[0][1]) return H
-
-        H.push(P[i]) // push P[i] onto stack
-    }
-
-    if (minmax != minmin) H.push(P[minmin]) // push joining endpoint onto stack
-
-    return H
 }
 
 function label_box(label) {
-  var offset = 10 + label.offset
+  var offset = 4 + label.offset
   var x, y, a, b
   var angle = Math.PI*2 * label.angle
 
