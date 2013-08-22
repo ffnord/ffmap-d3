@@ -24,13 +24,13 @@ header ul {
 }
 
 header {
-  background: #333;
+  background: #4d4d4d;
   color: #fefefe;
 }
 
 header a {
   text-decoration: none;
-  color: #FFCC01;
+  color: #ff6699;
 }
 
 header a:hover {
