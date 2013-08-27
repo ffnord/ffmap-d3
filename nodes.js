@@ -1,4 +1,7 @@
-var style;
+var style,
+    mynodes,
+    mylinks,
+    mylabels;
 
 function switch_style(s) {
   var el = document.getElementsByTagName("link")
@@ -330,17 +333,18 @@ var force = d3.layout.force()
 resize()
 
 function tick_event(e) {
-  vis.selectAll(".link").selectAll("line")
+  mylinks
       .attr("x1", function(d) { return d.source.x })
       .attr("y1", function(d) { return d.source.y })
       .attr("x2", function(d) { return d.target.x })
       .attr("y2", function(d) { return d.target.y })
 
-  vis.selectAll(".node")
+  mynodes
      .attr("cx", function(d) { return d.x })
      .attr("cy", function(d) { return d.y })
 
-  vis.selectAll(".label").attr("transform", function(d) {
+  mylabels
+    .attr("transform", function(d) {
     return "translate(" + d.x + "," + d.y + ")";
   })
 }
@@ -688,7 +692,13 @@ function update() {
   })
 
   if (hashstr.length != 0)
-    show_node(hashstr)
+    show_node(hashstr);
+
+  mylinks = vis.selectAll(".link").selectAll("line");
+
+  mynodes = vis.selectAll(".node");
+
+  mylabels = vis.selectAll(".label");
 }
 
 var initial = 1
