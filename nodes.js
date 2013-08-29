@@ -48,13 +48,13 @@ var updated_at = cp.append("p")
 cp.append("button")
     .attr("class", "btn")
     .attr("value", "reload")
-    .text("Aktualisieren")
+    .text("Reload")
     .on("click", reload)
 
 var style_btn = cp.append("button")
                   .attr("class", "btn")
                   .attr("value", "reload")
-                  .text("Farbwechsler")
+                  .text("Style")
                   .on("click", next_style)
 
 cp.append("button")
@@ -370,13 +370,13 @@ function reload() {
                  }).length
 
     d3.select("#nodecount")
-      .text(nNodes + " Knoten")
+      .text(nNodes + " Nodes")
 
     d3.select("#gatewaycount")
       .text(nGateways + " Gateways")
 
     d3.select("#clientcount")
-      .text("ungefähr " + (nClients - nNodes) + " Clients")
+      .text("Approximately " + (nClients - nNodes) + " Clients")
 
     data = wilder_scheiß(data)
 
