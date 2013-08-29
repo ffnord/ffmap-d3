@@ -28,7 +28,7 @@ function nodetable(table, fn) {
     row.append("td").text(function (d) { return d.clients.length })
     row.append("td").text(function (d) { return d.wifilinks.length })
     row.append("td").text(function (d) { return d.vpns.length })
-    row.append("td").text(function (d) { return d.geo?"ja":"nein" })
+    row.append("td").text(function (d) { return d.geo?"yes":"no" })
 
     $("#list").tablesorter()
   }

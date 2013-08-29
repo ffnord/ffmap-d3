@@ -36,16 +36,16 @@
 }
 
 .node {
-  stroke: #AEC7E8;
+  stroke: #4d4d4d;
 }
 
 .node.gateway {
-  stroke: #FF7F0E;
+  stroke: #ff6699;
 }
 
 .node.client {
-  stroke: #1F77B4;
-  fill: #1F77B4;
+  stroke: #4d4d4d;
+  fill: #4d4d4d;
 }
 
 .link .label {
@@ -77,5 +77,5 @@
 }
 
 .label .dot {
-  fill: #AEC7E8;
+  fill: #4d4d4d;
 }
