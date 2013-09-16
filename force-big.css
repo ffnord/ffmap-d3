@@ -39,6 +39,10 @@
   stroke: #48f;
 }
 
+.node.uplink {
+  stroke: #ff7f0e;
+}
+
 .node.gateway {
   stroke: #ff7f0e;
   fill: #ff7f03;

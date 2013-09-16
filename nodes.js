@@ -569,6 +569,9 @@ function update() {
 
   node.attr("class", function(d) {
         var s = ["node"]
+        if (d.vpns.length > 0)
+          s.push(["uplink"])
+
         for (var key in d.flags)
           if (d.flags.hasOwnProperty(key) && d.flags[key])
             s.push(key)
