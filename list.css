@@ -3,8 +3,28 @@ table {
   border-spacing: 0;
 }
 
+table th.header {
+  background-color: #F3F781;
+  padding-right: 0px;
+  cursor:pointer;
+}
+
+table th.header:after {
+   content: "\0000a0\0000a0";
+}
+
 table th.headerSortUp, table th.headerSortDown {
   background-color: lightblue;
+}
+
+table th.headerSortUp:after {
+   content: "\0000a0\2912";
+   color:blue;
+}
+
+table th.headerSortDown:after {
+   content: "\0000a0\2913";
+   color:blue;
 }
 
 table td, table th {
