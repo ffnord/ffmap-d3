@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-    <link rel="stylesheet" href="leaflet.css" type="text/css" />
-    <link href='style.css' rel='stylesheet' type='text/css' />
-    <link href='geomap.css' rel='stylesheet' type='text/css' />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <title>Freifunk <!--#include file="ort.txt" --> - Knotenkarte</title>
+    <link rel="stylesheet" type="text/css" href="css/leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/geomap.css" />
 
     <style type="text/css">
       #map {
@@ -17,17 +18,9 @@
       .nodePopup .label { font-weight: bold; }
     </style>
 
-    <title>Freifunk Lübeck - Knotenkarte</title>
-
-    <script type="text/javascript" src="lib/d3.min.js"></script>
-    <script type="text/javascript" src="leaflet.js"></script>
-    <script type="text/javascript" src="links.js"></script>
-    <script type="text/javascript" src="loader.js"></script>
-    <script type="text/javascript" src="geomap.js"></script>
+    <script type="text/javascript" src="geomap_compiled.js"></script>
 
     <script type="text/javascript">
-      var nodes_json = "nodes.json"
-
       window.onresize = resize
 
       function getOffset( el ) {
@@ -54,9 +47,9 @@
 
   <body onload="resize(); init()">
     <header>
-      <h1><a href="https://luebeck.freifunk.net">luebeck.freifunk.net</a></h1>
+      <h1><a href="//<!--#include file="fqhn.txt" -->/"><!--#include file="fqhn.txt" --></a></h1>
       <ul>
-        <li><a href="nodes.html">Graph</a></li>
+        <li><a href="graph.html">Graph</a></li>
         <li><a href="geomap.html">Karte</a></li>
         <li><a href="list.html">Liste</a></li>
       </ul>
