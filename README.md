@@ -2,7 +2,7 @@ ffmap-d3
 ========
 
 This repository shows the graph of all nodes in the freifunk network.
-if you clone this repository, you also nees to download some sample data into nodes.json, for example the nodes of Freifunk Lübeck:
+if you clone this repository, you also need to download some sample data into nodes.json, for example the nodes of Freifunk Lübeck:
 
 https://luebeck.freifunk.net/map/nodes.json
 
