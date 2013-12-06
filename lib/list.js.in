@@ -7,12 +7,12 @@ function nodetable(table, fn) {
 
     var tr = thead.append("tr")
 
-    tr.append("th").text("Name")
-    tr.append("th").text("Status")
-    tr.append("th").text("Clients")
-    tr.append("th").text("WLAN Links")
-    tr.append("th").text("VPN")
-    tr.append("th").text("Geo")
+    tr.append("th").text("tr(Name)")
+    tr.append("th").text("tr(Status)")
+    tr.append("th").text("tr(Clients)")
+    tr.append("th").text("tr(WLAN Links)")
+    tr.append("th").text("tr(VPN)")
+    tr.append("th").text("tr(Geo)")
   }
 
   function update(data) {

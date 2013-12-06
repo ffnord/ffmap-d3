@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ ! -f Makefile.conf ]
+then
+  echo "FFMAP_LANGUAGE=${LANGUAGE}" > Makefile.conf
+fi
+
+make localization_file
