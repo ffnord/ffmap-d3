@@ -1,0 +1,85 @@
+#!/usr/bin/perl
+
+use Getopt::Long;
+my $length = 24;
+my $makemode;
+GetOptions ("c=s" => \$conffile, # numeric
+	    "make" => \$makemode) # flag
+or die("Error in command line arguments\n");
+
+if (-e $conffile) {
+  open(CONFFILE, "$conffile");
+  while (<CONFFILE>) {
+    $_=/^(.*):(.*)$/;
+    $dict{$1}=$2;
+  }
+  close(CONFFILE);
+}
+
+foreach $infile (@ARGV) {
+    print $infile . "\n";
+if (! -e $infile) {
+    print "No such file: $infile\n";
+}
+
+local $/;
+
+open(INFILE,"<$infile");
+$in=<INFILE>;
+close(INFILE);
+
+if ($makemode) {
+  @matches=$in=~/^|\Wtr\(([^)]*)\)/g;
+  for ($i=1; $i<=$#matches;$i++) {
+      $m=$matches[$i];
+      if ($dict{$m}) {
+	  $m_dict{$m}=$dict{$m};
+      }
+      else {
+	  $m_dict{$m}=$m;
+      }
+  }
+}
+elsif (! -e $conffile) {
+  $in=~s/tr\(([^)]*)\)/$1/g;
+}
+else {
+    foreach $key (keys %dict) {
+	$value=$dict{$key};
+	$in=~s/tr\(${key}\)/${value}/g;
+    }
+    @matches=$in=~/^|\Wtr\(([^)]*)\)/g;
+    print @matches;
+    if ($#matches > 0) {
+	for ($i=1; $i<=$#matches;$i++) {
+	    $m=$matches[$i];
+	    print STDERR "No translation for \"$m\"\n";
+	}
+	print STDERR "Recreate localization file";
+	exit(1);
+    }
+}
+
+if (!$makemode) {
+    $infile =~ /(.*)\.in$/;
+    if ($1) {
+	$outfile = $1;
+    }
+    else {
+	$outfile = $infile;
+    }
+    open(OUTFILE,">$outfile");
+    print OUTFILE $in;
+    close(OUTFILE);
+}
+}
+
+if ($makemode) {
+  @matches=keys %m_dict;
+  @matches=sort(@matches);
+  open(CONFFILE, ">$conffile");
+  foreach (@matches) {
+      print CONFFILE "$_:" . $m_dict{$_} ."\n";
+  }
+  close(CONFFILE);
+}
