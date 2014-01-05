@@ -1,2 +1,5 @@
+*~
+*.pyc
+*kate-swp
 *_compiled.js
 nodes.json
