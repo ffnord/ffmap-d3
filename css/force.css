@@ -40,15 +40,6 @@ header, footer {
   width: 100%;
 }
 
-#sidebar {
-  border-left: 1pt solid #ccc;
-  display: table-cell;
-  vertical-align: top;
-  padding: 1em;
-  z-index: 0;
-  font-size: 9pt;
-}
-
 .node.marked {
   stroke: #C83771 !important;
   stroke-width: 5px;

@@ -23,74 +23,78 @@
         <div id="chart">
         </div>
         <div id="sidebar">
-          <div id="legend">
-            <h2>Legende</h2>
-            <ul>
-              <li><svg width=30 height=20>
-                  <circle cx=15 cy=10 r=8 class="node"/>
-                </svg>
-                <label>Knoten</label>
-              </li>
-              <li><svg width=30 height=20>
-                  <circle cx=15 cy=10 r=8 class="node"/>
-                  <g class="label">
-                    <circle cx=15 cy=10 r=3 class="dot"/>
-                  </g>
-                </svg>
-                <label>mit Koordinaten</label>
-              </li>
-              <li><svg width=30 height=20>
-                  <circle cx=15 cy=10 r=8 class="node uplink"/>
-                </svg>
-                <label>mit Uplink</label>
-              </li>
-              <li><svg width=30 height=20>
-                  <circle cx=15 cy=10 r=8 class="node gateway"/>
-                </svg>
-                <label>Gateway</label>
-              </li>
-              <li><svg width=30 height=20>
-                  <circle cx=15 cy=10 r=4 class="node client"/>
-                </svg>
-                <label>Client</label>
-              </li>
-              <li><svg width=30 height=20 class="link">
-                  <line x1="2" y1="10" x2="28" y2="10"/>
-                </svg>
-                <label>Link</label>
-              </li>
+          <button class="toggler">
+          </button>
+          <div class="content">
+            <div id="legend">
+              <h2>Legende</h2>
+              <ul>
+                <li><svg width=30 height=20>
+                    <circle cx=15 cy=10 r=8 class="node"/>
+                  </svg>
+                  <label>Knoten</label>
+                </li>
+                <li><svg width=30 height=20>
+                    <circle cx=15 cy=10 r=8 class="node"/>
+                    <g class="label">
+                      <circle cx=15 cy=10 r=3 class="dot"/>
+                    </g>
+                  </svg>
+                  <label>mit Koordinaten</label>
+                </li>
+                <li><svg width=30 height=20>
+                    <circle cx=15 cy=10 r=8 class="node uplink"/>
+                  </svg>
+                  <label>mit Uplink</label>
+                </li>
+                <li><svg width=30 height=20>
+                    <circle cx=15 cy=10 r=8 class="node gateway"/>
+                  </svg>
+                  <label>Gateway</label>
+                </li>
+                <li><svg width=30 height=20>
+                    <circle cx=15 cy=10 r=4 class="node client"/>
+                  </svg>
+                  <label>Client</label>
+                </li>
+                <li><svg width=30 height=20 class="link">
+                    <line x1="2" y1="10" x2="28" y2="10"/>
+                  </svg>
+                  <label>Link</label>
+                </li>
 
-              <li><svg width=30 height=20 class="link vpn">
-                  <line x1="2" y1="10" x2="28" y2="10"/>
-                </svg>
-                <label>VPN-Link</label>
-              </li>
-              <li><svg width=140 height=25 class="link vpn">
-                <defs>
-                  <linearGradient id="linkgrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#0a3" />
-                    <stop offset="50%" stop-color="orange" />
-                    <stop offset="100%" stop-color="red" />
-                  </linearGradient>
-                </defs>
-                  <rect x="18" y="12" width="88" height="6" fill="url(#linkgrad)"/>
-                  <text text-anchor="middle" y=8 x=18>gut</text>
-                  <text text-anchor="middle" y=8 x=106>schlecht</text>
-                </svg>
-              </li>
-              <li><svg width=30 height=20 class="uplinks">
-                  <g transform="translate(12,28)">
-                    <line x1="2" y1="10" x2="28" y2="10" stroke="#000"/>
-                    <path d="m -2.8850049,-13.182327 c 7.5369165,0.200772 12.1529864,-1.294922
-                             12.3338513,-10.639456 l 2.2140476,1.018191 -3.3137621,-5.293097
-                             -3.2945999,5.20893 2.4339957,-0.995747 c -0.4041883,5.76426
-                             -1.1549641,10.561363 -10.3735326,10.701179 z"/>
-                    <text text-anchor="middle" y=-17>ℕ</text>
-                  </g>
-                </svg>
-                <label>Anzahl VPN-Links</label>
-              </li>
-            </ul>
+                <li><svg width=30 height=20 class="link vpn">
+                    <line x1="2" y1="10" x2="28" y2="10"/>
+                  </svg>
+                  <label>VPN-Link</label>
+                </li>
+                <li><svg width=140 height=25 class="link vpn">
+                  <defs>
+                    <linearGradient id="linkgrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#0a3" />
+                      <stop offset="50%" stop-color="orange" />
+                      <stop offset="100%" stop-color="red" />
+                    </linearGradient>
+                  </defs>
+                    <rect x="18" y="12" width="88" height="6" fill="url(#linkgrad)"/>
+                    <text text-anchor="middle" y=8 x=18>gut</text>
+                    <text text-anchor="middle" y=8 x=106>schlecht</text>
+                  </svg>
+                </li>
+                <li><svg width=30 height=20 class="uplinks">
+                    <g transform="translate(12,28)">
+                      <line x1="2" y1="10" x2="28" y2="10" stroke="#000"/>
+                      <path d="m -2.8850049,-13.182327 c 7.5369165,0.200772 12.1529864,-1.294922
+                               12.3338513,-10.639456 l 2.2140476,1.018191 -3.3137621,-5.293097
+                               -3.2945999,5.20893 2.4339957,-0.995747 c -0.4041883,5.76426
+                               -1.1549641,10.561363 -10.3735326,10.701179 z"/>
+                      <text text-anchor="middle" y=-17>ℕ</text>
+                    </g>
+                  </svg>
+                  <label>Anzahl VPN-Links</label>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
