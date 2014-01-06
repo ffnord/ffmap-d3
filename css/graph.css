@@ -1,0 +1,7 @@
+#close_sidebar{
+	border:1px solid black;
+	text-align: right;
+	padding: 1px 3px 1px 3px;
+	float: right;
+	cursor: pointer;
+}
