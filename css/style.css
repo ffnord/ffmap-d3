@@ -70,10 +70,14 @@ header h1 a {
   border: none;
   margin: 0;
   background-color: #eee;
+  opacity:0.6;
+  margin-left:-0.9em;
 }
 
 #sidebar .toggler:hover {
   background-color: #FFCC01;
+  cursor:pointer;
+  opacity:0.8;
 }
 
 #sidebar .toggler:active {
