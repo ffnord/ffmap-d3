@@ -4,7 +4,7 @@ GEOMAP_SRC  = config.js lib/d3.min.js lib/loader.js lib/nodes.js lib/links.js li
 GRAPH_SRC   = config.js lib/d3.min.js lib/loader.js lib/nodes.js lib/links.js lib/date.js lib/pacman.js lib/graph.js lib/init.js
 LIST_SRC    = config.js lib/d3.min.js lib/loader.js lib/nodes.js lib/links.js lib/jquery.min.js lib/jquery.tablesorter.min.js lib/list.js lib/init.js
 
-all: geomap_compiled.js graph_compiled.js list_compiled.js stats_compiled.js
+all: geomap_compiled.js graph_compiled.js list_compiled.js
 
 clean:
 	rm -f geomap_compiled.js
