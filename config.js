@@ -3,12 +3,15 @@
 var ffmapConfig = {
   // link to your main community site:
   url:       "/",
-  
+
   // visible link in the navigation:
   sitename:  "luebeck.freifunk.net",
-  
+
   // initial gravity, friction, of the graph at pageload:
-  gravity:   0.15,
+  gravity:   0.05,
   friction:  0.73,
-  theta:     0.8
+  theta:     0.8,
+  charge:    1.0,
+  distance:  1.0,
+  strength:  1.0
 };
