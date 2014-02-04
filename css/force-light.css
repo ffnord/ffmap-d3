@@ -2,6 +2,10 @@
   background-image: url(gplaypattern.png);
 }
 
+.node, .link {
+  opacity: 0.999;
+}
+
 .node {
   fill: #fff;
   stroke-width: 2.5px;
