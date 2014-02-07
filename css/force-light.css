@@ -56,6 +56,11 @@
   fill: #1F77B4;
 }
 
+.node.gluon {
+  stroke: #24AA61;
+  stroke-width: 4px;
+}
+
 .link .label {
   fill: transparent;
   stroke: #C83771;
@@ -86,8 +91,4 @@
 
 .label .dot {
   fill: #AEC7E8;
-}
-
-.label .gluon {
-  fill: #2FFA1C;
 }
