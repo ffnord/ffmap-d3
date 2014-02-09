@@ -2,6 +2,10 @@
   background-image: url(gplaypattern.png);
 }
 
+.node, .link {
+  opacity: 0.999;
+}
+
 .node {
   fill: #fff;
   stroke-width: 2.5px;
@@ -50,6 +54,11 @@
 .node.client {
   stroke: #1F77B4;
   fill: #1F77B4;
+}
+
+.node.gluon {
+  stroke: #24AA61;
+  stroke-width: 4px;
 }
 
 .link .label {
