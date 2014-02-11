@@ -209,3 +209,98 @@ footer {
 footer a {
   color: #444;
 }
+
+#chart {
+  background-image: url(gplaypattern.png);
+}
+
+.node, .link {
+  opacity: 0.999;
+}
+
+.node {
+  fill: #fff;
+  stroke-width: 2.5px;
+}
+
+.node text, .label text {
+  font-size: 10px;
+  fill: #333;
+}
+
+.link line {
+  stroke: #777;
+  stroke-width: 2.5px;
+}
+
+.link line.unidirectional {
+  stroke-width: 0.8px;
+}
+
+.link.vpn line {
+  stroke-dasharray: 0.75px 4px;
+  stroke-linecap: round;
+  stroke-width: 1.5px;
+}
+
+.link:hover line {
+  stroke-width: 5px;
+}
+
+.uplinks path {
+  fill: #333;
+}
+
+.node {
+  stroke: #AEC7E8;
+}
+
+.node.uplink {
+  fill: #FFFF69;
+}
+
+.node.gateway {
+  stroke: #FF7F0E;
+}
+
+.node.client {
+  stroke: #1F77B4;
+  fill: #1F77B4;
+}
+
+.node.gluon {
+  stroke: #24AA61;
+  stroke-width: 4px;
+}
+
+.link .label {
+  fill: transparent;
+  stroke: #C83771;
+  stroke-width: 1px;
+}
+
+.strength {
+  font-size: 10px;
+  fill: #C83771;
+}
+
+#sidebar {
+  color: #777;
+}
+
+#sidebar text {
+  fill: #777;
+  font-size: 0.8em;
+}
+
+.label rect {
+  fill: rgba(255, 255, 255, 0.8);
+}
+
+.label.highlight rect {
+  fill: rgba(255, 255, 100, 0.9);
+}
+
+.label .dot {
+  fill: #AEC7E8;
+}
