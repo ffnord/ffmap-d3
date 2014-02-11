@@ -7,11 +7,14 @@ body {
 header h1, ul {
   margin: 0;
   padding: 0;
+  flaot: left;
 }
 
 header h1, header ul, header ul li {
-  display: inline-block;
+  display: block;
+  float: left;
   font-size: 10pt;
+  padding-top: 7px;
 }
 
 header h1, header ul li a {
@@ -45,6 +48,10 @@ header h1 a:hover {
 
 header h1 a {
   color: #FFFFFF;
+}
+
+header .toggler {
+	display: none
 }
 
 .container {
