@@ -49,13 +49,13 @@ header, footer {
   stroke-opacity: 0.8;
 }
 
-.faded {
-  stroke-opacity: 0.02;
-  fill-opacity: 0.1;
+.node.highlight {
+  stroke: #dd3333 !important;
+  stroke-width: 3px !important;
 }
 
-.node.highlight {
-  fill: #FFF0B3;
+.node:hover {
+  stroke-width: 5px !important;
 }
 
 #nodeinfo {
