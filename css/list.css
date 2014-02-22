@@ -1,33 +1,33 @@
-table {
+#list {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-table th.header {
+#list th.header {
   background-color: #F3F781;
   padding-right: 0px;
   cursor:pointer;
 }
 
-table th.header:after {
+#list th.header:after {
    content: "\0000a0\0000a0";
 }
 
-table th.headerSortUp, table th.headerSortDown {
+#list th.headerSortUp, #list th.headerSortDown {
   background-color: lightblue;
 }
 
-table th.headerSortUp:after {
-   content: "\0000a0\2912";
+#list th.headerSortUp:after {
+   content: "\0000a0\25b4";
    color:blue;
 }
 
-table th.headerSortDown:after {
-   content: "\0000a0\2913";
+#list th.headerSortDown:after {
+   content: "\0000a0\25be";
    color:blue;
 }
 
-table td, table th {
+#list td, table th {
   border: 1pt solid #333;
   padding: 0.25em 0.5em;
 }
@@ -38,4 +38,8 @@ table td, table th {
 
 #list tbody tr.online td:nth-child(2) {
   background: lightgreen;
+}
+
+#list tfoot td {
+  font-weight: bold;
 }
