@@ -3,26 +3,26 @@
   border-spacing: 0;
 }
 
-#list th.header {
+#list thead th {
   background-color: #F3F781;
   padding-right: 0px;
   cursor:pointer;
 }
 
-#list th.header:after {
+#list thead th div:after {
    content: "\0000a0\0000a0";
 }
 
-#list th.headerSortUp, #list th.headerSortDown {
+#list thead th.tablesorter-headerAsc, #list thead th.tablesorter-headerDesc {
   background-color: lightblue;
 }
 
-#list th.headerSortUp:after {
+#list thead th.tablesorter-headerAsc div:after {
    content: "\0000a0\25b4";
    color:blue;
 }
 
-#list th.headerSortDown:after {
+#list thead th.tablesorter-headerDesc div:after {
    content: "\0000a0\25be";
    color:blue;
 }
