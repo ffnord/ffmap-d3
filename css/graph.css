@@ -268,9 +268,8 @@ footer a {
   fill: #1F77B4;
 }
 
-.node.gluon {
-  stroke: #24AA61;
-  stroke-width: 4px;
+.node.legacy {
+  stroke: #d00000;
 }
 
 .link .label {
