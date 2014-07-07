@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
     <title>Freifunk <!--#include file="ort.txt" --> - Knotengraph</title>
     <link rel="stylesheet" type="text/css" href="css/style.css" />
-    <link rel="stylesheet" type="text/css" href="css/force.css" />
-    <link rel="stylesheet" type="text/css" href="css/force-light.css" title="light" />
-    <link rel="stylesheet" type="text/css" href="css/force-big.css" title="big" />
+    <link rel="stylesheet" type="text/css" href="css/graph.css" />
   </head>
   <body>
     <header>
-      <h1><a href="//<!--#include file="fqhn.txt" -->/"><!--#include file="fqhn.txt" --></a></h1>
+      <h1><a href="/" id="sitelink">luebeck.freifunk.net</a></h1>
       <ul>
         <li><a href="graph.html">Graph</a></li>
         <li><a href="geomap.html">Karte</a></li>
@@ -23,81 +21,91 @@
         <div id="chart">
         </div>
         <div id="sidebar">
-          <div id="legend">
-            <h2>Legende</h2>
-            <ul>
-              <li><svg width=30 height=20>
-                  <circle cx=15 cy=10 r=8 class="node"/>
-                </svg>
-                <label>Knoten</label>
-              </li>
-              <li><svg width=30 height=20>
-                  <circle cx=15 cy=10 r=8 class="node"/>
-                  <g class="label">
-                    <circle cx=15 cy=10 r=3 class="dot"/>
-                  </g>
-                </svg>
-                <label>mit Koordinaten</label>
-              </li>
-              <li><svg width=30 height=20>
-                  <circle cx=15 cy=10 r=8 class="node uplink"/>
-                </svg>
-                <label>mit Uplink</label>
-              </li>
-              <li><svg width=30 height=20>
-                  <circle cx=15 cy=10 r=8 class="node gateway"/>
-                </svg>
-                <label>Gateway</label>
-              </li>
-              <li><svg width=30 height=20>
-                  <circle cx=15 cy=10 r=4 class="node client"/>
-                </svg>
-                <label>Client</label>
-              </li>
-              <li><svg width=30 height=20 class="link">
-                  <line x1="2" y1="10" x2="28" y2="10"/>
-                </svg>
-                <label>Link</label>
-              </li>
+          <button class="toggler" title="toggle sidebar">
+          </button>
+          <div class="content">
+            <div id="legend">
+              <h2>Legende</h2>
+              <ul>
+                <li><svg width=30 height=20>
+                    <circle cx=15 cy=10 r=8 class="node"/>
+                  </svg>
+                  <label>Knoten</label>
+                </li>
+                <li><svg width=30 height=20>
+                    <circle cx=15 cy=10 r=8 class="node legacy"/>
+                  </svg>
+                  <label>veraltete FW</label>
+                </li>
+                <li><svg width=30 height=20>
+                    <circle cx=15 cy=10 r=8 class="node"/>
+                    <g class="label">
+                      <circle cx=15 cy=10 r=3 class="dot"/>
+                    </g>
+                  </svg>
+                  <label>mit Koordinaten</label>
+                </li>
+                <li><svg width=30 height=20>
+                    <circle cx=15 cy=10 r=8 class="node uplink"/>
+                  </svg>
+                  <label>mit Uplink</label>
+                </li>
+                <li><svg width=30 height=20>
+                    <circle cx=15 cy=10 r=8 class="node gateway"/>
+                  </svg>
+                  <label>Gateway</label>
+                </li>
+                <li><svg width=30 height=20>
+                    <circle cx=15 cy=10 r=4 class="node client"/>
+                  </svg>
+                  <label>Client</label>
+                </li>
+                <li><svg width=30 height=20 class="link">
+                    <line x1="2" y1="10" x2="28" y2="10"/>
+                  </svg>
+                  <label>Link</label>
+                </li>
 
-              <li><svg width=30 height=20 class="link vpn">
-                  <line x1="2" y1="10" x2="28" y2="10"/>
-                </svg>
-                <label>VPN-Link</label>
-              </li>
-              <li><svg width=140 height=25 class="link vpn">
-                <defs>
-                  <linearGradient id="linkgrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#0a3" />
-                    <stop offset="50%" stop-color="orange" />
-                    <stop offset="100%" stop-color="red" />
-                  </linearGradient>
-                </defs>
-                  <rect x="18" y="12" width="88" height="6" fill="url(#linkgrad)"/>
-                  <text text-anchor="middle" y=8 x=18>gut</text>
-                  <text text-anchor="middle" y=8 x=106>schlecht</text>
-                </svg>
-              </li>
-              <li><svg width=30 height=20 class="uplinks">
-                  <g transform="translate(12,28)">
-                    <line x1="2" y1="10" x2="28" y2="10" stroke="#000"/>
-                    <path d="m -2.8850049,-13.182327 c 7.5369165,0.200772 12.1529864,-1.294922
-                             12.3338513,-10.639456 l 2.2140476,1.018191 -3.3137621,-5.293097
-                             -3.2945999,5.20893 2.4339957,-0.995747 c -0.4041883,5.76426
-                             -1.1549641,10.561363 -10.3735326,10.701179 z"/>
-                    <text text-anchor="middle" y=-17>ℕ</text>
-                  </g>
-                </svg>
-                <label>Anzahl VPN-Links</label>
-              </li>
-            </ul>
+                <li><svg width=30 height=20 class="link vpn">
+                    <line x1="2" y1="10" x2="28" y2="10"/>
+                  </svg>
+                  <label>VPN-Link</label>
+                </li>
+                <li><svg width=140 height=25 class="link vpn">
+                  <defs>
+                    <linearGradient id="linkgrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#0a3" />
+                      <stop offset="50%" stop-color="orange" />
+                      <stop offset="100%" stop-color="red" />
+                    </linearGradient>
+                  </defs>
+                    <rect x="18" y="12" width="88" height="6" fill="url(#linkgrad)"/>
+                    <text text-anchor="middle" y=8 x=18>gut</text>
+                    <text text-anchor="middle" y=8 x=106>schlecht</text>
+                  </svg>
+                </li>
+                <li><svg width=30 height=20 class="uplinks">
+                    <g transform="translate(12,28)">
+                      <line x1="2" y1="10" x2="28" y2="10" stroke="#000"/>
+                      <path d="m -2.8850049,-13.182327 c 7.5369165,0.200772 12.1529864,-1.294922
+                               12.3338513,-10.639456 l 2.2140476,1.018191 -3.3137621,-5.293097
+                               -3.2945999,5.20893 2.4339957,-0.995747 c -0.4041883,5.76426
+                               -1.1549641,10.561363 -10.3735326,10.701179 z"/>
+                      <text text-anchor="middle" y=-17>ℕ</text>
+                    </g>
+                  </svg>
+                  <label>Anzahl VPN-Links</label>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <footer>
-      <a href="http://tcatm.github.com/ffmap-d3/">ffmap-d3</a> — © Nils Schneider</a>
+      <a href="http://tcatm.github.com/ffmap-d3/">ffmap-d3</a> — © Nils Schneider
     </footer>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.1/d3.min.js"></script>
     <script type="text/javascript" src="graph_compiled.js"></script>
   </body>
 </html>

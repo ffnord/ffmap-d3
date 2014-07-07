@@ -50,3 +50,36 @@ header h1 a {
 .container {
   margin: 1em;
 }
+
+#sidebar {
+  display: flex;
+  height: 100%;
+}
+
+#sidebar .content {
+  border-left: 1pt solid #ccc;
+  display: block;
+  vertical-align: top;
+  padding: 1em;
+  z-index: 0;
+  font-size: 9pt;
+}
+
+#sidebar .toggler {
+  align-self: stretch;
+  border: none;
+  margin: 0;
+  background-color: #eee;
+  opacity:0.6;
+  margin-left:-0.9em;
+}
+
+#sidebar .toggler:hover {
+  background-color: #FFCC01;
+  cursor:pointer;
+  opacity:0.8;
+}
+
+#sidebar .toggler:active {
+  background-color: #FFDD20;
+}
