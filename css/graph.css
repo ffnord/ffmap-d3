@@ -228,7 +228,7 @@ footer a {
   fill: #333;
 }
 
-.link line {
+.link line, .link path {
   stroke: #777;
   stroke-width: 2.5px;
 }
@@ -263,7 +263,7 @@ footer a {
   stroke: #FF7F0E;
 }
 
-.node.client {
+.clients {
   stroke: #1F77B4;
   fill: #1F77B4;
 }
