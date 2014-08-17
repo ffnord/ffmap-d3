@@ -42,7 +42,7 @@ header, footer {
 
 .node.marked {
   stroke: #C83771 !important;
-  stroke-width: 5px;
+  fill: #C83771 !important;
 }
 
 .link {
