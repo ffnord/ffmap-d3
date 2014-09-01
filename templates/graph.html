@@ -33,9 +33,9 @@
                   <label>Knoten</label>
                 </li>
                 <li><svg width=30 height=20>
-                    <circle cx=15 cy=10 r=8 class="node gluon"/>
+                    <circle cx=15 cy=10 r=8 class="node legacy"/>
                   </svg>
-                  <label>mit Gluon</label>
+                  <label>veraltete FW</label>
                 </li>
                 <li><svg width=30 height=20>
                     <circle cx=15 cy=10 r=8 class="node"/>
@@ -56,7 +56,7 @@
                   <label>Gateway</label>
                 </li>
                 <li><svg width=30 height=20>
-                    <circle cx=15 cy=10 r=4 class="node client"/>
+                    <path class="clients" d="M10,10a5,5 0 1,0 10,0a5,5 0 1,0 -10,0"/>
                   </svg>
                   <label>Client</label>
                 </li>
@@ -105,6 +105,6 @@
     <footer>
       <a href="http://tcatm.github.com/ffmap-d3/">ffmap-d3</a> — © Nils Schneider
     </footer>
-    <script type="text/javascript" src="graph.js"></script>
+    <script type="text/javascript" src="graph_compiled.js"></script>
   </body>
 </html>
