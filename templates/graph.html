@@ -2,14 +2,14 @@
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-    <title>Freifunk <!--#include file="ort.txt" --> - Knotengraph</title>
+    <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=0.7, user-scalable=0" />
+    <title>Freifunk #cityname# - Knotengraph</title>
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <link rel="stylesheet" type="text/css" href="css/graph.css" />
   </head>
   <body>
     <header>
-      <h1><a href="/" id="sitelink">luebeck.freifunk.net</a></h1>
+      <h1><a href="#url#" id="sitelink">#sitename#</a></h1>
       <ul>
         <li><a href="graph.html">Graph</a></li>
         <li><a href="geomap.html">Karte</a></li>
@@ -33,9 +33,9 @@
                   <label>Knoten</label>
                 </li>
                 <li><svg width=30 height=20>
-                    <circle cx=15 cy=10 r=8 class="node legacy"/>
+                    <circle cx=15 cy=10 r=8 class="node gluon"/>
                   </svg>
-                  <label>veraltete FW</label>
+                  <label>mit Gluon</label>
                 </li>
                 <li><svg width=30 height=20>
                     <circle cx=15 cy=10 r=8 class="node"/>
@@ -105,7 +105,6 @@
     <footer>
       <a href="http://tcatm.github.com/ffmap-d3/">ffmap-d3</a> — © Nils Schneider
     </footer>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.1/d3.min.js"></script>
-    <script type="text/javascript" src="graph_compiled.js"></script>
+    <script type="text/javascript" src="graph.js"></script>
   </body>
 </html>
