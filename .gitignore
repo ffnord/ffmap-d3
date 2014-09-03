@@ -1,3 +1,5 @@
-*_compiled.js
+nodes/*.png
 nodes.json
 lib/vendor/*
+*_compiled.js
+*.html
