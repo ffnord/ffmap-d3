@@ -30,10 +30,10 @@ lib/vendor/leaflet.js:
 %_compiled.js:
 	$(CAT) $^ > $@
 
-GEOMAP_SRC  = config.js lib/loader.js lib/vendor/d3.min.js lib/links.js lib/vendor/leaflet.js lib/html5slider.js lib/geomap.js lib/init.js
-GRAPH_SRC   = config.js lib/loader.js lib/vendor/d3.min.js lib/links.js lib/pacman.js lib/graph.js lib/init.js
-LIST_SRC    = config.js lib/loader.js lib/vendor/d3.min.js lib/links.js lib/vendor/jquery-1.11.0.min.js lib/vendor/jquery.tablesorter.min.js lib/list.js lib/init.js
-STATS_SRC   = config.js lib/loader.js lib/stats.js lib/init.js
+GEOMAP_SRC  = config.js lib/loader.js lib/vendor/d3.min.js lib/links.js lib/vendor/leaflet.js lib/html5slider.js lib/geomap.js
+GRAPH_SRC   = config.js lib/loader.js lib/vendor/d3.min.js lib/links.js lib/pacman.js lib/graph.js
+LIST_SRC    = config.js lib/loader.js lib/vendor/d3.min.js lib/links.js lib/vendor/jquery-1.11.0.min.js lib/vendor/jquery.tablesorter.min.js lib/list.js
+STATS_SRC   = config.js lib/loader.js lib/stats.js
 
 geomap_compiled.js: $(GEOMAP_SRC)
 
