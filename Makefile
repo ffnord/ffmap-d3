@@ -10,6 +10,8 @@ include config.mk
 clean:
 	rm -f $(foreach target,$(TARGETS),$(target).html)
 	rm -f $(foreach target,$(TARGETS),$(target)_compiled.js)
+
+distclean: clean
 	rm -f lib/vendor/*.js
 
 lib/vendor/d3.min.js:
