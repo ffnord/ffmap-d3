@@ -79,14 +79,6 @@ module.exports = function (grunt) {
                     'lib/list.js'
                 ],
                 dest: 'build/list.js'
-            },
-            stats: {
-                src: [
-                    'config.js',
-                    'lib/loader.js',
-                    'lib/stats.js'
-                ],
-                dest: 'build/stats.js'
             }
         }
     });
