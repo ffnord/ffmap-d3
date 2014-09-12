@@ -26,3 +26,14 @@ list.html
 --------
 A plain text table with all nodes in the network
 sortable if you click on the titles in the header-row
+
+Development
+===========
+
+To build the project, you need to have nodejs and grunt installed. Install the nodejs packages for your
+operating system (and npm, if those packages do not already contain it) and after that run `npm install`
+in the root directory of the project.
+
+You are now ready to build the project by running `grunt`. To start a development server on localhost,
+you can use `grunt dev`. This task will build the project, start a [development server](http://localhost:8000/),
+and watch the source files for changes.
