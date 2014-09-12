@@ -55,7 +55,7 @@ module.exports = function (grunt) {
                     'lib/html5slider.js',
                     'lib/geomap.js'
                 ],
-                dest: 'build/geomap_compiled.js'
+                dest: 'build/geomap.js'
             },
             graph: {
                 src: [
@@ -66,7 +66,7 @@ module.exports = function (grunt) {
                     'lib/pacman.js',
                     'lib/graph.js'
                 ],
-                dest: 'build/graph_compiled.js'
+                dest: 'build/graph.js'
             },
             list: {
                 src: [
@@ -78,7 +78,7 @@ module.exports = function (grunt) {
                     'bower_components/jquery.tablesorter/js/jquery.tablesorter.js',
                     'lib/list.js'
                 ],
-                dest: 'build/list_compiled.js'
+                dest: 'build/list.js'
             },
             stats: {
                 src: [
@@ -86,7 +86,7 @@ module.exports = function (grunt) {
                     'lib/loader.js',
                     'lib/stats.js'
                 ],
-                dest: 'build/stats_compiled.js'
+                dest: 'build/stats.js'
             }
         }
     });
