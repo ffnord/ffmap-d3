@@ -13,6 +13,7 @@
     "grunt-contrib-copy": "^0.5.0",
     "grunt-contrib-uglify": "^0.5.1",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-eslint": "^1.1.0",
     "grunt-newer": "^0.7.0"
   }
 }

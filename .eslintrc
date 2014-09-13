@@ -1,0 +1,13 @@
+{
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "semi": [2, "never"],
+    "curly": [2, "multi"],
+    "no-redeclare": 0,
+    "no-use-before-define": 0,
+    "no-shadow": 0
+  }
+}
