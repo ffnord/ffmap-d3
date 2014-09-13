@@ -40,7 +40,6 @@ module.exports = function(grunt) {
           "bower_components/d3/d3.js",
           "lib/links.js",
           "bower_components/leaflet/dist/leaflet-src.js",
-          "lib/html5slider.js",
           "lib/geomap.js"
         ],
         dest: "build/geomap.js"
