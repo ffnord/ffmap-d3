@@ -12,6 +12,7 @@
   "dependencies": {
     "d3": "~3.4.11",
     "leaflet": "~0.7.3",
+    "bacon": "~0.7.22",
     "jquery.tablesorter": "~2.17.7"
   }
 }

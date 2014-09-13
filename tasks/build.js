@@ -36,6 +36,7 @@ module.exports = function(grunt) {
       geomap: {
         src: [
           "config.js",
+          "bower_components/bacon/dist/Bacon.js",
           "lib/loader.js",
           "bower_components/d3/d3.js",
           "lib/links.js",
@@ -47,6 +48,7 @@ module.exports = function(grunt) {
       graph: {
         src: [
               "config.js",
+              "bower_components/bacon/dist/Bacon.js",
               "lib/loader.js",
               "bower_components/d3/d3.js",
               "lib/links.js",
@@ -58,6 +60,7 @@ module.exports = function(grunt) {
       list: {
         src: [
         "config.js",
+        "bower_components/bacon/dist/Bacon.js",
         "lib/loader.js",
           "bower_components/d3/d3.js",
           "lib/links.js",
