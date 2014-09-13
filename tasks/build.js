@@ -17,8 +17,8 @@ module.exports = function(grunt) {
         cwd: "templates/",
         dest: "build/"
       },
-      images: {
-        src: ["img/*.png", "css/*.png"],
+      resources: {
+        src: ["img/*.png", "css/*.png", "lib/*.wav"],
         expand: true,
         dest: "build/"
       },
