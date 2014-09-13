@@ -1,3 +1,6 @@
+//TODO: remove no-unused-vars config, once switched to modules
+/*eslint no-unused-vars: [2, {"vars": "local"}] */
+
 /* after making any changes here enter "make" in your terminal to appy the changes */
 
 var ffmapConfig = {
@@ -16,5 +19,5 @@ var ffmapConfig = {
   strength:  1.0,
 
   // path to the nodes.json
-  nodes_json: "nodes.json",
-};
+  nodesJSON: "nodes.json"
+}
