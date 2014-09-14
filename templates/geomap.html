@@ -18,34 +18,11 @@
       .nodePopup .label { font-weight: bold; }
     </style>
 
-    <script type="text/javascript" src="geomap.js"></script>
+    <script data-main="js/geomap" type="text/javascript" src="js/lib/require.js"></script>
 
-    <script type="text/javascript">
-      window.onresize = resize
-
-      function getOffset( el ) {
-        var _x = 0, _y = 0
-
-        while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
-          _x += el.offsetLeft - el.scrollLeft
-          _y += el.offsetTop - el.scrollTop
-          el = el.offsetParent
-        }
-        return { top: _y, left: _x }
-      }
-
-      function resize() {
-        var offset = getOffset(document.getElementById('map'))
-
-        var w = window.innerWidth - offset.left
-        var h = window.innerHeight - offset.top - 1
-
-        d3.select("#map").style("width", w+"px").style("height", h+"px")
-      }
-    </script>
   </head>
 
-  <body onload="resize(); init()">
+  <body>
     <header>
       <h1><a href="#url#" id="sitelink">#sitename#</a></h1>
       <ul>
