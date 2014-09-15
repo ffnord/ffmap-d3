@@ -18,8 +18,14 @@ module.exports = function(grunt) {
         dest: "build/"
       },
       resources: {
-        src: ["img/*.png", "css/*.png", "lib/*.wav"],
+        src: ["img/*.png", "css/*.png"],
         expand: true,
+        dest: "build/"
+      },
+      pacman: {
+        src: ["pacman/*.*", "!pacman/*.js"],
+        expand: true,
+        cwd: "src/",
         dest: "build/"
       },
       css: {
@@ -53,9 +59,14 @@ module.exports = function(grunt) {
         dest: "build/js/lib"
       },
       script: {
-        src: ["config.js", "lib/*.js"],
+        src: ["**/*.js"],
         expand: true,
-        flatten: true,
+        cwd: "src/",
+        dest: "build/js"
+      },
+      config: {
+        src: ["config.js"],
+        expand: true,
         dest: "build/js"
       }
     }

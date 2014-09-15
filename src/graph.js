@@ -35,7 +35,7 @@ define("graph", [
     .attr("class", "btn")
     .attr("value", "reload")
     .on("click", function () {
-      require(["pacman"], function (pacman) {
+      require(["pacman/main"], function (pacman) {
         pacman(vis, force, data, update)
       })
     })

@@ -15,15 +15,16 @@ module.exports = function (grunt) {
         options: {
           livereload: true
         },
-        files: ["{css,img}/*.png", "css/*.css", "lib/*.js", "templates/*.html"],
+        files: ["{css,img}/*.png", "css/*.css", "src/**/*.js", "templates/*.html"],
         tasks: ["default"]
       },
       config: {
         options: {
-          reload: true
+          reload: true,
+          livereload: true
         },
         files: ["Gruntfile.js", "tasks/*.js"],
-        tasks: []
+        tasks: ["default"]
       }
     }
   })
