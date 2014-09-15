@@ -14,7 +14,7 @@ header h1, ul {
   padding: 0;
 }
 
-header h1, header ul, header ul li {
+header h1, header ul, header nav, header ul li {
   display: inline-block;
   font-size: 10pt;
 }
@@ -31,6 +31,7 @@ header ul {
 header {
   background: #333;
   color: #fefefe;
+  height: 35px;
 }
 
 header a {
@@ -50,10 +51,6 @@ header h1 a:hover {
 
 header h1 a {
   color: #FFFFFF;
-}
-
-.container {
-  margin: 1em;
 }
 
 #sidebar {
@@ -87,4 +84,15 @@ header h1 a {
 
 #sidebar .toggler:active {
   background-color: #FFDD20;
+}
+
+.container {
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  padding-top: 35px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
 }

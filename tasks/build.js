@@ -45,14 +45,23 @@ module.exports = function(grunt) {
         sourceMap: true,
         sourceMapIncludeSources: true
       },
+      baseLibs: {
+        files: {
+          "build/js/lib/base.js": [
+            "bower_components/requirejs/require.js",
+            "bower_components/jquery/dist/jquery.js",
+            "bower_components/underscore/underscore.js"
+          ]
+        },
+        expand: true
+      },
       libs: {
         src: [
-          "bower_components/requirejs/require.js",
           "bower_components/bacon/dist/Bacon.js",
           "bower_components/d3/d3.js",
           "bower_components/leaflet/dist/leaflet-src.js",
-          "bower_components/jquery/dist/jquery.js",
-          "bower_components/jquery.tablesorter/js/jquery.tablesorter.js"
+          "bower_components/jquery.tablesorter/js/jquery.tablesorter.js",
+          "bower_components/backbone/backbone.js"
         ],
         expand: true,
         flatten: true,
