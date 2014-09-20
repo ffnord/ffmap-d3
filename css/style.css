@@ -4,6 +4,11 @@ body {
   font-family: sans serif, sans, arial;
 }
 
+input, select, button {
+  font-family: inherit;
+  font-size: 100%;
+}
+
 header h1, ul {
   margin: 0;
   padding: 0;
