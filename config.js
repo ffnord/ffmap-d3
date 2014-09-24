@@ -20,4 +20,7 @@ var ffmapConfig = {
 
   // path to the nodes.json
   nodesJSON: "nodes.json"
+  // add gui options
+  showstats: false,
+  checkfirmware: false
 }
