@@ -1,14 +1,14 @@
 //TODO: remove no-unused-vars config, once switched to modules
 /*eslint no-unused-vars: [2, {"vars": "local"}] */
 
-/* after making any changes here enter "make" in your terminal to appy the changes */
+/* after making any changes here enter "make" in your terminal to apply the changes */
 
 var ffmapConfig = {
   // link to your main community site:
   url:       "/",
 
   // visible link in the navigation:
-  sitename:  "luebeck.freifunk.net",
+  sitename:  "gothamcity.freifunk.net",
 
   // initial gravity, friction, of the graph at pageload:
   gravity:   0.05,
