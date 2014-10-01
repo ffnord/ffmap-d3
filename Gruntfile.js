@@ -10,5 +10,6 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-newer")
 
   grunt.registerTask("default", ["checkDependencies", "eslint", "newer:copy", "newer:uglify"])
+  grunt.registerTask("lint", ["eslint"])
   grunt.registerTask("dev", ["default", "connect:server", "watch"])
 }
