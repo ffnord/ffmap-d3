@@ -5,6 +5,9 @@
   "repository": {
     "url": "https://github.com/ffnord/ffmap-d3/"
   },
+  "scripts": {
+    "test": "node -e \"require('grunt').cli()\" '' clean lint"
+  },
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-check-dependencies": "^0.6.0",
