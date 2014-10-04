@@ -26,6 +26,12 @@ module.exports = function(grunt) {
         src: ["css/*.css"],
         expand: true,
         dest: "build/"
+      },
+      "leaflet-css": {
+        src: ["leaflet.css"],
+        expand: true,
+        cwd: "bower_components/leaflet/dist",
+        dest: "build/css"
       }
     },
     uglify: {
