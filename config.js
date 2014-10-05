@@ -19,5 +19,10 @@ var ffmapConfig = {
   strength:  1.0,
 
   // path to the nodes.json
-  nodesJSON: "nodes.json"
+  nodesJSON: "nodes.json",
+
+  // Show status diagram in graph view
+  showstats: true,
+  // check current firmware version
+  checkfirmware: true
 }
