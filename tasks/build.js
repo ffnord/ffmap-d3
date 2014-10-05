@@ -39,42 +39,24 @@ module.exports = function(grunt) {
         sourceMap: true,
         sourceMapIncludeSources: true
       },
-      geomap: {
+      libs: {
         src: [
-          "config.js",
+          "bower_components/requirejs/require.js",
           "bower_components/bacon/dist/Bacon.js",
-          "lib/loader.js",
           "bower_components/d3/d3.js",
-          "lib/links.js",
           "bower_components/leaflet/dist/leaflet-src.js",
-          "lib/geomap.js"
-        ],
-        dest: "build/geomap.js"
-      },
-      graph: {
-        src: [
-              "config.js",
-              "bower_components/bacon/dist/Bacon.js",
-              "lib/loader.js",
-              "bower_components/d3/d3.js",
-              "lib/links.js",
-              "lib/pacman.js",
-              "lib/graph.js"
-        ],
-        dest: "build/graph.js"
-      },
-      list: {
-        src: [
-        "config.js",
-        "bower_components/bacon/dist/Bacon.js",
-        "lib/loader.js",
-          "bower_components/d3/d3.js",
-          "lib/links.js",
           "bower_components/jquery/dist/jquery.js",
-          "bower_components/jquery.tablesorter/js/jquery.tablesorter.js",
-            "lib/list.js"
+          "bower_components/jquery.tablesorter/js/jquery.tablesorter.js"
         ],
-        dest: "build/list.js"
+        expand: true,
+        flatten: true,
+        dest: "build/js/lib"
+      },
+      script: {
+        src: ["config.js", "lib/*.js"],
+        expand: true,
+        flatten: true,
+        dest: "build/js"
       }
     }
   })
