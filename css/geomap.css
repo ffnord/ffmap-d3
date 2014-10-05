@@ -54,6 +54,10 @@ line.link {
   stroke-width: 1pt;
 }
 
+#map {
+  height: 100%;
+}
+
 #map.pick-coordinates {
   cursor: crosshair;
 }
