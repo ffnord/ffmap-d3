@@ -3,7 +3,7 @@
 module.exports = function (grunt) {
   grunt.config.merge({
     clean: {
-      build: ["build/", "!build/nodes.json", "node_modules/grunt-newer/.cache"]
+      build: ["build/**/*", "!build/nodes.json", "node_modules/grunt-newer/.cache"]
     }
   })
 
