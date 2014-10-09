@@ -58,6 +58,10 @@ define("main", [
   var router = new MainRouter()
   Backbone.history.start()
 
+  //set default app
+  if (!window.location.hash)
+    router.navigate(ffmapConfig.defaultApp, { trigger: true, replace: true })
+
   var MainMenuList = Backbone.View.extend({
     el: "#mainMenu",
     addItem: function (model) {
