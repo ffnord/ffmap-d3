@@ -23,22 +23,33 @@ define("main", [
 
   var graph = loadNodes(ffmapConfig)
 
+  function getQueryParams(query) {
+    query = query || ""
+    var params = {}
+    query.split("&").forEach(function (pair) {
+        var tmp = pair.split("=")
+        params[tmp[0]] = decodeURIComponent(tmp[1])
+      })
+    return params
+  }
+
   var MainRouter = Backbone.Router.extend({
     routes: {
       ":target": "openApp"
     },
-    openApp: function (target) {
+    openApp: function (target, query) {
       require([target + "/main"], function (app) {
+        var params = getQueryParams(query)
         if (app.createMainView)
-          app.createMainView({
+          app.createMainView(_.extend({
             el: ".container",
             model: graph
-          }).render()
+          }, params)).render()
 
         if (app.createMenu)
-          app.createMenu({
+          app.createMenu(_.extend({
             el: "#appMenu"
-          }).render()
+          }, params)).render()
 
         if (app.run) app.run()
       })
