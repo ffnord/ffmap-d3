@@ -18,8 +18,14 @@ module.exports = function(grunt) {
         dest: "build/"
       },
       resources: {
-        src: ["img/*.png", "css/*.png", "lib/*.wav"],
+        src: ["img/*.png", "css/*.png"],
         expand: true,
+        dest: "build/"
+      },
+      pacman: {
+        src: ["pacman/*.*", "!pacman/*.js"],
+        expand: true,
+        cwd: "src/",
         dest: "build/"
       },
       css: {
@@ -36,26 +42,43 @@ module.exports = function(grunt) {
     },
     uglify: {
       options: {
+        mangle: false,
+        compress: false,
+        beautify: true,
         sourceMap: true,
         sourceMapIncludeSources: true
       },
+      baseLibs: {
+        files: {
+          "build/js/lib/base.js": [
+            "bower_components/requirejs/require.js",
+            "bower_components/jquery/dist/jquery.js",
+            "bower_components/underscore/underscore.js"
+          ]
+        },
+        expand: true
+      },
       libs: {
         src: [
-          "bower_components/requirejs/require.js",
           "bower_components/bacon/dist/Bacon.js",
           "bower_components/d3/d3.js",
           "bower_components/leaflet/dist/leaflet-src.js",
-          "bower_components/jquery/dist/jquery.js",
-          "bower_components/jquery.tablesorter/js/jquery.tablesorter.js"
+          "bower_components/jquery.tablesorter/js/jquery.tablesorter.js",
+          "bower_components/backbone/backbone.js"
         ],
         expand: true,
         flatten: true,
         dest: "build/js/lib"
       },
       script: {
-        src: ["config.js", "lib/*.js"],
+        src: ["**/*.js"],
         expand: true,
-        flatten: true,
+        cwd: "src/",
+        dest: "build/js"
+      },
+      config: {
+        src: ["config.js"],
+        expand: true,
         dest: "build/js"
       }
     }

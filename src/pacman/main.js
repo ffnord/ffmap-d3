@@ -1,4 +1,4 @@
-define("pacman", [
+define("pacman/main", [
   "lib/d3"
 ], function (d3) {
   "use strict"
@@ -55,9 +55,9 @@ define("pacman", [
       } else {
         var snd
         if (closest.flags.client)
-          snd = new Audio("lib/pacman_eatfruit.wav")
+          snd = new Audio("pacman/eatfruit.wav")
         else
-          snd = new Audio("lib/pacman_eatghost.wav")
+          snd = new Audio("pacman/eatghost.wav")
         snd.play()
 
         data.nodes = data.nodes.filter(function (d) {

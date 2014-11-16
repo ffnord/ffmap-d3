@@ -15,7 +15,7 @@ module.exports = function (grunt) {
     },
     eslint: {
       sources: {
-        src: ["*.js", "!Gruntfile.js", "lib/*.js"]
+        src: ["*.js", "!Gruntfile.js", "src/**/*.js"]
       },
       grunt: {
         src: ["Gruntfile.js", "tasks/*.js"]
