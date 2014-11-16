@@ -9,6 +9,8 @@ define("config", function () {
     // visible link in the navigation:
     sitename:  "gothamcity.freifunk.net",
 
+    defaultApp: "geomap?lat=51.35&lon=7.5&zoom=14",
+
     // initial gravity, friction, of the graph at pageload:
     gravity:   0.05,
     friction:  0.73,

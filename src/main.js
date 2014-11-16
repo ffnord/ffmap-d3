@@ -21,7 +21,7 @@ define("main", [
     dependencies: ["list"]
   }*/])
 
-  var graph = loadNodes(ffmapConfig)
+  var graph = loadNodes(ffmapConfig.nodesJSON)
 
   function getQueryParams(query) {
     query = query || ""
@@ -43,7 +43,7 @@ define("main", [
         if (app.createMainView)
           app.createMainView(_.extend({
             el: ".container",
-            model: graph
+            stream: graph
           }, params)).render()
 
         if (app.createMenu)
