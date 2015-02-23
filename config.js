@@ -24,6 +24,20 @@ define("config", function () {
       type: "rrd"
     }
 
+    /*
+    map: {
+      layer: {
+        url: "http://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png",
+        config: {
+          subdomains: "abcd",
+          type: "osm",
+          attribution: "© <a href=\"http://osm.org/copyright\" target=\"_blank\">OpenStreetMap</a> contributors, Open Database License",
+          opacity: 0.7
+        }
+      }
+    }
+    */
+
   }
 
   return ffmapConfig
