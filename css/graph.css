@@ -69,6 +69,7 @@ header, footer {
 #nodeinfo {
   top: 10px;
   left: 10px;
+  z-index: 10;
 }
 
 #nodeinfo a {
