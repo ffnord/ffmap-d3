@@ -71,7 +71,12 @@ header, footer {
   left: 10px;
 }
 
+#nodeinfo a {
+  color: #444;
+}
+
 #nodeinfo button.close {
+  cursor: pointer;
   float: right;
 }
 
