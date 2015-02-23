@@ -18,7 +18,12 @@ define("config", function () {
     strength:  1.0,
 
     // path to the nodes.json
-    nodesJSON: "nodes.json"
+    nodesJSON: "nodes.json",
+
+    graph: {
+      type: "rrd"
+    }
+
   }
 
   return ffmapConfig
