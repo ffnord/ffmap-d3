@@ -24,6 +24,7 @@
 line.link {
   stroke-width: 2.5pt;
   opacity: 0.5;
+  cursor: crosshair !important;
 }
 
 #voronoi path {
