@@ -218,6 +218,7 @@ footer a {
 
 #chart {
   background-image: url(gplaypattern.png);
+  overflow: hidden;
 }
 
 .node, .link {
