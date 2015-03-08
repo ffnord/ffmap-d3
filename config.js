@@ -25,7 +25,7 @@ define("config", function () {
     },
 
     map: {
-      showNodeInfo: true,
+      showNodeInfo: false,
       layer: {
         url: "http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg",
         config: {
