@@ -58,29 +58,6 @@ header, footer {
   stroke-width: 5px !important;
 }
 
-#nodeinfo {
-  position: absolute;
-  background: #fff;
-  border: 1px solid #ddd;
-  padding: 0.5em;
-  font-family: arial, helvatica;
-}
-
-#nodeinfo {
-  top: 10px;
-  left: 10px;
-  z-index: 10;
-}
-
-#nodeinfo a {
-  color: #444;
-}
-
-#nodeinfo button.close {
-  cursor: pointer;
-  float: right;
-}
-
 #controlpanel {
   font-size: 10pt;
   display: inline-block;
@@ -93,24 +70,6 @@ header, footer {
 
 #controlpanel p {
   margin: 0 1em;
-}
-
-#nodeinfo h1, #nodeinfo p {
-  color: #555;
-}
-
-#nodeinfo h1 {
-  font-size: 10pt;
-  margin: 0 0 0.5em;
-}
-
-#nodeinfo h2 {
-  font-size: 9pt;
-}
-
-#nodeinfo p {
-  font-size: 10pt;
-  margin: 0;
 }
 
 .btn {
