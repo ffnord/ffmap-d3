@@ -7,7 +7,7 @@ body {
   width: 100%;
 }
 
-#chart, #chart svg {
+#graph, #graph svg {
   vertical-align: top;
 }
 
@@ -27,13 +27,13 @@ header, footer {
   height: 100%;
 }
 
-#chart svg {
+#graph svg {
   display: inline-block;
   width: 100%;
   height: 100%;
 }
 
-#chart {
+#graph {
   display: table-cell;
   position: relative;
   height: 100%;
@@ -175,7 +175,7 @@ footer a {
   color: #444;
 }
 
-#chart {
+#graph {
   background-image: url(gplaypattern.png);
   overflow: hidden;
 }
