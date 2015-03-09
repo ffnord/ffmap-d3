@@ -7,17 +7,17 @@ define("config", [
   var d3Config = {
     locale : {
       decimal: ",",
-        thousands: ".",
-        grouping: [3],
-        currency: ["€", ""],
-        dateTime: "%a %b %e %X %Y",
-        date: "%d.%m.%Y",
-        time: "%H:%M:%S",
-        periods: ["", ""],
-        days: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
-        shortDays: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
-        months: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
-        shortMonths: ["Jan", "Feb", "Mrz", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]
+      thousands: ".",
+      grouping: [3],
+      currency: ["€", ""],
+      dateTime: "%a %b %e %X %Y",
+      date: "%d.%m.%Y",
+      time: "%H:%M:%S",
+      periods: ["", ""],
+      days: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
+      shortDays: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
+      months: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+      shortMonths: ["Jan", "Feb", "Mrz", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]
     }
   }
 
