@@ -17,6 +17,7 @@
 }
 
 #nodeinfo button.close {
+  margin-left: 4px;
   cursor: pointer;
   float: right;
   font-size: 12pt;
