@@ -9,7 +9,7 @@
   left: 10px;
   z-index: 1200;
   max-height: 95%;
-  overflow: scroll;
+  overflow-y: auto;
 }
 
 #nodeinfo a {
