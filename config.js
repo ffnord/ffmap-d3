@@ -103,6 +103,13 @@ define("config", [
 
     map: {
       showNodeInfo: false,
+      /*
+      init: {
+        lat: 50.77621,
+        lon: 6.08385,
+        zoom: 12
+      },
+      */
       layer: {
         url: "http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg",
         config: {
