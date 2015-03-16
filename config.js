@@ -55,25 +55,6 @@ define("config", [
             }
           ]
         },
-        "traffic": {
-          label: "Traffic",
-          sources: [
-            {
-              name: "traffic.tx.bytes",
-              label: "TX Bytes",
-              color: "rgba(31, 119, 180, 0.6)"
-            },
-            {
-              name: "traffic.rx.bytes",
-              label: "RX Bytes",
-              color: "#6e6e6e"
-            }
-          ],
-          margin: {
-            left: 46
-          },
-          tickFormat: "bytes"
-        },
         "loadavg": {
           label: "Load",
           sources: [
