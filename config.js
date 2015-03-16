@@ -40,7 +40,7 @@ define("config", [
     nodesJSON: "nodes.json",
 
     chart: {
-      type: "json",
+      type: "rrd", //json
       defaults: {
         metric: "clientcount",
         range: "24h"
