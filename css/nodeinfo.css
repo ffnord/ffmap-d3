@@ -1,0 +1,43 @@
+#nodeinfo {
+  font-size: 10pt;
+  position: absolute;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 0.5em;
+  font-family: arial, helvatica;
+  top: 10px;
+  left: 10px;
+  z-index: 1200;
+  max-height: 95%;
+  overflow-y: auto;
+}
+
+#nodeinfo a {
+  color: #444;
+}
+
+#nodeinfo button.close {
+  margin-left: 4px;
+  cursor: pointer;
+  float: right;
+  font-size: 12pt;
+}
+
+#nodeinfo h1, #nodeinfo p {
+  color: #555;
+}
+
+#nodeinfo h1 {
+  font-size: 10pt;
+  margin: 0 0 0.5em;
+}
+
+#nodeinfo h2 {
+  font-size: 9pt;
+  margin-bottom: 4px;
+}
+
+#nodeinfo p {
+  font-size: 10pt;
+  margin: 0;
+}

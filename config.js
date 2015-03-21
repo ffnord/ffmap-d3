@@ -1,6 +1,25 @@
-define("config", function () {
+define("config", [
+  "lib/d3"
+], function (d3) {
   /* after making any changes here enter "grunt" in your terminal to apply the changes */
   "use strict"
+
+  var d3Config = {
+    locale : {
+      decimal: ",",
+      thousands: ".",
+      grouping: [3],
+      currency: ["€", ""],
+      dateTime: "%a %b %e %X %Y",
+      date: "%d.%m.%Y",
+      time: "%H:%M:%S",
+      periods: ["", ""],
+      days: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
+      shortDays: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
+      months: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+      shortMonths: ["Jan", "Feb", "Mrz", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]
+    }
+  }
 
   var ffmapConfig = {
     // link to your main community site:
@@ -20,11 +39,70 @@ define("config", function () {
     // path to the nodes.json
     nodesJSON: "nodes.json",
 
-    graph: {
-      type: "rrd"
+    chart: {
+      type: "rrd", //json
+      defaults: {
+        metric: "clientcount",
+        range: "24h"
+      },
+      metrics: {
+        "clientcount": {
+          label: "Clients",
+          sources: [
+            {
+              name: "clientcount",
+              interpolation: "step"
+            }
+          ]
+        },
+        "loadavg": {
+          label: "Load",
+          sources: [
+            {
+              name: "loadavg"
+            }
+          ],
+          tickFormat: d3.format("02.2f")
+        },
+        "uptime": {
+          label: "Uptime",
+          sources: [
+            {
+              name: "uptime",
+              interpolation: "Linear"
+            }
+          ],
+          tickFormat: "time"
+        }
+      },
+      ranges: {
+        "4h": {
+          label: "4h",
+          tickFormat: d3.locale(d3Config.locale).timeFormat("%H:%M")
+        },
+        "24h": {
+          label: "24h",
+          tickFormat: d3.locale(d3Config.locale).timeFormat("%H")
+        },
+        "14d": {
+          label: "14d",
+          tickFormat: d3.locale(d3Config.locale).timeFormat("%d.%m."),
+          rotateTicks: true
+        },
+        "1mon": {
+          label: "1m",
+          tickFormat: d3.locale(d3Config.locale).timeFormat("%d.%m."),
+          rotateTicks: true
+        },
+        "1y": {
+          label: "1y",
+          tickFormat: d3.locale(d3Config.locale).timeFormat("%b")
+        }
+      }
     },
 
     map: {
+      showNodeInfo: false,
       layer: {
         url: "http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg",
         config: {

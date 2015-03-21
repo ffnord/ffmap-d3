@@ -1,0 +1,141 @@
+#chart div.chart-container {
+  width: 400px;
+  height: 250px;
+}
+
+#chart div.chart-container svg .axis path,
+#chart div.chart-container svg .axis line {
+  fill: none;
+  stroke: darkgrey;
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+#chart div.chart-container svg .line {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 2.0px;
+}
+
+#chart div.chart-container svg .area {
+  fill: darkgrey;
+  opacity: 0.3;
+}
+
+#chart div.chart-container svg .points circle {
+  stroke-width: 15px;
+  stroke: transparent;
+  fill: darkgrey;
+  cursor: pointer;
+}
+
+#chart div.chart-container svg .points circle:hover {
+}
+
+#chart div.chart-container svg .area-gradient-stop1 {
+  stop-color: white;
+}
+
+#chart div.chart-container svg .area-gradient-stop2 {
+  stop-color: black;
+}
+
+#chart div.chart-container svg .axis text {
+  fill: #444;
+  font-size: 7pt;
+}
+
+#chart div.chart-container svg .x.axis text.rotated {
+  font-size: 6pt;
+}
+
+#chart div.chart-container svg .grid {
+  opacity: 0.8;
+}
+
+#chart div.chart-container svg .grid .tick {
+  stroke: lightgrey;
+  stroke-width: 1px;
+}
+
+#chart div.chart-container svg .grid path {
+  stroke-width: 0;
+}
+
+#chart ul.chart-ranges {
+  list-style-type: none;
+  font-size: 8pt;
+}
+
+#chart ul.chart-ranges li {
+  float: left;
+  margin-right: 6px;
+}
+
+#chart ul.chart-ranges li a {
+  transition: color 0.4s;
+}
+
+#chart ul.chart-ranges li.active a {
+  color: rgba(31, 119, 180, 1);
+}
+
+#chart ul.chart-metrics {
+  float: right;
+  list-style-type: none;
+  font-size: 8pt;
+}
+
+#chart ul.chart-metrics li {
+  float: left;
+  margin-right: 2px;
+  transition: background-color 0.4s;
+  background-color: #6e6e6e;
+}
+
+#chart ul.chart-metrics li a {
+  display: block;
+  padding: 4px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#chart ul.chart-metrics li.active {
+  background-color: #C83771;
+}
+
+#chart ul.chart-legend {
+  list-style-type: none;
+  font-size: 8pt;
+  position: absolute;
+  right: 10px;
+  margin-top: -20px;
+  border: 1px solid lightgrey;
+}
+
+#chart ul.chart-legend.hidden {
+  display: none;
+}
+
+#chart ul.chart-legend li {
+  margin: 4px;
+  height: 10px;
+}
+
+#chart ul.chart-legend li .marker {
+  width: 11px;
+  height: 11px;
+  float: left;
+  margin-right: 3px;
+  background-color: lightgrey;
+}
+
+#chart ul.chart-legend li .label {
+  float: left;
+}
+
+#chart br.clear {
+  float: none;
+  clear: both;
+}
